@@ -61,11 +61,11 @@
                 </div>
                 <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
                     <li class="nav-item mt-2">
-                        <a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="#">Diskusi Kelas</a>
+                        <a class="nav-link text-active-primary ms-0 me-10 py-5 " href="{{ route("mahasiswa.kelas.materi", [$kode_kelas, $materi_id]) }}">Diskusi Kelas</a>
                     </li>
                     <li class="nav-item mt-2">
-                        <a class="nav-link text-active-primary ms-0 me-10 py-5"
-                            href="{{ route("mahasiswa.kelas.materiDiskusiPribadi", [$kode_kelas, $materi_id]) }}">Diskusi Pribadi + AI</a>
+                        <a class="nav-link text-active-primary ms-0 me-10 py-5 active"
+                            href="#">Diskusi Pribadi + AI</a>
                     </li>
                 </ul>
             </div>
@@ -79,20 +79,7 @@
 
                             <div class="card-title">
                                 <div class="me-5">
-                                    Diskusi Kelas
-                                </div>
-                                <div class="symbol-group symbol-hover">
-                                    @foreach ($list_mahasiswa->take(5) as $mhs)
-                                        <div class="symbol symbol-35px symbol-circle">
-                                            <img alt="Pic" src="{{ $mhs->mahasiswa?->user?->getPhoto() }}" />
-                                        </div>
-                                    @endforeach
-                                    <a href="#" class="symbol symbol-35px symbol-circle" data-bs-toggle="modal"
-                                        data-bs-target="#kt_modal_view_users">
-                                        <span class="symbol-label fs-8 fw-bold" data-bs-toggle="tooltip"
-                                            data-bs-trigger="hover"
-                                            title="View more users">+{{ $list_mahasiswa->count() }}</span>
-                                    </a>
+                                    Diskusi Pribadi
                                 </div>
                             </div>
                         </div>
@@ -103,7 +90,7 @@
                                 data-kt-scroll-dependencies="#kt_header, #kt_app_header, #kt_app_toolbar, #kt_toolbar, #kt_footer, #kt_app_footer, #kt_chat_messenger_header, #kt_chat_messenger_footer"
                                 data-kt-scroll-wrappers="#kt_content, #kt_app_content, #kt_chat_messenger_body"
                                 data-kt-scroll-offset="5px">
-                                @forelse ($list_diskusi_grup as $diskusi)
+                                @forelse ($list_diskusi_pribadi as $diskusi)
                                     @if ($diskusi->user_id == auth()->user()->id)
                                         <div class="d-flex justify-content-end mb-10">
                                             <div class="d-flex flex-column align-items-end">
@@ -205,7 +192,7 @@
             cluster: 'ap1'
         });
 
-        var channel = pusher.subscribe('diskusi-grup');
+        var channel = pusher.subscribe('diskusi-pribadi');
         channel.bind('chat' + '{{ $materi->id }}', function(data) {
             let result = data.message
 
@@ -259,7 +246,7 @@
             }
             var message = $('[data-kt-element="input"]').val();
             $.ajax({
-                url: '{{ route('kirimDiskusiGrup', $materi->id) }}',
+                url: '{{ route('kirimDiskusiPribadi', $materi->id) }}',
                 type: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'

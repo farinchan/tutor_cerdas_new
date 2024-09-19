@@ -56,9 +56,12 @@ Route::prefix('mahasiswa')->middleware(['auth', 'role:mahasiswa'])->name('mahasi
         Route::get('/', [MahasiswaKelasController::class, 'index'])->name('index');
         Route::get('/{kode_kelas}', [MahasiswaKelasController::class, 'show'])->name('show');
         Route::get('/{kode_kelas}/materi/{id}', [MahasiswaMateriController::class, 'materi'])->name('materi');
+        Route::get('/{kode_kelas}/materi/{id}/diskusi-pribadi', [MahasiswaMateriController::class, 'materiDiskusiPribadi'])->name('materiDiskusiPribadi');
+
 
     });
 });
 
 Route::post('/kirimDiskusiGrup/{materi_id}', [MahasiswaMateriController::class, 'kirimDiskusiGrup'])->name('kirimDiskusiGrup');
+Route::post('/kirimDiskusiPribadi/{materi_id}', [MahasiswaMateriController::class, 'kirimDiskusiPribadi'])->name('kirimDiskusiPribadi');
 
