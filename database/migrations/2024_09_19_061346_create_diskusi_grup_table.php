@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('diskusi', function (Blueprint $table) {
+        Schema::create('diskusi_grup', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('materi_id')->constrained('materi')->onUpdate('cascade')->onDelete('cascade');
-            $table->unsignedBigInteger('nim');
-            $table->foreign('nim')->references('nim')->on('mahasiswa')->onUpdate('cascade')->onDelete('cascade');
-            $table->text('pertanyaan');
-            $table->enum('role', ['dosen', 'mahasiswa', 'asisten']);
+            $table->text('pesan');
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('diskusis');
+        Schema::dropIfExists('diskusi_grups');
     }
 };

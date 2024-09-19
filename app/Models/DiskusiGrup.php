@@ -4,14 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
 
-class Mahasiswa extends Model
+class DiskusiGrup extends Model
 {
     use HasFactory;
 
-    protected $table = 'mahasiswa';
-    protected $primaryKey = 'nim';
+    protected $table = 'diskusi_grup';
+
     protected $guarded = [];
 
     public function user()
@@ -19,10 +18,8 @@ class Mahasiswa extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function nilai()
+    public function materi()
     {
-        return $this->hasMany(Nilai::class, 'nim', 'nim');
+        return $this->belongsTo(Materi::class, 'materi_id', 'id');
     }
-
-    
 }

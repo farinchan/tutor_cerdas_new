@@ -119,7 +119,7 @@ License: For each use you must have a valid license purchased only from above li
     <!--begin::Custom Javascript(used for this page only)-->
     <script src="{{ asset("assets/js/widgets.bundle.js") }}"></script>
     <script src="{{ asset("assets/js/custom/widgets.js") }}"></script>
-    <script src="{{ asset("assets/js/custom/apps/chat/chat.js") }}"></script>
+    {{-- <script src="{{ asset("assets/js/custom/apps/chat/chat.js") }}"></script> --}}
     <script src="{{ asset("assets/js/custom/utilities/modals/create-campaign.js") }}"></script>
     <script src="{{ asset("assets/js/custom/utilities/modals/create-app.js") }}"></script>
     <script src="{{ asset("assets/js/custom/utilities/modals/users-search.js") }}"></script>

@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('mahasiswa', function (Blueprint $table) {
             $table->unsignedBigInteger('nim')->primary();
-            $table->string('foto')->nullable();
             $table->text('alamat');
             $table->enum('jenis_kelamin', ['L', 'P']);
             $table->enum('agama', ['Islam', 'Kristen', 'Katolik', 'Hindu', 'Budha', 'Konghucu']);

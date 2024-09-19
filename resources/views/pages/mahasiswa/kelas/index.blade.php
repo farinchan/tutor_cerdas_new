@@ -14,7 +14,7 @@
                             data-bs-theme="light">
                             <h3 class="card-title align-items-start flex-column text-white pt-15">
                                 <a class="fw-bold text-white fs-2x mb-3 text-hover-info"
-                                    href="{{ route('dosen.kelas.show', $row->kode_kelas) }} ">
+                                    href="{{ route('mahasiswa.kelas.show', $row->kode_kelas) }} ">
                                     {{ $row->nama_kelas }} - {{ $row->matakuliah->nama_mk }}
                                 </a>
                                 <div class="fs-4 text-white">

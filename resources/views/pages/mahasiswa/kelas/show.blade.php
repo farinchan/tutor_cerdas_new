@@ -22,62 +22,46 @@
             <div class="flex-column flex-lg-row-auto w-lg-250px w-xl-350px mb-10">
                 <div class="card card-flush mb-5">
                     <div class="card-header rounded bgi-no-repeat bgi-size-cover bgi-position-y-top bgi-position-x-center align-items-start h-250px"
-                        style="background-image:url('{{ asset('assets/media/svg/shapes/bg-kelas.png') }}"
-                        data-bs-theme="light">
-                        <h3 class="card-title align-items-start flex-column text-white pt-15">
-                            <span class="fw-bold fs-2x mb-3">
-                                {{ $kelas->nama_kelas }} - {{ $kelas->matakuliah->nama_mk }}
-                            </span>
-                            <div class="fs-4 text-white">
-                                <span class="opacity-75">
-                                    {{ $kelas->tingkat }} - {{ $kelas->jurusan }}
-                                </span>
-                            </div>
-                        </h3>
-                    </div>
-                    <div class="card-body mt-n20 mb-10">
-                        <div class="mt-n20 position-relative">
-                            <div class="row g-3 g-lg-6">
-                                <div class="col-6">
-                                    <div class="bg-gray-100 bg-opacity-70 rounded-2 px-6 py-5">
-                                        <div class="symbol symbol-30px me-5 mb-8">
-                                            <span class="symbol-label">
-                                                <i class="ki-duotone ki-flask fs-1 text-primary">
-                                                    <span class="path1"></span>
-                                                    <span class="path2"></span>
-                                                </i>
-                                            </span>
-                                        </div>
-                                        <div class="m-0">
-                                            <span
-                                                class="text-gray-700 fw-bolder d-block fs-2qx lh-1 ls-n1 mb-1">{{ $kelas->materi->count() }}</span>
-                                            <span class="text-gray-500 fw-semibold fs-6">Materi</span>
-                                        </div>
-                                    </div>
+                            style="background-image:url('{{ asset('assets/media/svg/shapes/bg-kelas.png') }}"
+                            data-bs-theme="light">
+                            <h3 class="card-title align-items-start flex-column text-white pt-15">
+                                <a class="fw-bold text-white fs-2x mb-3 text-hover-info"
+                                    href="{{ route('mahasiswa.kelas.show', $kelas->kode_kelas) }} ">
+                                    {{ $kelas->nama_kelas }} - {{ $kelas->matakuliah->nama_mk }}
+                                </a>
+                                <div class="fs-4 text-white">
+                                    <span class="opacity-75">
+                                        {{ $kelas->tingkat }} - {{ $kelas->jurusan }}
+                                    </span>
                                 </div>
-                                <div class="col-6">
-                                    <div class="bg-gray-100 bg-opacity-70 rounded-2 px-6 py-5">
-                                        <div class="symbol symbol-30px me-5 mb-8">
-                                            <span class="symbol-label">
-                                                <i class="ki-duotone ki-people fs-1 text-primary">
-                                                    <span class="path1"></span>
-                                                    <span class="path2"></span>
-                                                    <span class="path3"></span>
-                                                    <span class="path4"></span>
-                                                    <span class="path5"></span>
-                                                </i>
-                                            </span>
-                                        </div>
-                                        <div class="m-0">
-                                            <span
-                                                class="text-gray-700 fw-bolder d-block fs-2qx lh-1 ls-n1 mb-1">{{ $kelas->mahasiswa->count() }}</span>
-                                            <span class="text-gray-500 fw-semibold fs-6">Mahasiswa</span>
-                                        </div>
+                            </h3>
+                        </div>
+                        <div class="card-body mt-n20 mb-10">
+                            <div class="bg-gray-100 bg-opacity-70 rounded-2 px-6 py-5">
+                                <div class="d-flex flex-column">
+                                    <span class="text-gray-800  mb-3">Dosen/Pengajar :</span>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <!--begin:: Avatar -->
+                                    <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                        <a href="#">
+                                            <div class="symbol-label">
+                                                <img src="{{ $kelas->dosen?->user?->getPhoto() }}" alt="Emma Smith"
+                                                    class="w-100">
+                                            </div>
+                                        </a>
                                     </div>
+                                    <!--end::Avatar-->
+                                    <!--begin::User details-->
+                                    <div class="d-flex flex-column">
+                                        <a href="#"
+                                            class="text-gray-800 text-hover-primary mb-1">{{ $kelas->dosen?->user?->name }}</a>
+                                        <span>NIDN. {{ $kelas->dosen?->nidn }}</span>
+                                    </div>
+                                    <!--begin::User details-->
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </div>
                 <div class="card mb-5 mb-xl-8">
                     <div class="card-header border-0">
@@ -105,20 +89,14 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab"
-                            href="#kt_user_view_mahasiswa">Mahasiswa
-                            @if ($mahasiswa_nonaktif_count > 0)
-                                <strong>{{ $mahasiswa_nonaktif_count }}</strong>
-                            @endif
+                            href="#kt_user_view_mahasiswa">Anggota Kelas
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab"
-                            href="#kt_user_view_penilaian">penilaian</a>
+                            href="#kt_user_view_penilaian">Nilai Saya</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab"
-                            href="#kt_user_view_pengaturan">Pengaturan</a>
-                    </li>
+                    
                 </ul>
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="kt_user_view_materi" role="tabpanel">
@@ -148,7 +126,7 @@
                                                 <img src="{{ asset('assets/media/books.png') }}" alt=""
                                                     width="80px" class="me-4">
                                                 <div>
-                                                    <a href="#"
+                                                    <a href="{{ route("mahasiswa.kelas.materi", [$kelas->kode_kelas, $materi->id]) }}"
                                                         class="fs-4 fw-bold text-hover-primary text-gray-800">
                                                         {{ $materi->judul }}
                                                     </a>
@@ -164,8 +142,8 @@
                                             </div>
                                             <div class="separator separator-dashed my-7"></div>
                                             <div class="text-end">
-                                                <button class="btn btn-sm btn-light btn-active-light-primary">Pelajari
-                                                    Sekarang</button>
+                                                <a href="{{ route("mahasiswa.kelas.materi", [$kelas->kode_kelas, $materi->id]) }}" class="btn btn-sm btn-light btn-active-light-primary">Pelajari
+                                                    Sekarang</a>
                                             </div>
                                         </div>
                                     </div>
@@ -174,81 +152,6 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="kt_user_view_mahasiswa" role="tabpanel">
-                        <div class="card pt-4 mb-6 mb-xl-9">
-                            <div class="card-header border-0">
-                                <div class="card-title">
-                                    <h2>Permintaan Bergabung</h2>
-                                </div>
-                            </div>
-                            <div class="card-body py-4">
-                                <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
-
-                                    <thead>
-                                        <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
-                                            <th class="w-10px pe-2">
-                                                <div
-                                                    class="form-check form-check-sm form-check-custom form-check-solid me-3">
-                                                    <input class="form-check-input" type="checkbox" data-kt-check="true"
-                                                        data-kt-check-target="#kt_table_users .form-check-input"
-                                                        value="1" />
-                                                </div>
-                                            </th>
-                                            <th class="min-w-125px">Mahasiswa</th>
-                                            <th class="min-w-125px">status</th>
-                                            <th class="text-end min-w-100px">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="text-gray-600 fw-semibold">
-                                        @foreach ($list_mahasiswa_nonaktif as $mahasiswa_nonaktif)
-                                            <tr>
-                                                <td>
-                                                    <div
-                                                        class="form-check form-check-sm form-check-custom form-check-solid">
-                                                        <input class="form-check-input" type="checkbox" value="1" />
-                                                    </div>
-                                                </td>
-                                                <td class="d-flex align-items-center">
-                                                    <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
-                                                        <a href="#">
-                                                            <div class="symbol-label">
-                                                                <img src="{{ $mahasiswa_nonaktif->mahasiswa?->getPhoto() }}"
-                                                                    alt="{{ $mahasiswa_nonaktif->name }}"
-                                                                    width="50px" />
-                                                            </div>
-                                                        </a>
-                                                    </div>
-                                                    <div class="d-flex flex-column">
-                                                        <a href="#"
-                                                            class="text-gray-800 text-hover-primary mb-1">{{ $mahasiswa_nonaktif->mahasiswa?->user->name }}</a>
-                                                        <span>NIM. {{ $mahasiswa_nonaktif->mahasiswa?->nim }}</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <span class="badge badge-light-danger">Tidak Aktif</span>
-                                                </td>
-                                                <td class="text-end min-w-200px">
-                                                    <a href="#" class="btn btn-icon btn-light-linkedin me-2 "
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#view_user{{ $mahasiswa_nonaktif->id }}"><i
-                                                            class="far fa-eye fs-4"></i></a>
-                                                    <form style="display: inline-block;" action="" method="POST">
-                                                        @csrf
-                                                        <button type="submit"
-                                                            class="btn btn-icon btn-light-twitter me-2">
-                                                            <i class="fas fa-check fs-4"></i>
-                                                        </button>
-                                                    </form>
-                                                    <a href="#" class="btn btn-icon btn-light-youtube me-2"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#kt_modal_delete_user{{ $mahasiswa_nonaktif->id }}"><i
-                                                            class="fas fa-times fs-4"></i></a>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
                         <div class="card">
                             <div class="card-header border-0 pt-6">
                                 <div class="card-title">
@@ -263,12 +166,6 @@
                                     </div>
                                 </div>
                                 <div class="card-toolbar">
-                                    <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
-
-
-                                        <button type="button" class="btn btn-primary">
-                                            <i class="ki-duotone ki-plus fs-2"></i>Invite</button>
-                                    </div>
                                     <div class="d-flex justify-content-end align-items-center d-none">
                                         <div class="fw-bold me-5">
                                             <span class="me-2"
@@ -295,7 +192,7 @@
                                             </th>
                                             <th class="min-w-125px">Mahasiswa</th>
                                             <th class="min-w-125px">Waktu Bergabung</th>
-                                            <th class="text-end min-w-100px">Actions</th>
+                                            
                                         </tr>
                                     </thead>
                                     <tbody class="text-gray-600 fw-semibold">
@@ -311,7 +208,7 @@
                                                     <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                                         <a href="#">
                                                             <div class="symbol-label">
-                                                                <img src="{{ $mahasiswa->mahasiswa?->getPhoto() }}"
+                                                                <img src="{{ $mahasiswa->mahasiswa?->user?->getPhoto() }}"
                                                                     alt="{{ $mahasiswa->name }}" width="50px" />
                                                             </div>
                                                         </a>
@@ -323,21 +220,6 @@
                                                     </div>
                                                 </td>
                                                 <td>{{ $mahasiswa->created_at->diffForHumans() }}</td>
-                                                <td class="text-end">
-                                                    <a href="#"
-                                                        class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm"
-                                                        data-kt-menu-trigger="click"
-                                                        data-kt-menu-placement="bottom-end">Actions
-                                                        <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4"
-                                                        data-kt-menu="true">
-                                                        <div class="menu-item px-3">
-                                                            <a href="#" class="menu-link px-3"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#kick_mahasiswa{{ $mahasiswa->id }}">Keluarkan</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
                                             </tr>
                                             <div class="modal fade" tabindex="-1"
                                                 id="kick_mahasiswa{{ $mahasiswa->id }}">
@@ -387,193 +269,35 @@
                         <div class="card pt-4 mb-6 mb-xl-9">
                             <div class="card-header border-0">
                                 <div class="card-title">
-                                    <h2>Penilaian Mahasiswa</h2>
+                                    <h2>Nilai Saya</h2>
                                 </div>
                             </div>
                             <div class="card-body pt-0 pb-5">
                                 <div class="table-responsive">
-                                    <table class="table align-middle table-row-dashed gy-5"
-                                        id="kt_table_users_login_session">
-                                        <thead class="border-bottom border-gray-200 fs-7 fw-bold">
-                                            <tr class="text-start text-muted text-uppercase gs-0">
-                                                <th class="min-w-100px">NIM</th>
-                                                <th>Nama</th>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr class="fw-bold fs-6 text-gray-800">
+                                                <th class="text-center" colspan="6" >Nilai</th>
+                                            </tr>
+                                            <tr class="fw-bold fs-6 text-gray-800">
                                                 <th class="text-center">Tugas</th>
                                                 <th class="text-center">Quiz</th>
                                                 <th class="text-center">UTS</th>
                                                 <th class="text-center">UAS</th>
-                                                <th class="text-end">Actions</th>
+                                                <th class="text-center">Nilai Akhir</th>
                                             </tr>
                                         </thead>
-                                        <tbody class="fs-6 fw-semibold text-gray-600">
-                                            @foreach ($list_nilai_mahasiswa as $nilai_mahasiswa)
-                                                <tr>
-                                                    <td>{{ $nilai_mahasiswa->nim }}</td>
-                                                    <td>{{ $nilai_mahasiswa->name }}</td>
-                                                    <td class="text-center">{{ $nilai_mahasiswa->nilai_tugas ?? '-' }}
-                                                    </td>
-                                                    <td class="text-center">{{ $nilai_mahasiswa->nilai_quiz ?? '-' }}</td>
-                                                    <td class="text-center">{{ $nilai_mahasiswa->nilai_uts ?? '-' }}</td>
-                                                    <td class="text-center">{{ $nilai_mahasiswa->nilai_uas ?? '-' }}</td>
-                                                    <td class="text-end">
-                                                        <a href="#" class="btn btn-icon btn-light-linkedin me-2 "
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#modal_nilai{{ $nilai_mahasiswa->nim }}">
-                                                            <i class="fa-solid fa-pen-to-square fs-4"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-
-                                                <div class="modal fade" tabindex="-1"
-                                                    id="modal_nilai{{ $nilai_mahasiswa->nim }}">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h3 class="modal-title">Nilai Siswa</h3>
-
-                                                                <!--begin::Close-->
-                                                                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2"
-                                                                    data-bs-dismiss="modal" aria-label="Close">
-                                                                    <i class="ki-duotone ki-cross fs-1"><span
-                                                                            class="path1"></span><span
-                                                                            class="path2"></span></i>
-                                                                </div>
-                                                                <!--end::Close-->
-                                                            </div>
-
-                                                            <form
-                                                                action="{{ route('dosen.kelas.updateNilai', $kelas->kode_kelas) }}"
-                                                                method="POST">
-                                                                @csrf
-                                                                @method('PUT')
-                                                                <div class="modal-body">
-
-                                                                    <div class="mb-8">
-                                                                        <label
-                                                                            class="form-label fw-bold required">NIM:</label>
-                                                                        <input type="text" class="form-control "
-                                                                            placeholder="NIM"
-                                                                            value="{{ $nilai_mahasiswa->nim }}"
-                                                                            name="nim" readonly />
-                                                                    </div>
-                                                                    <div class="mb-8">
-                                                                        <label
-                                                                            class="form-label fw-bold required">Nama:</label>
-                                                                        <input type="text" class="form-control "
-                                                                            placeholder="Nama"
-                                                                            value="{{ $nilai_mahasiswa->name }}"
-                                                                            readonly />
-                                                                    </div>
-                                                                    <div class="mb-8">
-                                                                        <label class="form-label fw-bold">Tugas:</label>
-                                                                        <input type="number" class="form-control "
-                                                                            placeholder="Tugas" name="nilai_tugas"
-                                                                            value="{{ $nilai_mahasiswa->nilai_tugas }}" />
-                                                                    </div>
-                                                                    <div class="mb-8">
-                                                                        <label class="form-label fw-bold">Quiz:</label>
-                                                                        <input type="number" class="form-control "
-                                                                            placeholder="Quiz" name="nilai_quiz"
-                                                                            value="{{ $nilai_mahasiswa->nilai_quiz }}" />
-                                                                    </div>
-                                                                    <div class="mb-8">
-                                                                        <label class="form-label fw-bold">UTS:</label>
-                                                                        <input type="number" class="form-control "
-                                                                            placeholder="UTS" name="nilai_uts"
-                                                                            value="{{ $nilai_mahasiswa->nilai_uts }}" />
-                                                                    </div>
-                                                                    <div class="mb-8">
-                                                                        <label class="form-label fw-bold">UAS:</label>
-                                                                        <input type="number" class="form-control "
-                                                                            placeholder="UAS" name="nilai_uas"
-                                                                            value="{{ $nilai_mahasiswa->nilai_uas }}" />
-                                                                    </div>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-light"
-                                                                        data-bs-dismiss="modal">Close</button>
-                                                                    <button type="submit" class="btn btn-primary">Save
-                                                                        changes</button>
-                                                                </div>
-                                                            </form>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            @endforeach
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-center">{{ $nilai_saya->nilai_tugas??"-" }}</td>
+                                                <td class="text-center">{{ $nilai_saya->nilai_quiz??"-" }}</td>
+                                                <td class="text-center">{{ $nilai_saya->nilai_uts??"-" }}</td>
+                                                <td class="text-center">{{ $nilai_saya->nilaiuas??"-" }}</td>
+                                                <td class="text-center">{{ $nilai_saya->nilai_akhir??"-" }}</td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="tab-pane fade" id="kt_user_view_pengaturan" role="tabpanel">
-                        <div class="card pt-4 mb-6 mb-xl-9">
-                            <div class="card-header border-0">
-                                <div class="card-title">
-                                    <h2>Pengaturan Kelas</h2>
-                                </div>
-                            </div>
-                            <div class="card-body pt-0 pb-5">
-                                <form action="{{ route('dosen.kelas.store') }}" method="POST">
-                                    @csrf
-
-                                    <div class="modal-body">
-                                        <div class="row mb-8">
-                                            <div class="col-lg-8">
-                                                <label class="form-label fw-bold required">Mata Kuliah:</label>
-                                                <input type="text" class="form-control " placeholder="Mata Kuliah"
-                                                    name="matakuliah" value="{{ old('') }}" />
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <label class="form-label fw-bold required">SKS:</label>
-                                                <input type="number" class="form-control " placeholder="SKS"
-                                                    name="sks" value="{{ old('sks') }}" />
-                                            </div>
-                                        </div>
-                                        <hr>
-
-                                        <div class="mb-8 mt-8">
-                                            <label class="form-label fw-bold required">Kode Kelas:</label>
-                                            <input type="text" class="form-control " placeholder="Kode Kelas"
-                                                value="{{ $kelas->kode_kelas }}" readonly />
-                                        </div>
-                                        <div class="mb-8 mt-5">
-                                            <label class="form-label fw-bold required">Nama Kelas:</label>
-                                            <input type="text" class="form-control " name="nama_kelas"
-                                                placeholder="Nama Kelas" value="{{ $kelas->nama_kelas }}" />
-                                        </div>
-                                        <div class="mb-8">
-                                            <label class="form-label fw-bold required">Tingkat:</label>
-                                            <select class="form-select" data-placeholder="Pilih Tingkat" name="tingkat"
-                                                required>
-                                                <option>Pilih Tingkat</option>
-                                                <option value="D3" {{ $kelas->tingkat == 'D3' ? 'selected' : '' }}>D3
-                                                </option>
-                                                <option value="D4" {{ $kelas->tingkat == 'D4' ? 'selected' : '' }}>D4
-                                                </option>
-                                                <option value="S1" {{ $kelas->tingkat == 'S1' ? 'selected' : '' }}>S1
-                                                </option>
-                                                <option value="S2" {{ $kelas->tingkat == 'S2' ? 'selected' : '' }}>S2
-                                                </option>
-                                                <option value="S3" {{ $kelas->tingkat == 'S3' ? 'selected' : '' }}>S3
-                                                </option>
-                                            </select>
-                                        </div>
-                                        <div class="mb-8">
-                                            <label class="form-label fw-bold required">Jurusan:</label>
-                                            <input type="text" class="form-control " placeholder="Jurusan"
-                                                name="jurusan" value="{{ $kelas->jurusan }}" required />
-                                        </div>
-                                    </div>
-
-                                    <div class="modal-footer">
-                                        <button type="reset" class="btn btn-light"
-                                            data-bs-dismiss="modal">Batal</button>
-                                        <button type="submit" class="btn btn-primary">Buat Sekarang</button>
-                                    </div>
-                                </form>
                             </div>
                         </div>
                     </div>

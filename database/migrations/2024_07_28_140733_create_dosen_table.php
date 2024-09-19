@@ -15,7 +15,6 @@ return new class extends Migration
             $table->unsignedBigInteger('nidn')->primary();
             $table->enum('jabatan', ['asisten ahli', 'lektor', 'lektor kepala', 'guru besar']);
             $table->string('pangkat', 50)->nullable();
-            $table->string('foto')->nullable();
             $table->text('alamat');
             $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan']);
             $table->enum('agama', ['Islam', 'Kristen', 'Katolik', 'Hindu', 'Budha', 'Konghucu']);

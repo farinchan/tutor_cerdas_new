@@ -8,6 +8,7 @@
         "php": "^8.2",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
+        "pusher/pusher-php-server": "^7.2",
         "realrashid/sweet-alert": "^7.2",
         "spatie/laravel-permission": "^6.9"
     },

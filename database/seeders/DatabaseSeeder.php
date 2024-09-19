@@ -39,7 +39,7 @@ class DatabaseSeeder extends Seeder
         ])->assignRole('admin');
 
         User::create([
-            'name' => 'Dr. Fajri Rinaldi Chan, S.Pd., M.Eng., Ph.D.',
+            'name' => 'Fajri Rinaldi Chan, M.Eng., Ph.D.',
             'email' => 'fajririnaldichan@gmail.com',
             'password' => bcrypt('password'),
         ])->assignRole('dosen');
@@ -48,7 +48,6 @@ class DatabaseSeeder extends Seeder
             'nidn' => 1234567890,
             'jabatan' => 'Lektor Kepala',
             'pangkat' => 'IV/a',
-            'foto' => 'fajri.jpg',
             'alamat' => 'Jl. Raya No. 1, Jakarta',
             'jenis_kelamin' => 'Laki-laki',
             'agama' => 'Islam',

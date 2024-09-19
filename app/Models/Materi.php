@@ -16,4 +16,24 @@ class Materi extends Model
     protected $casts = [
         'file' => 'array',
     ];
+
+    public function kelas()
+    {
+        return $this->belongsTo(Kelas::class, 'kode_kelas', 'kode_kelas');
+    }
+
+    public function dosen()
+    {
+        return $this->belongsTo(Dosen::class, 'nidn', 'nidn');
+    }
+
+    public function getThumbnail()
+    {
+        if ($this->thumbnail) {
+            return asset('storage/' . $this->thumbnail);
+        }
+        return asset('images/default-thumbnail.jpg');
+    }
+
+
 }

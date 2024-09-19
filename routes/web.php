@@ -8,6 +8,7 @@ use App\Http\Controllers\Dosen\MahasiswaController as DosenMahasiswaController;
 use App\Http\Controllers\Dosen\MateriController as DosenMateriController;
 
 use App\Http\Controllers\Mahasiswa\KelasController as MahasiswaKelasController;
+use App\Http\Controllers\Mahasiswa\MateriController as MahasiswaMateriController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -51,9 +52,13 @@ Route::prefix('dosen')->middleware(['auth', 'role:dosen'])->name('dosen.')->grou
 });
 
 Route::prefix('mahasiswa')->middleware(['auth', 'role:mahasiswa'])->name('mahasiswa.')->group(function () {
-    Route::get('/kelas', [MahasiswaKelasController::class, 'index'])->name('kelas.index');
-    Route::get('/kelas/{kode_kelas}', [MahasiswaKelasController::class, 'show'])->name('kelas.show');
-    Route::get('/materi/{kode_kelas}/{id}', [MahasiswaKelasController::class, 'materi'])->name('materi');
+    Route::prefix('kelas')->name('kelas.')->group(function () {
+        Route::get('/', [MahasiswaKelasController::class, 'index'])->name('index');
+        Route::get('/{kode_kelas}', [MahasiswaKelasController::class, 'show'])->name('show');
+        Route::get('/{kode_kelas}/materi/{id}', [MahasiswaMateriController::class, 'materi'])->name('materi');
+
+    });
 });
 
+Route::post('/kirimDiskusiGrup/{materi_id}', [MahasiswaMateriController::class, 'kirimDiskusiGrup'])->name('kirimDiskusiGrup');
 
