@@ -38,6 +38,8 @@ Route::prefix('dosen')->middleware(['auth', 'role:dosen'])->name('dosen.')->grou
 
     Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
         Route::post('/invite/{kode_kelas}', [DosenMahasiswaController::class, 'invite'])->name('invite');
+        Route::put('/accept/{id}', [DosenMahasiswaController::class, 'accept'])->name('accept');
+        Route::put('/reject/{id}', [DosenMahasiswaController::class, 'reject'])->name('reject');
         Route::delete('/kick/{id}', [DosenMahasiswaController::class, 'kick'])->name('kick');
     });
 

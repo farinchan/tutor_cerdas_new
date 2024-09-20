@@ -69,7 +69,8 @@ License: For each use you must have a valid license purchased only from above li
             <!--begin::Wrapper-->
             <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
                 @include('layout/header/_base')
-                @include('layout/_toolbar')
+                {{-- @include('layout/_toolbar') --}}
+                @yield('toolbar')
                 <!--begin::Container-->
                 <div id="kt_content_container" class="d-flex flex-column-fluid align-items-start  container-xxl ">
                     <!--begin::Post-->
@@ -84,14 +85,14 @@ License: For each use you must have a valid license purchased only from above li
         <!--end::Page-->
     </div>
     <!--end::Root-->
-    @include('partials/_drawers')
+    {{-- @include('partials/_drawers') --}}
     <!--end::Main-->
     @include('partials/_scrolltop')
     <!--begin::Modals-->
-    @include('partials/modals/_invite-friends')
+    {{-- @include('partials/modals/_invite-friends')
     @include('partials/modals/create-campaign/_main')
     @include('partials/modals/create-app/_main')
-    @include('partials/modals/users-search/_main')
+    @include('partials/modals/users-search/_main') --}}
     <!--end::Modals-->
     <!--begin::Javascript-->
     <script>
@@ -103,7 +104,7 @@ License: For each use you must have a valid license purchased only from above li
     <!--end::Global Javascript Bundle-->
     <!--begin::Vendors Javascript(used for this page only)-->
     <script src="{{ asset("assets/plugins/custom/fullcalendar/fullcalendar.bundle.js") }}"></script>
-    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+    {{-- <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/radar.js"></script>
@@ -113,16 +114,16 @@ License: For each use you must have a valid license purchased only from above li
     <script src="https://cdn.amcharts.com/lib/5/geodata/continentsLow.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/geodata/usaLow.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZonesLow.js"></script>
-    <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZoneAreasLow.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZoneAreasLow.js"></script> --}}
     <script src="{{ asset("assets/plugins/custom/datatables/datatables.bundle.js") }}"></script>
     <!--end::Vendors Javascript-->
     <!--begin::Custom Javascript(used for this page only)-->
     <script src="{{ asset("assets/js/widgets.bundle.js") }}"></script>
     <script src="{{ asset("assets/js/custom/widgets.js") }}"></script>
     {{-- <script src="{{ asset("assets/js/custom/apps/chat/chat.js") }}"></script> --}}
-    <script src="{{ asset("assets/js/custom/utilities/modals/create-campaign.js") }}"></script>
+    {{-- <script src="{{ asset("assets/js/custom/utilities/modals/create-campaign.js") }}"></script>
     <script src="{{ asset("assets/js/custom/utilities/modals/create-app.js") }}"></script>
-    <script src="{{ asset("assets/js/custom/utilities/modals/users-search.js") }}"></script>
+    <script src="{{ asset("assets/js/custom/utilities/modals/users-search.js") }}"></script> --}}
     <!--end::Custom Javascript-->
     <!--end::Javascript-->
     @yield('scripts')

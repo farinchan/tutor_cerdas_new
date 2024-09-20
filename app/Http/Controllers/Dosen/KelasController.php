@@ -21,7 +21,8 @@ class KelasController extends Controller
     {
         $kelas = Kelas::where('nidn', Auth::user()->dosen->nidn)->with(['matakuliah', 'dosen', 'mahasiswa', 'materi']);
         $data = [
-            'title' => 'Kelas',
+            'title' => 'Daftar Kelas',
+            'menu' => 'kelas',
             'kode_kelas_new' => Str::random(10),
             'kelas' => $kelas->get()
         ];
@@ -70,17 +71,17 @@ class KelasController extends Controller
     {
         $kelas = Kelas::where('kode_kelas', $kode_kelas)->with(['matakuliah', 'dosen', 'materi'])->first();
         $data = [
-            'title' => 'Detail Kelas',
+            'title' => "Kelas " . $kelas->nama_kelas,
             'menu' => 'kelas',
-            'sub_menu' => 'kelas',
             'kelas' => $kelas,
             'list_mahasiswa' => KelasMahasiswa::where('kode_kelas', $kode_kelas)->with('mahasiswa')->where('status', 'aktif')->get(),
             'list_mahasiswa_nonaktif' => KelasMahasiswa::where('kode_kelas', $kode_kelas)->with('mahasiswa')->where('status', 'nonaktif')->get(),
-            'mahasiswa_nonaktif_count' => KelasMahasiswa::where('kode_kelas', $kode_kelas)->where('status', 'nonaktif')->count(),
+            'mahasiswa_nonaktif_count' => KelasMahasiswa::where('kode_kelas', $kode_kelas)->with('mahasiswa')->where('status', 'nonaktif')->count(),
             'list_nilai_mahasiswa' => Mahasiswa::leftJoin('users', 'mahasiswa.user_id', 'users.id')
                 ->leftJoin('kelas_mahasiswa', 'mahasiswa.nim', 'kelas_mahasiswa.nim')
                 ->leftJoin('nilai', 'mahasiswa.nim', 'nilai.nim')
                 ->where('kelas_mahasiswa.kode_kelas', $kode_kelas)
+                ->orderBy('mahasiswa.nim')
                 ->get(['mahasiswa.nim', 'users.name', 'nilai.nilai_tugas', 'nilai.nilai_quiz', 'nilai.nilai_uts', 'nilai.nilai_uas', 'nilai.nilai_akhir'])
 
         ];
