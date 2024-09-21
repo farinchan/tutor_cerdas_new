@@ -61,12 +61,11 @@
                 </div>
                 <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
                     <li class="nav-item mt-2">
-                        <a class="nav-link text-active-primary ms-0 me-10 py-5 "
-                            href="{{ route('mahasiswa.kelas.materi', [$kode_kelas, $materi_id]) }}">Diskusi Kelas</a>
+                        <a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="#">Diskusi Kelas</a>
                     </li>
                     <li class="nav-item mt-2">
-                        <a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="#">Diskusi Pribadi +
-                            AI</a>
+                        <a class="nav-link text-active-primary ms-0 me-10 py-5"
+                            href="{{ route("mahasiswa.kelas.materiDiskusiPribadi", [$kode_kelas, $materi_id]) }}">Diskusi Pribadi + AI</a>
                     </li>
                 </ul>
             </div>
@@ -80,7 +79,20 @@
 
                             <div class="card-title">
                                 <div class="me-5">
-                                    Diskusi Pribadi
+                                    Diskusi Kelas
+                                </div>
+                                <div class="symbol-group symbol-hover">
+                                    @foreach ($list_mahasiswa->take(5) as $mhs)
+                                        <div class="symbol symbol-35px symbol-circle">
+                                            <img alt="Pic" src="{{ $mhs->mahasiswa?->user?->getPhoto() }}" />
+                                        </div>
+                                    @endforeach
+                                    <a href="#" class="symbol symbol-35px symbol-circle" data-bs-toggle="modal"
+                                        data-bs-target="#kt_modal_view_users">
+                                        <span class="symbol-label fs-8 fw-bold" data-bs-toggle="tooltip"
+                                            data-bs-trigger="hover"
+                                            title="View more users">+{{ $list_mahasiswa->count() }}</span>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -91,7 +103,7 @@
                                 data-kt-scroll-dependencies="#kt_header, #kt_app_header, #kt_app_toolbar, #kt_toolbar, #kt_footer, #kt_app_footer, #kt_chat_messenger_header, #kt_chat_messenger_footer"
                                 data-kt-scroll-wrappers="#kt_content, #kt_app_content, #kt_chat_messenger_body"
                                 data-kt-scroll-offset="5px">
-                                @forelse ($list_diskusi_pribadi as $diskusi)
+                                @forelse ($list_diskusi_grup as $diskusi)
                                     @if ($diskusi->user_id == auth()->user()->id)
                                         <div class="d-flex justify-content-end mb-10">
                                             <div class="d-flex flex-column align-items-end">
@@ -104,11 +116,12 @@
                                                             class="fs-5 fw-bold text-gray-900 text-hover-primary ms-1">You</a>
                                                     </div>
                                                     <div class="symbol symbol-35px symbol-circle">
-                                                        <img alt="Pic"
-                                                            src="
-                                                        @if ($diskusi->user->role() == 'mahasiswa') {{ $diskusi->user?->getPhoto() }}
+                                                        <img alt="Pic" src="
+                                                        @if ($diskusi->user->role() == 'mahasiswa')
+                                                            {{ $diskusi->user?->getPhoto() }}
                                                         @else
-                                                            {{ $diskusi->user?->getPhoto() }} @endif
+                                                            {{ $diskusi->user?->getPhoto() }}
+                                                        @endif
                                                         " />
                                                     </div>
                                                 </div>
@@ -119,62 +132,40 @@
                                             </div>
                                         </div>
                                     @else
-                                        @if ($diskusi->is_ai == 1)
-                                            <div class="d-flex justify-content-start mb-10">
-                                                <div class="d-flex flex-column align-items-start">
-                                                    <div class="d-flex align-items-center mb-2">
-                                                        <div class="symbol symbol-35px symbol-circle">
-                                                            <img alt="Pic" src="https://res.cloudinary.com/duuawbwih/image/upload/v1726825426/microchip_muip1f.png" />
-                                                        </div>
-                                                        <div class="ms-3">
-                                                            <a href="#"
-                                                                class="fs-5 fw-bold text-info text-hover-primary me-1">"Tutor Cerdas AI"</a>
-                                                            <span class="text-muted fs-7 mb-1">
-                                                                {{ $diskusi->created_at->diffForHumans() }}
-                                                            </span>
-                                                        </div>
+                                        <div class="d-flex justify-content-start mb-10">
+                                            <div class="d-flex flex-column align-items-start">
+                                                <div class="d-flex align-items-center mb-2">
+                                                    <div class="symbol symbol-35px symbol-circle">
+                                                        <img alt="Pic" src="{{ $diskusi->user?->getPhoto() }}" />
                                                     </div>
-                                                    <div class="p-5 rounded bg-light-info text-gray-900 fw-semibold mw-lg-400px text-start"
-                                                        data-kt-element="message-text">
-                                                        {{ $diskusi->pesan }}
+                                                    <div class="ms-3">
+                                                        <a href="#"
+                                                            class="fs-5 fw-bold text-gray-900 text-hover-primary me-1">{{ $diskusi->user->name }}</a>
+                                                        <span class="text-muted fs-7 mb-1">
+                                                            {{ $diskusi->created_at->diffForHumans() }}
+                                                        </span>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        @else
-                                            <div class="d-flex justify-content-start mb-10">
-                                                <div class="d-flex flex-column align-items-start">
-                                                    <div class="d-flex align-items-center mb-2">
-                                                        <div class="symbol symbol-35px symbol-circle">
-                                                            <img alt="Pic" src="{{ $diskusi->user?->getPhoto() }}" />
-                                                        </div>
-                                                        <div class="ms-3">
-                                                            <a href="#"
-                                                                class="fs-5 fw-bold text-gray-900 text-hover-primary me-1">{{ $diskusi->user->name }}</a>
-                                                            <span class="text-muted fs-7 mb-1">
-                                                                {{ $diskusi->created_at->diffForHumans() }}
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="p-5 rounded bg-light-info text-gray-900 fw-semibold mw-lg-400px text-start"
-                                                        data-kt-element="message-text">
-                                                        {{ $diskusi->pesan }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endif
-                                    @endif
-                                @empty
-                                    <div class="d-flex justify-content-center mb-10">
-                                        <div class="d-flex flex-column align-items-center">
-                                            <div class="d-flex align-items-center mb-2">
-                                                <div class="me-3">
-                                                    <span class="text-muted fs-7 mb-1">
-                                                        Belum ada diskusi
-                                                    </span>
+                                                <div class="p-5 rounded bg-light-info text-gray-900 fw-semibold mw-lg-400px text-start"
+                                                    data-kt-element="message-text">
+                                                    {{ $diskusi->pesan }}
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    @endif
+                                @empty
+                                        <div class="d-flex justify-content-center mb-10">
+                                            <div class="d-flex flex-column align-items-center">
+                                                <div class="d-flex align-items-center mb-2">
+                                                    <div class="me-3">
+                                                        <span class="text-muted fs-7 mb-1">
+                                                            Belum ada diskusi
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                 @endforelse
                             </div>
                         </div>
@@ -214,14 +205,13 @@
             cluster: 'ap1'
         });
 
-        var channel = pusher.subscribe('diskusi-pribadi');
-        channel.bind('chat.' + '{{ $materi->id }}' + '.user.' + '{{ auth()->user()->id }}',
-            function(data) {
-                let result = data.message
+        var channel = pusher.subscribe('diskusi-grup');
+        channel.bind('chat' + '{{ $materi->id }}', function(data) {
+            let result = data.message
 
-                if (result.user_id == '{{ auth()->user()->id }}') {
-                    $('[data-kt-element="messages"]').append(
-                        `<div class="d-flex justify-content-end mb-10">
+            if (result.user_id == '{{ auth()->user()->id }}') {
+                $('[data-kt-element="messages"]').append(
+                    `<div class="d-flex justify-content-end mb-10">
                         <div class="d-flex flex-column align-items-end">
                             <div class="d-flex align-items-center mb-2">
                                 <div class="me-3">
@@ -237,10 +227,10 @@
                                 </div>
                         </div>
                     </div>`
-                    );
-                } else {
-                    $('[data-kt-element="messages"]').append(
-                        `<div class="d-flex justify-content-start mb-10">
+                );
+            } else {
+                $('[data-kt-element="messages"]').append(
+                    `<div class="d-flex justify-content-start mb-10">
                         <div class="d-flex flex-column align-items-start">
                             <div class="d-flex align-items-center mb-2">
                                 <div class="symbol symbol-35px symbol-circle">
@@ -256,12 +246,12 @@
                                 </div>
                         </div>
                     </div>`
-                    );
-                }
-                $('[data-kt-element="messages"]').scrollTop($('[data-kt-element="messages"]')[0].scrollHeight);
+                );
+            }
+            $('[data-kt-element="messages"]').scrollTop($('[data-kt-element="messages"]')[0].scrollHeight);
 
-
-            });
+            
+        });
 
         $('[data-kt-element="send"]').on('click', function() {
             if ($('[data-kt-element="input"]').val() == '') {
@@ -269,27 +259,24 @@
             }
             var message = $('[data-kt-element="input"]').val();
             $.ajax({
-                url: '{{ route('kirimDiskusiPribadi', $materi->id) }}',
+                url: '{{ route('kirimDiskusiGrup', $materi->id) }}',
                 type: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
                 data: {
-                    pesan: message,
-                    user_chat_id: '{{ auth()->user()->id }}'
+                    pesan: message
                 },
                 success: function(data) {
                     console.log(data);
-                    $('[data-kt-element="messages"]').scrollTop($('[data-kt-element="messages"]')[0]
-                        .scrollHeight);
-
+                    $('[data-kt-element="input"]').val('');
+                    $('[data-kt-element="messages"]').scrollTop($('[data-kt-element="messages"]')[0].scrollHeight);
+                  
                 },
                 error: function(err) {
                     Alert('error', 'Gagal mengirim pesan');
                 }
             });
-            $('[data-kt-element="input"]').val('');
-
         });
     </script>
 @endsection

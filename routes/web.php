@@ -34,6 +34,11 @@ Route::prefix('dosen')->middleware(['auth', 'role:dosen'])->name('dosen.')->grou
         Route::get('/{kode_kelas}', [DosenKelasController::class, 'show'])->name('show');
 
         Route::put('/nilai/{nim}', [DosenKelasController::class, 'updateNilai'])->name('updateNilai');
+
+        Route::get('/{kode_kelas}/materi/{id}', [DosenMateriController::class, 'materi'])->name('materi.show');
+        Route::get('/{kode_kelas}/materi/{id}/diskusi-grup', [DosenMateriController::class, 'materiDiskusiGrup'])->name('materi.diskusiGrup');
+
+        
     });
 
     Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
@@ -49,6 +54,10 @@ Route::prefix('dosen')->middleware(['auth', 'role:dosen'])->name('dosen.')->grou
         Route::get('/create/{kode_kelas}', [DosenMateriController::class, 'create'])->name('create');
         Route::post('/uploadFile', [DosenMateriController::class, 'uploadFile'])->name('uploadFile');
         Route::post('/store', [DosenMateriController::class, 'store'])->name('store');
+
+        Route::get('/{id}', [DosenMateriController::class, 'show'])->name('show');
+       
+        
     });
 
 });
@@ -66,4 +75,5 @@ Route::prefix('mahasiswa')->middleware(['auth', 'role:mahasiswa'])->name('mahasi
 
 Route::post('/kirimDiskusiGrup/{materi_id}', [MahasiswaMateriController::class, 'kirimDiskusiGrup'])->name('kirimDiskusiGrup');
 Route::post('/kirimDiskusiPribadi/{materi_id}', [MahasiswaMateriController::class, 'kirimDiskusiPribadi'])->name('kirimDiskusiPribadi');
+Route::post('/testKirimDiskusiPribadi/{materi_id}', [MahasiswaMateriController::class, 'testKirimDiskusiPribadi'])->name('testKirimDiskusiPribadi');
 

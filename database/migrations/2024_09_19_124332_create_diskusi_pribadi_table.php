@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->nullable();
             $table->foreignId('materi_id')->constrained('materi')->onUpdate('cascade')->onDelete('cascade');
             $table->boolean('is_ai')->default(false);
+            $table->string('user_chat_id')->nullable();
             $table->text('pesan');
             $table->timestamps();
         });

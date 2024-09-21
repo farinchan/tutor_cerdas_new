@@ -11,8 +11,8 @@
         <div class="card-toolbar">
             <a href="{{ route('dosen.materi.create', $kelas->kode_kelas) }}"
                 class="btn btn-light-primary btn-sm">
-                <i class="ki-duotone ki-plus fs-3">
-                </i>Tambah Materi
+                <i class="ki-duotone ki-plus fs-3"></i>
+                Tambah Materi
             </a>
         </div>
     </div>
@@ -24,7 +24,7 @@
                         <img src="{{ asset('assets/media/books.png') }}" alt=""
                             width="80px" class="me-4">
                         <div>
-                            <a href="#"
+                            <a href="{{ route("dosen.kelas.materi.show", [$kelas->kode_kelas, $materi->id]) }} "
                                 class="fs-4 fw-bold text-hover-primary text-gray-800">
                                 {{ $materi->judul }}
                             </a>
@@ -40,8 +40,9 @@
                     </div>
                     <div class="separator separator-dashed my-7"></div>
                     <div class="text-end">
-                        <button class="btn btn-sm btn-light btn-active-light-primary">Pelajari
-                            Sekarang</button>
+                        <a href="{{ route("dosen.kelas.materi.show", [$kelas->kode_kelas, $materi->id]) }}"
+                         class="btn btn-sm btn-light btn-active-light-primary">Pelajari
+                            Sekarang</a>
                     </div>
                 </div>
             </div>
