@@ -21,9 +21,7 @@
             <div class="card card-dashed h-xl-100 flex-row flex-stack flex-wrap p-6 mb-5">
                 <div class="d-flex flex-column py-2">
                     <div class="d-flex align-items-center">
-                        <img src="{{ asset('assets/media/books.png') }}" alt=""
-                            width="80px" class="me-4">
-                        <div>
+                        <div class="mx-3" >
                             <a href="{{ route("dosen.kelas.materi.show", [$kelas->kode_kelas, $materi->id]) }} "
                                 class="fs-4 fw-bold text-hover-primary text-gray-800">
                                 {{ $materi->judul }}
@@ -31,8 +29,8 @@
                             <div class="fs-6 fw-semibold text-gray-500">
                                 {{ $materi->deskripsi }}
                             </div>
-                            <small class="mt-2">
-                                <span class="text-muted fs-6">Tanggal Publish:</span>
+                            <small class="mt-3">
+                                {{-- <span class="text-muted fs-6">Tanggal Publish:</span> --}}
                                 <span
                                     class="text-primary fs-6 fw-bold">{{ $materi->created_at->diffForHumans() }}</span>
                             </small>

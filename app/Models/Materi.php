@@ -13,9 +13,6 @@ class Materi extends Model
     protected $primaryKey = 'id';
     protected $guarded = [];
 
-    protected $casts = [
-        'file' => 'array',
-    ];
 
     public function kelas()
     {
@@ -25,6 +22,11 @@ class Materi extends Model
     public function dosen()
     {
         return $this->belongsTo(Dosen::class, 'nidn', 'nidn');
+    }
+
+    public function materiFiles()
+    {
+        return $this->hasMany(MateriFile::class, 'materi_id', 'id');
     }
 
     public function getThumbnail()

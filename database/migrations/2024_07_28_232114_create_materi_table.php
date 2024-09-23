@@ -18,7 +18,6 @@ return new class extends Migration
             $table->text('isi_materi');
             $table->string('gambar')->nullable();
             $table->string('link')->nullable();
-            $table->json('file')->nullable();
             $table->string('video')->nullable();
             // $table->unsignedBigInteger('kode_mk'); // Add kode_mk 
             // $table->foreign('kode_mk')->references('kode_mk')->on('matakuliah')->onUpdate('cascade')->onDelete('cascade');            

@@ -14,7 +14,7 @@ use App\Models\DiskusiGrup;
 use App\Events\DiskusiGrupCreated;
 use App\Models\DiskusiPribadi;
 use App\Events\DiskusiPribadiCreated;
-
+use App\Models\MateriFile;
 
 class MateriController extends Controller
 {
@@ -28,14 +28,15 @@ class MateriController extends Controller
             'title' => 'Buat Materi',
             'menu' => 'materi',
             'sub_menu' => 'create',
-            'kode_kelas' => $kode_kelas
+            'kode_kelas' => $kode_kelas,
+            'kelas' => Kelas::where('kode_kelas', $kode_kelas)->first()
         ];
         return view('pages.dosen.materi.create', $data);
     }
 
     public function store(Request $request)
     {
-        return response()->json($request->all());
+        // return response()->json($request->all());
         if (Kelas::where('kode_kelas', $request->kode_kelas)->count() == 0) {
             return response()->json([
                 'status' => 'error',
@@ -71,31 +72,33 @@ class MateriController extends Controller
             $fotoPath = $foto->storeAs('public/materi/foto', $fotoNewName);
         }
 
-        $fileArray = [];
+        $materi = Materi::create([
+            'gambar' => $fotoPath,
+            'judul' => $request->judul,
+            'deskripsi' => $request->deskripsi,
+            'isi_materi' => $request->isi_materi,
+            'gambar' => $fotoPath,
+            'nidn' => Auth::user()->dosen->nidn,
+            'kode_kelas' => $request->kode_kelas,
+            'status' => $request->status
+        ]);
+
         if ($request->hasFile('file')) {
             foreach ($request->file('file') as $file) {
 
                 $fileNewName = Str::random(10) . "_" . $file->getClientOriginalName();
-                $filePath = $file->storeAs('public/materi', $fileNewName);
-                $fileArray[] = $filePath;
+                $filePath = $file->storeAs('materi', $fileNewName, 'public');
+                MateriFile::create([
+                    'materi_id' => $materi->id,
+                    'file' => str_replace('public/', '', $filePath)
+                ]);
             }
-        }
-
-
-        $materi = new Materi();
-        $materi->gambar = $fotoPath;
-        $materi->judul = $request->judul;
-        $materi->deskripsi = $request->deskripsi;
-        $materi->isi_materi = $request->isi_materi;
-        $materi->nidn = Auth::user()->dosen->nidn;
-        $materi->kode_kelas = $request->kode_kelas;
-        $materi->status = $request->status;
-        $materi->file = $fileArray;
-        $materi->save();
+        }   
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Materi berhasil ditambahkan'
+            'message' => 'Materi berhasil ditambahkan',
+            'redirect' => route('dosen.kelas.show', $request->kode_kelas)
         ]);
     }
 
