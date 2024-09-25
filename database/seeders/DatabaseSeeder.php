@@ -49,7 +49,7 @@ class DatabaseSeeder extends Seeder
             'jabatan' => 'Lektor Kepala',
             'pangkat' => 'IV/a',
             'alamat' => 'Jl. Raya No. 1, Jakarta',
-            'jenis_kelamin' => 'Laki-laki',
+            'jenis_kelamin' => 'L',
             'agama' => 'Islam',
             'pendidikan_terakhir' => 'S3',
             'user_id' => 2

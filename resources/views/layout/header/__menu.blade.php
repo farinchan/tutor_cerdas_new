@@ -36,12 +36,12 @@
         </div>
 
         <div class="menu-item menu-here-bg menu-lg-down-accordion me-0 me-lg-2">
-            <span class="menu-link py-3">
+            <a class="menu-link py-3" href="{{ route('admin.dashboard') }}">
                 <span class="menu-title">
                     Administrator
                 </span>
                 <span class="menu-arrow d-lg-none"></span>
-            </span>
+            </a>
         </div>
         <div class="menu-item menu-here-bg menu-lg-down-accordion me-0 me-lg-2">
             <span class="menu-link py-3">

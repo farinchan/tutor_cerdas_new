@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('judul');
             $table->text('deskripsi');
-            $table->text('isi_materi');
+            $table->longText('isi_materi');
             $table->string('gambar')->nullable();
             $table->string('link')->nullable();
             $table->string('video')->nullable();

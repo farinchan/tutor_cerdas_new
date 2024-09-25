@@ -10,6 +10,9 @@ use App\Http\Controllers\Dosen\MateriController as DosenMateriController;
 use App\Http\Controllers\Mahasiswa\KelasController as MahasiswaKelasController;
 use App\Http\Controllers\Mahasiswa\MateriController as MahasiswaMateriController;
 
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
@@ -36,7 +39,7 @@ Route::prefix('dosen')->middleware(['auth', 'role:dosen'])->name('dosen.')->grou
         Route::put('/nilai/{nim}', [DosenKelasController::class, 'updateNilai'])->name('updateNilai');
 
         Route::get('/{kode_kelas}/materi/{id}', [DosenMateriController::class, 'materi'])->name('materi.show');
-        Route::get('/{kode_kelas}/materi/{id}/diskusi-grup', [DosenMateriController::class, 'materiDiskusiGrup'])->name('materi.diskusiGrup');
+        Route::get('/{kode_kelas}/materi/{id}/diskusi-grup', [DosenMateriController::class, 'materiDiskusiPribadi'])->name('materi.diskusiGrup');
 
         
     });
@@ -77,3 +80,15 @@ Route::post('/kirimDiskusiGrup/{materi_id}', [MahasiswaMateriController::class, 
 Route::post('/kirimDiskusiPribadi/{materi_id}', [MahasiswaMateriController::class, 'kirimDiskusiPribadi'])->name('kirimDiskusiPribadi');
 Route::post('/testKirimDiskusiPribadi/{materi_id}', [MahasiswaMateriController::class, 'testKirimDiskusiPribadi'])->name('testKirimDiskusiPribadi');
 
+Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->group(function () {
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+
+    Route::prefix('user')->name('user.')->group(function () {
+        Route::get('/', [AdminUserController::class, 'index'])->name('index');
+        Route::get('/create', [AdminUserController::class, 'create'])->name('create');
+        Route::post('/store', [AdminUserController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [AdminUserController::class, 'edit'])->name('edit');
+        Route::put('/{id}/update', [AdminUserController::class, 'update'])->name('update');
+        Route::delete('/{id}/delete', [AdminUserController::class, 'delete'])->name('delete');
+    });
+});

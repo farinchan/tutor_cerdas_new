@@ -36,7 +36,7 @@
     <div class="content flex-row-fluid" id="kt_content">
         <form id="kt_ecommerce_add_category_form" class="form d-flex flex-column flex-lg-row" enctype="multipart/form-data">
             <div class="d-flex flex-column gap-7 gap-lg-10 w-150 w-lg-350px mb-7 me-lg-10">
-                <div class="card card-flush mb-5">
+                <div class="card card-flush mb-3">
                     <div class="card-header rounded bgi-no-repeat bgi-size-cover bgi-position-y-top bgi-position-x-center align-items-start h-250px"
                         style="background-image:url('{{ asset('assets/media/svg/shapes/bg-kelas.png') }}"
                         data-bs-theme="light">

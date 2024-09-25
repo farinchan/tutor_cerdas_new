@@ -23,8 +23,13 @@
                     <div class="d-flex align-items-center">
                         <div class="mx-3" >
                             <a href="{{ route("dosen.kelas.materi.show", [$kelas->kode_kelas, $materi->id]) }} "
-                                class="fs-4 fw-bold text-hover-primary text-gray-800">
+                                class="fs-4 fw-bold text-hover-primary text-gray-800 ">
                                 {{ $materi->judul }}
+                                @if($materi->status == "published")
+                                    <span class="badge badge-light-success ms-2 mb-3">Published</span>
+                                @else
+                                    <span class="badge badge-light-warning ms-2 mb-5">Draft</span>
+                                @endif
                             </a>
                             <div class="fs-6 fw-semibold text-gray-500">
                                 {{ $materi->deskripsi }}

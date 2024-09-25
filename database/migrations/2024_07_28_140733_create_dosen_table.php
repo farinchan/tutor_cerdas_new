@@ -16,7 +16,7 @@ return new class extends Migration
             $table->enum('jabatan', ['asisten ahli', 'lektor', 'lektor kepala', 'guru besar']);
             $table->string('pangkat', 50)->nullable();
             $table->text('alamat');
-            $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan']);
+            $table->enum('jenis_kelamin', ['L', 'P']);
             $table->enum('agama', ['Islam', 'Kristen', 'Katolik', 'Hindu', 'Budha', 'Konghucu']);
             $table->string('pendidikan_terakhir', 50);
             $table->foreignId('user_id')->constrained('users');
