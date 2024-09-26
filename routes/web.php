@@ -12,6 +12,9 @@ use App\Http\Controllers\Mahasiswa\MateriController as MahasiswaMateriController
 
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\MatakuliahController as AdminMatakuliahController;
+use App\Http\Controllers\Admin\KelasController as AdminKelasController;
+use App\Http\Controllers\Admin\MateriController as AdminMateriController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -82,6 +85,7 @@ Route::post('/testKirimDiskusiPribadi/{materi_id}', [MahasiswaMateriController::
 
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/stat', [AdminDashboardController::class, 'stat'])->name('stat');
 
     Route::prefix('user')->name('user.')->group(function () {
         Route::get('/', [AdminUserController::class, 'index'])->name('index');
@@ -90,5 +94,25 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->grou
         Route::get('/{id}/edit', [AdminUserController::class, 'edit'])->name('edit');
         Route::put('/{id}/update', [AdminUserController::class, 'update'])->name('update');
         Route::delete('/{id}/destroy', [AdminUserController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('matakuliah')->name('matakuliah.')->group(function () {
+        Route::get('/', [AdminMatakuliahController::class, 'index'])->name('index');
+        Route::post('/store', [AdminMatakuliahController::class, 'store'])->name('store');
+        Route::put('/{id}/update', [AdminMatakuliahController::class, 'update'])->name('update');
+        Route::delete('/{id}/destroy', [AdminMatakuliahController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('kelas')->name('kelas.')->group(function () {
+        Route::get('/', [AdminKelasController::class, 'index'])->name('index');
+        Route::post('/store', [AdminKelasController::class, 'store'])->name('store');
+        Route::put('/{id}/update', [AdminKelasController::class, 'update'])->name('update');
+        Route::delete('/{id}/destroy', [AdminKelasController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('materi')->name('materi.')->group(function () {
+        Route::get('/', [AdminMateriController::class, 'index'])->name('index');
+        Route::get('/show/{id}', [AdminMateriController::class, 'show'])->name('show');
+        Route::delete('/{id}/destroy', [AdminMateriController::class, 'destroy'])->name('destroy');
     });
 });

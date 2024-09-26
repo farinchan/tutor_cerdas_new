@@ -61,11 +61,13 @@ class DatabaseSeeder extends Seeder
         Mahasiswa::factory(30)->create();
 
         Matakuliah::create([
+            'kode_mk' => '25.5.12.CP1.09',
             'nama_mk' => 'Pemrograman Web',
             'sks' => '3'
         ]);
 
         Matakuliah::create([
+            'kode_mk' => '25.5.12.CP1.10',
             'nama_mk' => 'Pemrograman Mobile',
             'sks' => '3'
         ]);
@@ -75,7 +77,7 @@ class DatabaseSeeder extends Seeder
             'nama_kelas' => 'TI-2A',
             'tingkat' => 'S1',
             'jurusan' => 'Teknik Informatika',
-            'kode_mk' => 1,
+            'kode_mk' => '25.5.12.CP1.09',
             'nidn' => 1234567890
         ]);
 
@@ -84,7 +86,7 @@ class DatabaseSeeder extends Seeder
             'nama_kelas' => 'TI-2B',
             'tingkat' => 'S1',
             'jurusan' => 'Teknik Informatika',
-            'kode_mk' => 2,
+            'kode_mk' => '25.5.12.CP1.10',
             'nidn' => 1234567890
         ]);
 

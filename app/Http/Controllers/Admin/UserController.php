@@ -154,7 +154,7 @@ class UserController extends Controller
         ];
 
         if ($user->hasRole('mahasiswa')) {
-            $validation_rules['nim'] = 'required|unique:mahasiswa,nim,' . $user->mahasiswa->id;
+            $validation_rules['nim'] = 'required|unique:mahasiswa,nim,' . $user->mahasiswa->nim. ',nim';
             $validation_rules['alamat_mahasiswa'] = 'required';
             $validation_rules['jenis_kelamin_mahasiswa'] = 'required';
             $validation_rules['agama_mahasiswa'] = 'required';
@@ -162,7 +162,7 @@ class UserController extends Controller
         }
 
         if ($user->hasRole('dosen')) {
-            $validation_rules['nidn'] = 'required|unique:dosen,nidn,' . $user->dosen->id;
+            $validation_rules['nidn'] = 'required|unique:dosen,nidn,' . $user->dosen->nidn . ',nidn';
             $validation_rules['jabatan'] = 'required';
             $validation_rules['pangkat'] = 'required';
             $validation_rules['alamat_dosen'] = 'required';

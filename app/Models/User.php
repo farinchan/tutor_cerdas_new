@@ -47,6 +47,11 @@ class User extends Authenticatable
         ];
     }
 
+    public function scopeWithRole($query, $role)
+    {
+        return $query->role($role);
+    }
+
     public function dosen()
     {
         return $this->hasOne(Dosen::class);

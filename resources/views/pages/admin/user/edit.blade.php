@@ -102,7 +102,7 @@
                     </div>
                     <div class="card-body pt-0">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="role_mahasiswa" value="1" checked
+                            <input class="form-check-input" type="checkbox" name="role_mahasiswa" value="1"
                                 id="flexCheckDefault" @if ($user->getRoleNames()->contains('mahasiswa')) checked @endif />
                             <label class="form-check-label" for="flexCheckDefault">
                                 mahasiswa
@@ -157,7 +157,7 @@
                         <div class="mb-5 fv-row">
                             <label class="required form-label">Password</label>
                             <input type="password" name="password" class="form-control mb-2" placeholder="Password"
-                                required />
+                                 />
                                 <small class="text-muted">Kosongkan jika tidak ingin mengganti password</small>
                             @error('password')
                                 <div class="text-danger fs-7">{{ $message }}</div>

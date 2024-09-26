@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nama_kelas', 50);
             $table->string('tingkat', 10);
             $table->string('jurusan', 50);
-            $table->unsignedBigInteger('kode_mk'); // Add kode_mk column
+            $table->string('kode_mk', 30); // Add kode_mk column
             $table->foreign('kode_mk')->references('kode_mk')->on('matakuliah')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedBigInteger('nidn'); // Add nidn column
             $table->foreign('nidn')->references('nidn')->on('dosen')->onUpdate('cascade')->onDelete('cascade');
