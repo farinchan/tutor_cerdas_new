@@ -92,7 +92,7 @@ class UserController extends Controller
         $user->password = bcrypt($request->password);
         if ($request->hasFile('photo')) {
             $photo = $request->file('photo');
-            $photo_path = $photo->storeAs('photos', date('YmdHis') . Str::slug($request->name) . '.' . $photo->getClientOriginalExtension(), 'public');
+            $photo_path = $photo->storeAs('photos', date('YmdHis') . '-' . Str::slug($request->name) . '.' . $photo->getClientOriginalExtension(), 'public');
             $user->photo = str_replace('public/', '', $photo_path);
         }
         $user->save();
@@ -129,5 +129,132 @@ class UserController extends Controller
         return redirect()->route('admin.user.index');
     }
 
+    public function edit($id)
+    {
+        $user = User::findOrFail($id);
 
+        $data = [
+            'title' => 'Edit User',
+            'menu' => 'user',
+            'sub_menu' => 'user',
+            'user' => $user
+        ];
+
+        return view('pages.admin.user.edit', $data);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        $validation_rules = [
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ];
+
+        if ($user->hasRole('mahasiswa')) {
+            $validation_rules['nim'] = 'required|unique:mahasiswa,nim,' . $user->mahasiswa->id;
+            $validation_rules['alamat_mahasiswa'] = 'required';
+            $validation_rules['jenis_kelamin_mahasiswa'] = 'required';
+            $validation_rules['agama_mahasiswa'] = 'required';
+            $validation_rules['jurusan'] = 'required';
+        }
+
+        if ($user->hasRole('dosen')) {
+            $validation_rules['nidn'] = 'required|unique:dosen,nidn,' . $user->dosen->id;
+            $validation_rules['jabatan'] = 'required';
+            $validation_rules['pangkat'] = 'required';
+            $validation_rules['alamat_dosen'] = 'required';
+            $validation_rules['jenis_kelamin_dosen'] = 'required';
+            $validation_rules['agama_dosen'] = 'required';
+            $validation_rules['pendidikan_terakhir'] = 'required';
+        }
+
+        $validator = Validator::make($request->all(), $validation_rules, [
+            'required' => ':attribute harus diisi',
+            'unique' => ':attribute sudah terdaftar',
+            'email' => 'format email tidak valid',
+            'min' => ':attribute minimal :min karakter',
+            'image' => ':attribute harus berupa gambar',
+            'mimes' => 'format gambar tidak valid',
+            'max' => 'ukuran gambar maksimal :max KB'
+        ]);
+
+        if ($validator->fails()) {
+            Alert::error('Error', $validator->errors()->all());
+            return redirect()->back()->withInput()->withErrors($validator);
+        }
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        if ($request->hasFile('photo')) {
+            $photo = $request->file('photo');
+            $photo_path = $photo->storeAs('photos', date('YmdHis') . '-' . Str::slug($request->name) . '.' . $photo->getClientOriginalExtension(), 'public');
+            $user->photo = str_replace('public/', '', $photo_path);
+        }
+        if ($request->password) {
+            $user->password = bcrypt($request->password);
+        }
+        $user->save();
+
+        if ($user->hasRole('mahasiswa')) {
+            $user->assignRole('mahasiswa');
+            Mahasiswa::updateOrCreate(
+                ['user_id' => $user->id],
+                [
+                    'nim' => $request->nim,
+                    'alamat' => $request->alamat_mahasiswa,
+                    'jenis_kelamin' => $request->jenis_kelamin_mahasiswa,
+                    'agama' => $request->agama_mahasiswa,
+                    'jurusan' => $request->jurusan
+                ]
+            );
+        } else {
+            $user->removeRole('mahasiswa');
+        }
+
+        if ($user->hasRole('dosen')) {
+            Dosen::updateOrCreate(
+                ['user_id' => $user->id],
+                [
+                    'nidn' => $request->nidn,
+                    'jabatan' => $request->jabatan,
+                    'pangkat' => $request->pangkat,
+                    'alamat' => $request->alamat_dosen,
+                    'jenis_kelamin' => $request->jenis_kelamin_dosen,
+                    'agama' => $request->agama_dosen,
+                    'pendidikan_terakhir' => $request->pendidikan_terakhir
+                ]
+            );
+        } else {
+            $user->removeRole('dosen');
+        }
+
+        if ($request->role_admin) {
+            $user->assignRole('admin');
+        } else {
+            $user->removeRole('admin');
+        }
+
+        Alert::success('Success', 'User berhasil diupdate');
+        return redirect()->route('admin.user.index');
+    }
+
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+        if ($user->hasRole('mahasiswa')) {
+            $user->mahasiswa()->delete();
+        }
+
+        if ($user->hasRole('dosen')) {
+            $user->dosen()->delete();
+        }
+
+        $user->delete();
+
+        Alert::success('Success', 'User berhasil dihapus');
+        return redirect()->route('admin.user.index');
+    }
 }

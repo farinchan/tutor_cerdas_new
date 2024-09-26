@@ -92,6 +92,8 @@ class MateriController extends Controller
                 'query' => $request->pesan
             ]);
 
+            $responseChatbot = $response['response']['result'];
+
             DiskusiPribadi::create([
                 'materi_id' => $materi_id,
                 // 'user_id' =>  0,

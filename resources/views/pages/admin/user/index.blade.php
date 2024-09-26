@@ -182,6 +182,39 @@
             </div>
         </div>
     </div>
+
+    @foreach ($users as $user)
+        <div class="modal fade" id="kt_modal_delete_user{{ $user->id }}" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered mw-650px">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="fw-bold">Hapus Anggota</h2>
+                        <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+                            aria-label="Close">
+                            <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span
+                                    class="path2"></span></i>
+                        </div>
+                    </div>
+                    <div class="modal-body px-5">
+                        <form class="form" method="POST" action="{{ route('admin.user.destroy', $user->id) }}">
+                            @method('DELETE')
+                            @csrf
+                            <p class="text-center">
+                                Apakah Anda Yakin Ingin Menghapus Anggota <strong>{{ $user->name }}</strong> ?
+                            </p>
+                            <div class="text-center pt-10">
+                                <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal"
+                                    aria-label="Close">batal</button>
+                                <button type="submit" class="btn btn-danger" data-kt-users-modal-action="submit">
+                                    <span class="indicator-label">Hapus</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
 @endsection
 @section('scripts')
     <script src="{{ asset('assets/js/custom/apps/user-management/users/list/table.js') }}"></script>

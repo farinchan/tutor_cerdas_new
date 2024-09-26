@@ -89,6 +89,6 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->grou
         Route::post('/store', [AdminUserController::class, 'store'])->name('store');
         Route::get('/{id}/edit', [AdminUserController::class, 'edit'])->name('edit');
         Route::put('/{id}/update', [AdminUserController::class, 'update'])->name('update');
-        Route::delete('/{id}/delete', [AdminUserController::class, 'delete'])->name('delete');
+        Route::delete('/{id}/destroy', [AdminUserController::class, 'destroy'])->name('destroy');
     });
 });

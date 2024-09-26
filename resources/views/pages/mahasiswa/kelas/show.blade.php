@@ -133,9 +133,8 @@
                                     <div class="card card-dashed h-xl-100 flex-row flex-stack flex-wrap p-6 mb-5">
                                         <div class="d-flex flex-column py-2">
                                             <div class="d-flex align-items-center">
-                                                <img src="{{ asset('assets/media/books.png') }}" alt=""
-                                                    width="80px" class="me-4">
-                                                <div>
+                                                
+                                                <div class="mx-3">
                                                     <a href="{{ route("mahasiswa.kelas.materi", [$kelas->kode_kelas, $materi->id]) }}"
                                                         class="fs-4 fw-bold text-hover-primary text-gray-800">
                                                         {{ $materi->judul }}

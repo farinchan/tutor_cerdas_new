@@ -42,7 +42,7 @@
         <div class="cursor-pointer symbol symbol-30px symbol-lg-40px"
             data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
             data-kt-menu-placement="bottom-end">
-            <img class="symbol symbol-30px symbol-lg-40px" src="{{ asset("assets/media/avatars/300-3.jpg") }}" alt="user" />
+            <img class="symbol symbol-30px symbol-lg-40px" src="{{ Auth::user()?->getPhoto() }}" alt="user" />
         </div>
         @include('partials/menus/_user-account-menu')
         <!--end::Menu wrapper-->

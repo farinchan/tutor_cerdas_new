@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('diskusi_pribadi', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->nullable();
+            $table->integer('user_id')->nullable();
             $table->foreignId('materi_id')->constrained('materi')->onUpdate('cascade')->onDelete('cascade');
             $table->boolean('is_ai')->default(false);
             $table->string('user_chat_id')->nullable();
