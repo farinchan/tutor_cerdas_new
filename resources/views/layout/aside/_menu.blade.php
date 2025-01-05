@@ -102,7 +102,7 @@
             </span>
             <div class="menu-sub menu-sub-accordion">
                 <div class="menu-item">
-                    <a class="menu-link @if (request()->routeIs('admin.setting.website')) active @endif" href="#">
+                    <a class="menu-link @if (request()->routeIs('admin.setting.website')) active @endif" href="{{ route('admin.setting.website') }}">
                         <span class="menu-bullet">
                             <span class="bullet bullet-dot"></span>
                         </span>

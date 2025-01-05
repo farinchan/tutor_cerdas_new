@@ -24,49 +24,49 @@ class KelasController extends Controller
             'title' => 'Daftar Kelas',
             'menu' => 'kelas',
             'kode_kelas_new' => Str::random(10),
-            'kelas' => $kelas->get()
+            'kelas' => $kelas->get(),
+            'list_kelas' => Kelas::all(),
+            'list_matakuliah' => Matakuliah::all(),
         ];
+        // dd($data);
         return view('pages.dosen.kelas.index', $data);
     }
 
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'matakuliah' => 'required',
-            'sks' => 'required|numeric',
-            'kode_kelas' => 'required',
+            'kode_kelas' => 'required|unique:kelas,kode_kelas',
             'nama_kelas' => 'required',
             'tingkat' => 'required',
             'jurusan' => 'required',
+            'kode_mk' => 'required',
         ], [
-            'required' => ':attribute tidak boleh kosong',
-            'numeric' => ':attribute harus berupa angka'
+            'kode_kelas.required' => 'Kode kelas wajib diisi',
+            'kode_kelas.unique' => 'Kode kelas sudah digunakan',
+            'nama_kelas.required' => 'Nama kelas wajib diisi',
+            'kode_mk.required' => 'Matakuliah wajib diisi',
+            'tingkat.required' => 'Tingkat wajib diisi',
+            'jurusan.required' => 'Jurusan wajib diisi',
         ]);
 
         if ($validator->fails()) {
             Alert::error('Error', $validator->errors()->all());
-            return redirect()->back();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $matakuliah = new Matakuliah();
-        $matakuliah->nama_mk = $request->matakuliah;
-        $matakuliah->sks = $request->sks;
-        $matakuliah->save();
-
-        $matakuliah = Matakuliah::where('nama_mk', $request->matakuliah)->first();
         Kelas::create([
             'kode_kelas' => $request->kode_kelas,
             'nama_kelas' => $request->nama_kelas,
             'tingkat' => $request->tingkat,
             'jurusan' => $request->jurusan,
-            'kode_mk' => $matakuliah->kode_mk,
+            'kode_mk' => $request->kode_mk,
             'nidn' => Auth::user()->dosen->nidn
         ]);
 
-        Alert::success('Berhasil', 'Kelas berhasil ditambahkan');
+        Alert::success('Success', 'Kelas berhasil ditambahkan');
         return redirect()->back();
-    }
 
+    }
     public function show($kode_kelas)
     {
         $kelas = Kelas::where('kode_kelas', $kode_kelas)->with(['matakuliah', 'dosen', 'materi'])->first();

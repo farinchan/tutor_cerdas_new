@@ -1,0 +1,15 @@
+return [
+    'welcome' => 'Selamat datang di aplikasi kami!',
+    'language' => 'Bahasa',
+    'profile' => 'Profil',
+    'logout' => 'Keluar',
+    'login' => 'Masuk',
+    'register' => 'Daftar',
+    'email' => 'Email',
+    'password' => 'Kata Sandi',
+    'remember' => 'Ingat Saya',
+    'forgot' => 'Lupa Kata Sandi?',
+    'reset' => 'Atur Ulang Kata Sandi',
+    'send' => 'Kirim Tautan Atur Ulang Kata Sandi',
+    'confirm' => 'Konfirmasi Kata Sandi',
+];

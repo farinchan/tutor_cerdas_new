@@ -50,55 +50,52 @@
 
                         <form action="{{ route('dosen.kelas.store') }}" method="POST">
                             @csrf
-
                             <div class="modal-body">
-                                <div class="row mb-5">
-                                    <div class="col-lg-8">
-                                        <label class="form-label fw-bold required">Mata Kuliah:</label>
-                                        <input type="text" class="form-control form-control-solid"
-                                            placeholder="Mata Kuliah" name="matakuliah" value="{{ old('') }}" />
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <label class="form-label fw-bold required">SKS:</label>
-                                        <input type="number" class="form-control form-control-solid" placeholder="SKS"
-                                            name="sks" value="{{ old('sks') }}" />
-                                    </div>
-                                </div>
-                                <hr>
-
-                                <div class="mb-5 mt-5">
-                                    <label class="form-label fw-bold required">Kode Kelas:</label>
-                                    <input type="text" class="form-control form-control-solid"
-                                        placeholder="Kode Kelas" value="{{ $kode_kelas_new }}" readonly />
-                                    <input type="hidden" name="kode_kelas" value="{{ $kode_kelas_new }}">
-                                </div>
-                                <div class="mb-5 mt-5">
-                                    <label class="form-label fw-bold required">Nama Kelas:</label>
-                                    <input type="text" class="form-control form-control-solid" name="nama_kelas"
-                                        placeholder="Nama Kelas" value="{{ old('kode_kelas') }}" />
-                                </div>
-                                <div class="mb-5">
-                                    <label class="form-label fw-bold required">Tingkat:</label>
-                                    <select class="form-select form-select-solid" data-placeholder="Pilih Tingkat"
-                                        name="tingkat" value="{{ old('tingkat') }}" required>
-                                        <option>Pilih Tingkat</option>
-                                        <option value="D3">Diploma 3</option>
-                                        <option value="D4">Diploma 4</option>
-                                        <option value="S1">Sarjana</option>
-                                        <option value="S2">Magister</option>
-                                        <option value="S3">Doktor</option>
+                                @csrf
+                                <div class="mb-3">
+                                    <label for="matkul" class="form-label required">Mata Kuliah</label>
+                                    <select class="form-select form-select-solid" id="matkul" name="kode_mk" data-control="select2" data-placeholder="Pilih Mata Kuliah" data-dropdown-parent="#buat_kelas" required>
+                                        <option ></option>
+                                        @foreach ($list_matakuliah as $matakuliah)
+                                            <option value="{{ $matakuliah->kode_mk }}">{{ $matakuliah->nama_mk }}
+                                                ({{ $matakuliah->kode_mk }})</option>
+                                        @endforeach
                                     </select>
                                 </div>
-                                <div class="mb-5">
-                                    <label class="form-label fw-bold required">Jurusan:</label>
-                                    <input type="text" class="form-control form-control-solid"
-                                        placeholder="Jurusan" name="jurusan" value="{{ old('jurusan') }}" required />
+        
+                                <div class="mb-3">
+                                    <label for="nama_kelas" class="form-label required">Nama kelas</label>
+                                    <input type="text" class="form-control form-control-solid" id="nama_kelas" name="nama_kelas" placeholder="Nama kelas"
+                                        required>
+                                </div>
+        
+                                <div class="mb-3">
+                                    <label for="kode_kelas" class="form-label required">Kode kelas</label>
+                                    <input type="text" class="form-control form-control-solid" id="kode_kelas" name="kode_kelas" placeholder="Kode kelas" value="{{ $kode_kelas_new }}"
+                                     readonly
+                                        required>
+                                </div>
+        
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <label for="tingkat" class="form-label required">Tingkat</label>
+                                        <select class="form-select form-select-solid" id="tingkat" name="tingkat" required>
+                                            <option value="">Pilih Tingkat</option>
+                                            <option value="S1">S1</option>
+                                            <option value="S2">S2</option>
+                                            <option value="S3">S3</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <label for="jurusan" class="form-label required">Jurusan</label>
+                                        <input type="text" class="form-control form-control-solid" id="jurusan" name="jurusan" placeholder="Jurusan" required>
+                                    </div>
                                 </div>
                             </div>
-
+        
                             <div class="modal-footer">
-                                <button type="reset" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
-                                <button type="submit" class="btn btn-primary">Buat Sekarang</button>
+                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
+                                <button type="submit" class="btn btn-primary">Buat kelas</button>
                             </div>
                         </form>
                     </div>

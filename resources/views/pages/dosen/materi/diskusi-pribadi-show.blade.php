@@ -56,7 +56,7 @@
                                             <div class="symbol-badge bg-success start-100 top-100 border-4 h-8px w-8px ms-n2 mt-n2"></div>
                                         </div>
                                         <div class="ms-5">
-                                            <a href="{{ route("dosen.kelas.materi.diskusiPribadi.show", [$kode_kelas, $materi_id, $kelas_mahasiswa->mahasiswa?->user->id]) }}" class="fs-5 fw-bold text-gray-900 text-hover-primary mb-2">{{ $kelas_mahasiswa?->mahasiswa?->user->name }}</a>
+                                            <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary mb-2">{{ $kelas_mahasiswa?->mahasiswa?->user->name }}</a>
                                             <div class="fw-semibold text-muted">NIM.{{ $kelas_mahasiswa?->mahasiswa?->nim }}</div>
                                         </div>
                                     </div>

@@ -15,6 +15,10 @@ use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\MatakuliahController as AdminMatakuliahController;
 use App\Http\Controllers\Admin\KelasController as AdminKelasController;
 use App\Http\Controllers\Admin\MateriController as AdminMateriController;
+use App\Http\Controllers\Admin\SettingController as AdminSettingController;
+use App\Http\Controllers\LanguageController;
+
+Route::get('/language/{locale}', [LanguageController::class, 'switchLanguage'])->name('language.switch');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -30,7 +34,7 @@ Route::get('reset-password/{token}', [AuthController::class, 'resetPassword'])->
 Route::post('reset-password/{token}', [AuthController::class, 'resetPasswordProcess'])->name('reset.password.process');
 
 Route::prefix('dosen')->middleware(['auth', 'role:dosen'])->name('dosen.')->group(function () {
-    
+
     Route::prefix('kelas')->name('kelas.')->group(function () {
         Route::get('/', [DosenKelasController::class, 'index'])->name('index');
         Route::post('/store', [DosenKelasController::class, 'store'])->name('store');
@@ -42,9 +46,10 @@ Route::prefix('dosen')->middleware(['auth', 'role:dosen'])->name('dosen.')->grou
         Route::put('/nilai/{nim}', [DosenKelasController::class, 'updateNilai'])->name('updateNilai');
 
         Route::get('/{kode_kelas}/materi/{id}', [DosenMateriController::class, 'materi'])->name('materi.show');
-        Route::get('/{kode_kelas}/materi/{id}/diskusi-grup', [DosenMateriController::class, 'materiDiskusiPribadi'])->name('materi.diskusiGrup');
+        Route::get('/{kode_kelas}/materi/{id}/diskusi-pribadi', [DosenMateriController::class, 'materiDiskusiPribadi'])->name('materi.diskusiPribadi');
+        Route::get('/{kode_kelas}/materi/{id}/diskusi-pribadi/{diskusi_id}', [DosenMateriController::class, 'materiDiskusiPribadiShow'])->name('materi.diskusiPribadi.show');
 
-        
+
     });
 
     Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
@@ -62,8 +67,8 @@ Route::prefix('dosen')->middleware(['auth', 'role:dosen'])->name('dosen.')->grou
         Route::post('/store', [DosenMateriController::class, 'store'])->name('store');
 
         Route::get('/{id}', [DosenMateriController::class, 'show'])->name('show');
-       
-        
+
+
     });
 
 });
@@ -75,6 +80,7 @@ Route::prefix('mahasiswa')->middleware(['auth', 'role:mahasiswa'])->name('mahasi
         Route::get('/{kode_kelas}/materi/{id}', [MahasiswaMateriController::class, 'materi'])->name('materi');
         Route::get('/{kode_kelas}/materi/{id}/diskusi-pribadi', [MahasiswaMateriController::class, 'materiDiskusiPribadi'])->name('materiDiskusiPribadi');
 
+        Route::post('/join', [MahasiswaKelasController::class, 'join'])->name('join');
 
     });
 });
@@ -114,5 +120,11 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->grou
         Route::get('/', [AdminMateriController::class, 'index'])->name('index');
         Route::get('/show/{id}', [AdminMateriController::class, 'show'])->name('show');
         Route::delete('/{id}/destroy', [AdminMateriController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('setting')->name('setting.')->group(function () {
+        Route::get('/website', [AdminSettingController::class, 'website'])->name('website');
+        Route::put('/website', [AdminSettingController::class, 'websiteUpdate'])->name('website.update');
+        Route::put('/website/info', [AdminSettingController::class, 'informationUpdate'])->name('website.info');
     });
 });

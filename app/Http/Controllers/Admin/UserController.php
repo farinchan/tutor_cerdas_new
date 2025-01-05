@@ -198,7 +198,7 @@ class UserController extends Controller
         }
         $user->save();
 
-        if ($user->hasRole('mahasiswa')) {
+        if ($request->role_mahasiswa) {
             $user->assignRole('mahasiswa');
             Mahasiswa::updateOrCreate(
                 ['user_id' => $user->id],
@@ -214,7 +214,8 @@ class UserController extends Controller
             $user->removeRole('mahasiswa');
         }
 
-        if ($user->hasRole('dosen')) {
+        if ($request->role_dosen) {
+            $user->assignRole('dosen');
             Dosen::updateOrCreate(
                 ['user_id' => $user->id],
                 [

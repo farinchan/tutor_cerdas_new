@@ -13,7 +13,7 @@
             <!--end::Heaeder menu toggle-->
             <!--begin::Logo-->
             <a href="{{ route("home") }}">
-                <img alt="Logo" src="{{ asset('assets/media/logos/demo16.svg') }}" class="h-25px h-lg-30px me-2 me-lg-9" />
+                <img alt="Logo" src="{{ $setting_website->getLogo() }}" class="h-30px h-lg-55px me-2 me-lg-9" />
             </a>
             <!--end::Logo-->
             {{-- @include("layout/header/__project") --}}

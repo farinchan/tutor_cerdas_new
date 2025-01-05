@@ -4,8 +4,8 @@
 	<div class=" container-xxl  d-flex flex-column flex-md-row align-items-center justify-content-between">
 		<!--begin::Copyright-->
 		<div class="text-gray-900 order-2 order-md-1">
-			<span class="text-muted fw-semibold me-1">2024&copy;</span>
-			<a href="https://keenthemes.com" target="_blank" class="text-gray-800 text-hover-primary">Keenthemes</a>
+			<span class="text-muted fw-semibold me-1">2025&copy;</span>
+			<a href="https://keenthemes.com" target="_blank" class="text-gray-800 text-hover-primary">-</a>
 		</div>
 		<!--end::Copyright-->
 		<!--begin::Menu-->

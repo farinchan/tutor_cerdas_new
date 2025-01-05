@@ -69,6 +69,22 @@ class MateriController extends Controller
         // return response()->json($data);
         return view('pages.mahasiswa.materi.diskusi-pribadi', $data);
     }
+    public function materiDiskusiPribadiShow($kode_kelas, $id, $diskusi_id)
+    {
+        $materi = Materi::where('id', $id)->where('kode_kelas', $kode_kelas)->with('kelas')->first();
+        $data = [
+            'title' => 'Materi',
+            'menu' => 'kelas',
+            'sub_menu' => 'materi',
+            'kode_kelas' => $kode_kelas,
+            'materi_id' => $id,
+            'materi' => $materi,
+            'list_mahasiswa' => KelasMahasiswa::where('kode_kelas', $kode_kelas)->with('mahasiswa')->where('status', 'aktif')->get(),
+            'list_diskusi_pribadi' => DiskusiPribadi::where('user_chat_id', $diskusi_id)->where('materi_id', $id)->orderBy('created_at', 'asc')->with('user')->get()
+        ];
+        // return response()->json($data);
+        return view('pages.mahasiswa.materi.diskusi-pribadi-show', $data);
+    }
 
     public function kirimDiskusiPribadi(Request $request, $materi_id)
     {

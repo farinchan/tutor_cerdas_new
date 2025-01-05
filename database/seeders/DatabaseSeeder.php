@@ -8,6 +8,7 @@ use App\Models\KelasMahasiswa;
 use App\Models\Mahasiswa;
 use App\Models\Matakuliah;
 use App\Models\Materi;
+use App\Models\SettingWebsite;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -160,6 +161,25 @@ class DatabaseSeeder extends Seeder
             'nidn' => 1234567890,
             'kode_kelas' => Kelas::all()->last()->kode_kelas,
             'status' => 'published'
+        ]);
+
+        SettingWebsite::create([
+            'name' => 'Tutor Cerdas',
+            'logo' => 'setting/logo.png',
+            'favicon' => 'setting/favicon.png',
+            'email' => 'office@gariskode.com',
+            'phone' => '08123456789',
+            'address' => '-',
+            'latitude' => '-0.3051158430561598',
+            'longitude' => '100.36946868126212',
+            'facebook' => 'https://facebook.com',
+            'instagram' => 'https://instagram.com',
+            'twitter' => 'https://twitter.com',
+            'youtube' => 'https://youtube.com',
+            'whatsapp' => 'https://whatsapp.com',
+            'telegram' => 'https://telegram.com',
+            'linkedin' => 'https://linkedin.com',
+            'about' => 'Tutor Cerdas adalah platform pembelajaran online yang menyediakan berbagai macam materi pembelajaran yang dapat diakses oleh mahasiswa dan dosen'
         ]);
 
     }

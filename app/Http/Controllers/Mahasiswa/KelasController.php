@@ -9,12 +9,13 @@ use App\Models\Kelas;
 use App\Models\KelasMahasiswa;
 use App\Models\Mahasiswa;
 use Illuminate\Support\Str;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class KelasController extends Controller
 {
     public function index()
     {
-        $kelas = KelasMahasiswa::where('nim', Auth::user()->mahasiswa->nim)->with('kelas');
+        $kelas = KelasMahasiswa::where('nim', Auth::user()->mahasiswa->nim)->where('status', 'aktif')->with('kelas');
         $data = [
             'title' => 'Kelas',
             'kode_kelas_new' => Str::random(10),
@@ -22,6 +23,23 @@ class KelasController extends Controller
         ];
         // dd($data);
         return view('pages.mahasiswa.kelas.index', $data);
+    }
+
+    public function join(){
+        $kelas = Kelas::where('kode_kelas', request()->kode_kelas)->first();
+        if(!$kelas){
+            Alert::error('Error', 'kelas tidak ditemukan');
+            return redirect()->back()->with('error', 'Kode kelas tidak ditemukan');
+        }
+
+        KelasMahasiswa::create([
+            'nim' => Auth::user()->mahasiswa->nim,
+            'kode_kelas' => $kelas->kode_kelas,
+            'status' => 'nonaktif'
+        ]);
+
+        Alert::success('Berhasil', 'Permintaan bergabung berhasil dikirim, silahkan tunggu konfirmasi dari dosen, cek email secara berkala');
+        return redirect()->back();
     }
 
     public function show($kode_kelas)
