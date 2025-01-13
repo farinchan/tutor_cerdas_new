@@ -19,7 +19,7 @@
     <div class="card-body p-9 pt-4">
         @foreach ($kelas->materi as $materi)
             <div class="card card-dashed h-xl-100 flex-row flex-stack flex-wrap p-6 mb-5">
-                <div class="d-flex flex-column py-2">
+                <div class="d-flex flex-column py-2" style="width: 100%">
                     <div class="d-flex align-items-center">
                         <div class="mx-3" >
                             <a href="{{ route("dosen.kelas.materi.show", [$kelas->kode_kelas, $materi->id]) }} "

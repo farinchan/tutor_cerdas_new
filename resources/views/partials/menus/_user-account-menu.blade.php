@@ -17,12 +17,12 @@
                 </div>
                 <a href="#" class="fw-semibold text-muted text-hover-primary fs-7">
                     {{ Auth::user()?->email }} </a>
-                    <div>
+                <div>
 
-                        <span class="badge badge-light-success fw-bold fs-8 px-2 py-1">
-                            {{ Auth::user()?->getRoleNames()->first() }}
-                        </span>
-                    </div>
+                    <span class="badge badge-light-success fw-bold fs-8 px-2 py-1">
+                        {{ Auth::user()?->getRoleNames()->first() }}
+                    </span>
+                </div>
             </div>
 
             <!--end::Username-->
@@ -34,7 +34,7 @@
     <!--end::Menu separator-->
     <!--begin::Menu item-->
     <div class="menu-item px-5">
-        <a href="?page=account/overview" class="menu-link px-5">
+        <a href="{{ route('profile') }}" class="menu-link px-5">
             Profil Saya
         </a>
     </div>
@@ -63,18 +63,16 @@
         <a href="#" class="menu-link px-5">
             <span class="menu-title position-relative">
                 Language
-
-
                 @if (app()->getLocale() == 'en')
                     <span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">
-                        English <img class="w-15px h-15px rounded-1 ms-2" src="assets/media/flags/united-states.svg"
-                            alt="" />
+                        English <img class="w-15px h-15px rounded-1 ms-2"
+                            src="{{ asset('assets/media/flags/united-states.svg') }}" alt="" />
                     </span>
                 @endif
                 @if (app()->getLocale() == 'id')
                     <span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">
-                        Indonesia <img class="w-15px h-15px rounded-1 ms-2" src="assets/media/flags/spain.svg"
-                            alt="" />
+                        Indonesia <img class="w-15px h-15px rounded-1 ms-2"
+                            src="{{ asset('assets/media/flags/indonesia.svg') }}" alt="" />
                 @endif
             </span>
         </a>
@@ -85,7 +83,7 @@
                 <a href="{{ route('language.switch', 'en') }}"
                     class="menu-link d-flex px-5 @if (app()->getLocale() == 'en') active @endif">
                     <span class="symbol symbol-20px me-4">
-                        <img class="rounded-1" src="assets/media/flags/united-states.svg" alt="" />
+                        <img class="rounded-1" src="{{ asset('assets/media/flags/united-states.svg') }}" alt="" />
                     </span>
                     English
                 </a>
@@ -94,7 +92,7 @@
                 <a href="{{ route('language.switch', 'id') }}" class="menu-link d-flex px-5"
                     @if (app()->getLocale() == 'id') active @endif>
                     <span class="symbol symbol-20px me-4">
-                        <img class="rounded-1" src="assets/media/flags/spain.svg" alt="" />
+                        <img class="rounded-1" src="{{ asset('assets/media/flags/indonesia.svg') }}" alt="" />
                     </span>
                     Indonesia
                 </a>

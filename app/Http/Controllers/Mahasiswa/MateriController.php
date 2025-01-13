@@ -101,7 +101,7 @@ class MateriController extends Controller
 
         $responseChatbot = null;
         try {
-            $response = Http::post('http://127.0.0.1:4000/chatbot', [
+            $response = Http::post('http://127.0.0.1:5000/chatbot', [
                 'materi_id' => $materi_id,
                 'user_id' => Auth::user()->id,
                 'user_chat_id' => Auth::user()->id,
@@ -117,7 +117,7 @@ class MateriController extends Controller
                 'is_ai' => true,
                 'pesan' => $response['response']['result']
             ]);
-            
+
         } catch (\Throwable $th) {
             $responseChatbot = null;
         }

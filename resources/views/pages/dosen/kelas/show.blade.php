@@ -163,7 +163,7 @@
             'columnDefs': [{
                     orderable: false,
                     targets: 0
-                }, // Disable ordering on column 0 (checkbox)           
+                }, // Disable ordering on column 0 (checkbox)
             ]
         });
 

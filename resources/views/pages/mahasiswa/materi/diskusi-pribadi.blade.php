@@ -70,6 +70,10 @@
                     </div>
                     <hr class=" mb-5">
                     {!! $materi->isi_materi !!}
+                    @foreach ($materi->materiFiles as $file)
+                    <Embed type="application/pdf" src="{{ asset('storage/' . $file->file) }}" width="600"
+                        height="400"></Embed>
+                @endforeach
                 </div>
                 <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
                     <li class="nav-item mt-2">

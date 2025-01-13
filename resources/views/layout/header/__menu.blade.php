@@ -56,12 +56,12 @@
 
         @auth
             <div class="menu-item menu-here-bg menu-lg-down-accordion me-0 me-lg-2">
-                <span class="menu-link py-3">
+                <a href="{{ route("profile") }}" class="menu-link py-3">
                     <span class="menu-title">
                         Profil Saya
                     </span>
                     <span class="menu-arrow d-lg-none"></span>
-                </span>
+                </a>
             </div>
         @endauth
 

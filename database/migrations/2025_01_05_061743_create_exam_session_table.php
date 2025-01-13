@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('exam_session', function (Blueprint $table) {
             $table->id();
             $table->foreignId('exam_id')->constrained('exam')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('mahasiswa_id')->constrained('mahasiswa')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedBigInteger('nim');
+            $table->foreign('nim')->references('nim')->on('mahasiswa')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamp('start_time')->nullable();
             $table->timestamp('end_time')->nullable();
             $table->integer('score')->nullable();

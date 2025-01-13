@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Dosen\KelasController as DosenKelasController;
 use App\Http\Controllers\Dosen\MahasiswaController as DosenMahasiswaController;
@@ -21,6 +22,8 @@ use App\Http\Controllers\LanguageController;
 Route::get('/language/{locale}', [LanguageController::class, 'switchLanguage'])->name('language.switch');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+Route::put('/profile', [ProfileController::class, 'profileUpdate'])->name('profile.update');
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'loginProcess'])->name('login.process');
@@ -47,7 +50,18 @@ Route::prefix('dosen')->middleware(['auth', 'role:dosen'])->name('dosen.')->grou
 
         Route::get('/{kode_kelas}/materi/{id}', [DosenMateriController::class, 'materi'])->name('materi.show');
         Route::get('/{kode_kelas}/materi/{id}/diskusi-pribadi', [DosenMateriController::class, 'materiDiskusiPribadi'])->name('materi.diskusiPribadi');
-        Route::get('/{kode_kelas}/materi/{id}/diskusi-pribadi/{diskusi_id}', [DosenMateriController::class, 'materiDiskusiPribadiShow'])->name('materi.diskusiPribadi.show');
+        // Route::get('/{kode_kelas}/materi/{id}/diskusi-pribadi/{diskusi_id}', [DosenMateriController::class, 'materiDiskusiPribadiShow'])->name('materi.diskusiPribadi.show');
+
+
+        //ujian
+        Route::get('/{kode_kelas}/materi/{id}/soal-ujian', [DosenMateriController::class, 'ujianSoal'])->name('materi.ujianSoal');
+        Route::post('/{kode_kelas}/materi/{id}/soal-ujian', [DosenMateriController::class, 'ujianSoalStore'])->name('materi.ujianSoal.store');
+
+        Route::get('/{kode_kelas}/materi/{id}/soal-ujian-create', [DosenMateriController::class, 'ujianSoalQuestionCreate'])->name('materi.ujianSoalQuestionCreate');
+        Route::post('/{kode_kelas}/materi/{id}/soal-ujian-create', [DosenMateriController::class, 'ujianSoalQuestionStore'])->name('materi.ujianSoalQuestionStore');
+        Route::get('/{kode_kelas}/materi/{id}/soal-ujian-edit/{question_id}', [DosenMateriController::class, 'ujianSoalQuestionEdit'])->name('materi.ujianSoalQuestionEdit');
+        Route::put('/{kode_kelas}/materi/{id}/soal-ujian-edit/{question_id}', [DosenMateriController::class, 'ujianSoalQuestionUpdate'])->name('materi.ujianSoalQuestionUpdate');
+        Route::delete('/{kode_kelas}/materi/{id}/soal-ujian-delete/{question_id}', [DosenMateriController::class, 'ujianSoalQuestionDelete'])->name('materi.ujianSoalQuestionDelete');
 
 
     });

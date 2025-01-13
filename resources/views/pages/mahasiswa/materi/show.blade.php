@@ -36,7 +36,7 @@
     <div class="content flex-row-fluid" id="kt_content">
         <div class="card mb-5 mb-xxl-8">
             <div class="card-body pt-9 pb-0">
-               
+
                 <div class="p-5">
                     <div class="d-flex flex-wrap flex-sm-nowrap align-items-center mb-4">
                         <div class="d-flex flex-column flex-grow-1">
@@ -70,6 +70,10 @@
                     </div>
                     <hr class=" mb-5">
                     {!! $materi->isi_materi !!}
+                    @foreach ($materi->materiFiles as $file)
+                    <Embed type="application/pdf" src="{{ asset('storage/' . $file->file) }}" width="600"
+                        height="400"></Embed>
+                @endforeach
                 </div>
                 <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
                     <li class="nav-item mt-2">
@@ -262,7 +266,7 @@
             }
             $('[data-kt-element="messages"]').scrollTop($('[data-kt-element="messages"]')[0].scrollHeight);
 
-            
+
         });
 
         $('[data-kt-element="send"]').on('click', function() {
@@ -283,7 +287,7 @@
                     console.log(data);
                     $('[data-kt-element="input"]').val('');
                     $('[data-kt-element="messages"]').scrollTop($('[data-kt-element="messages"]')[0].scrollHeight);
-                  
+
                 },
                 error: function(err) {
                     Alert('error', 'Gagal mengirim pesan');

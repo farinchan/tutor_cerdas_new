@@ -62,20 +62,20 @@
                                         @endforeach
                                     </select>
                                 </div>
-        
+
                                 <div class="mb-3">
                                     <label for="nama_kelas" class="form-label required">Nama kelas</label>
                                     <input type="text" class="form-control form-control-solid" id="nama_kelas" name="nama_kelas" placeholder="Nama kelas"
                                         required>
                                 </div>
-        
+
                                 <div class="mb-3">
                                     <label for="kode_kelas" class="form-label required">Kode kelas</label>
                                     <input type="text" class="form-control form-control-solid" id="kode_kelas" name="kode_kelas" placeholder="Kode kelas" value="{{ $kode_kelas_new }}"
                                      readonly
                                         required>
                                 </div>
-        
+
                                 <div class="row mb-3">
                                     <div class="col-md-4">
                                         <label for="tingkat" class="form-label required">Tingkat</label>
@@ -92,7 +92,7 @@
                                     </div>
                                 </div>
                             </div>
-        
+
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
                                 <button type="submit" class="btn btn-primary">Buat kelas</button>

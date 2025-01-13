@@ -295,14 +295,14 @@
                                     <label class="required form-label">Jenis Kelamin</label>
                                     <select name="jenis_kelamin_dosen" class="form-select mb-2" >
                                         <option value="">Pilih Jenis Kelamin</option>
-                                        <option value="L" @if ($user->dosen?->jenis_kelamin_dosen == 'L') selected @endif>
+                                        <option value="L" @if ($user->dosen?->jenis_kelamin == 'L') selected @endif>
                                             Laki-laki
                                         </option>
-                                        <option value="P" @if ($user->dosen?->jenis_kelamin_dosen == 'P') selected @endif>
+                                        <option value="P" @if ($user->dosen?->jenis_kelamin == 'P') selected @endif>
                                             Perempuan
                                         </option>
                                     </select>
-                                    @error('jenis_kelamin_dosen')
+                                    @error('jenis_kelamin')
                                         <div class="text-danger fs-7">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -338,7 +338,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
                 <div class="d-flex justify-content-end">
                     <a href="" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">Batal</a>

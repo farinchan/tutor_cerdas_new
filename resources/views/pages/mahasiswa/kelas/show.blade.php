@@ -113,7 +113,7 @@
                         <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab"
                             href="#kt_user_view_penilaian">Nilai Saya</a>
                     </li>
-                    
+
                 </ul>
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="kt_user_view_materi" role="tabpanel">
@@ -131,9 +131,9 @@
                             <div class="card-body p-9 pt-4">
                                 @foreach ($kelas->materi as $materi)
                                     <div class="card card-dashed h-xl-100 flex-row flex-stack flex-wrap p-6 mb-5">
-                                        <div class="d-flex flex-column py-2">
+                                        <div class="d-flex flex-column py-2" style="width: 100%">
                                             <div class="d-flex align-items-center">
-                                                
+
                                                 <div class="mx-3">
                                                     <a href="{{ route("mahasiswa.kelas.materi", [$kelas->kode_kelas, $materi->id]) }}"
                                                         class="fs-4 fw-bold text-hover-primary text-gray-800">
@@ -201,7 +201,7 @@
                                             </th>
                                             <th class="min-w-125px">Mahasiswa</th>
                                             <th class="min-w-125px">Waktu Bergabung</th>
-                                            
+
                                         </tr>
                                     </thead>
                                     <tbody class="text-gray-600 fw-semibold">
@@ -322,7 +322,7 @@
             'columnDefs': [{
                     orderable: false,
                     targets: 0
-                }, // Disable ordering on column 0 (checkbox)           
+                }, // Disable ordering on column 0 (checkbox)
             ]
         });
 

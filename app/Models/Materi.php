@@ -37,5 +37,10 @@ class Materi extends Model
         return asset('images/default-thumbnail.jpg');
     }
 
+    public function exam()
+    {
+        return $this->hasOne(Exam::class, 'materi_id', 'id');
+    }
+
 
 }
