@@ -62,6 +62,11 @@ class User extends Authenticatable
         return $this->hasOne(Mahasiswa::class);
     }
 
+    public function umum()
+    {
+        return $this->hasOne(Umum::class);
+    }   
+
     public function role()
     {
         return $this->getRoleNames()->first();

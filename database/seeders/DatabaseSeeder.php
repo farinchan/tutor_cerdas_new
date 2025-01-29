@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
         Role::create(['name' => 'admin']);
         Role::create(['name' => 'dosen']);
         Role::create(['name' => 'mahasiswa']);
+        Role::create(['name' => 'umum']);
 
         User::create([
             'name' => 'Fajri Rinaldi Chan',

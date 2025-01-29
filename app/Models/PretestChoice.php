@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class PretestChoice extends Model
+{
+    use HasFactory;
+
+    protected $table = 'pretest_choice';
+    protected $guarded = ['id', 'created_at', 'updated_at'];
+
+    public function question()
+    {
+        return $this->belongsTo(PretestQuestion::class, 'pretest_question_id', 'id');
+    }
+
+    
+}

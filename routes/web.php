@@ -48,9 +48,16 @@ Route::prefix('dosen')->middleware(['auth', 'role:dosen'])->name('dosen.')->grou
 
         Route::put('/nilai/{nim}', [DosenKelasController::class, 'updateNilai'])->name('updateNilai');
 
+        Route::post('pretest/{kode_kelas}/create', [DosenKelasController::class, 'pretestCreate'])->name('pretestCreate');
+        Route::get('pretest/{kode_kelas}/soal/create', [DosenKelasController::class, 'pretestQuestionCreate'])->name('pretestQuestionCreate');
+        Route::post('pretest/{kode_kelas}/soal/store', [DosenKelasController::class, 'pretestQuestionStore'])->name('pretestQuestionStore');
+        Route::get('pretest/{kode_kelas}/soal/edit/{question_id}', [DosenKelasController::class, 'pretestQuestionEdit'])->name('pretestQuestionEdit');
+        Route::put('pretest/{kode_kelas}/soal/update/{question_id}', [DosenKelasController::class, 'pretestQuestionUpdate'])->name('pretestQuestionUpdate');
+        Route::delete('pretest/{kode_kelas}/soal/delete/{question_id}', [DosenKelasController::class, 'pretestQuestionDelete'])->name('pretestQuestionDelete');
+
         Route::get('/{kode_kelas}/materi/{id}', [DosenMateriController::class, 'materi'])->name('materi.show');
         Route::get('/{kode_kelas}/materi/{id}/diskusi-pribadi', [DosenMateriController::class, 'materiDiskusiPribadi'])->name('materi.diskusiPribadi');
-        // Route::get('/{kode_kelas}/materi/{id}/diskusi-pribadi/{diskusi_id}', [DosenMateriController::class, 'materiDiskusiPribadiShow'])->name('materi.diskusiPribadi.show');
+        Route::get('/{kode_kelas}/materi/{id}/diskusi-pribadi/{diskusi_id}', [DosenMateriController::class, 'materiDiskusiPribadiShow'])->name('materi.diskusiPribadi.show');
 
 
         //ujian

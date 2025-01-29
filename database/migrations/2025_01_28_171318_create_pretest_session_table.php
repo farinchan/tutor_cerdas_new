@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('exam_session', function (Blueprint $table) {
+        Schema::create('pretest_session', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('exam_id')->constrained('exam')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('pretest_id')->constrained('pretest')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('nim');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamp('start_time')->nullable();
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('exam_sessions');
+        Schema::dropIfExists('pretest_sessions');
     }
 };

@@ -33,4 +33,9 @@ class Kelas extends Model
     {
         return $this->hasMany(Materi::class, 'kode_kelas', 'kode_kelas');
     }
+
+    public function pretest()
+    {
+        return $this->hasOne(Pretest::class, 'kode_kelas', 'kode_kelas');
+    }
 }

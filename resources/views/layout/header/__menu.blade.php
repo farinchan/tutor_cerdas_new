@@ -18,6 +18,18 @@
             </a>
         </div>
 
+        @role('umum')
+            <div
+                class="menu-item menu-here-bg menu-lg-down-accordion me-0 me-lg-2 @if (request()->routeIs('mahasiswa.*')) here @endif">
+                <a class="menu-link py-3" href="{{ route('mahasiswa.kelas.index') }}">
+                    <span class="menu-title">
+                        Kelas
+                    </span>
+                    <span class="menu-arrow d-lg-none"></span>
+                </a>
+            </div>
+        @endrole
+
         @role('mahasiswa')
             <div
                 class="menu-item menu-here-bg menu-lg-down-accordion me-0 me-lg-2 @if (request()->routeIs('mahasiswa.*')) here @endif">

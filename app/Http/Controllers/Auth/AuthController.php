@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -34,6 +35,9 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
             return redirect()->route('home');
+        }else{
+            Alert::error('Error', 'Email atau password salah');
+            return redirect()->back();
         }
     }
 
@@ -76,21 +80,23 @@ class AuthController extends Controller
                 return redirect()->back()->withInput()->withErrors($validator_mhs);
             }
 
-            $user = User::create([
-                'name' => $request->nama,
-                'email' => $request->email,
-                'password' => bcrypt($request->password)
-            ]);
+
+
+            $user = new User();
+            $user->name = $request->nama;
+            $user->email = $request->email;
+            $user->password = bcrypt($request->password);
+            if ($request->hasFile('foto')) {
+                $file = $request->file('foto');
+                $filename = time() . Str::random(10) . '.' . $file->getClientOriginalExtension();
+                $user->photo = $file->storeAs('foto', $filename, 'public');
+            }
+            $user->save();
 
             $user->assignRole('mahasiswa');
 
-            if ($request->hasFile('foto')) {
-                $request->file('foto')->storeAs('public/foto', $request->nim . "-" . $request->nama . "." . $request->file('foto')->getClientOriginalExtension());
-            }
-
             $user->mahasiswa()->create([
                 'nim' => $request->nim,
-                'foto' => $request->file('foto') ? $request->nim . "-" . $request->nama . "." . $request->file('foto')->getClientOriginalExtension() : null,
                 'alamat' => $request->alamat,
                 'jenis_kelamin' => $request->jenis_kelamin,
                 'agama' => $request->agama,
@@ -99,7 +105,7 @@ class AuthController extends Controller
 
             Alert::success('Success', 'Registrasi berhasil silahkan login untuk melanjutkan');
             return redirect()->route('login');
-        } else {
+        } else if ($request->role == 'dosen') {
 
 
             $validator_dosen = Validator::make($request->all(), [
@@ -131,29 +137,75 @@ class AuthController extends Controller
                 return redirect()->back()->withInput()->withErrors($validator_dosen);
             }
 
-
-            $user = User::create([
-                'name' => $request->nama,
-                'email' => $request->email,
-                'password' => bcrypt($request->password),
-            ]);
+            $user = new User();
+            $user->name = $request->nama;
+            $user->email = $request->email;
+            $user->password = bcrypt($request->password);
+            if ($request->hasFile('foto')) {
+                $file = $request->file('foto');
+                $filename = time() . Str::random(10) . '.' . $file->getClientOriginalExtension();
+                $user->photo = $file->storeAs('foto', $filename, 'public');
+            }
+            $user->save();
 
             $user->assignRole('dosen');
 
 
-            if ($request->hasFile('foto')) {
-                $request->file('foto')->storeAs('public/foto', $request->nidn . "-" . $request->nama . "." . $request->file('foto')->getClientOriginalExtension());
-            }
-
             $user->dosen()->create([
                 'nidn' => $request->nidn,
-                'foto' => $request->file('foto') ? $request->nidn . "-" . $request->nama . "." . $request->file('foto')->getClientOriginalExtension() : null,
                 'alamat' => $request->alamat,
                 'jenis_kelamin' => $request->jenis_kelamin,
                 'agama' => $request->agama,
                 'jabatan' => $request->jabatan,
                 'pangkat' => $request->pangkat,
                 'pendidikan_terakhir' => $request->pendidikan_terakhir
+            ]);
+
+            Alert::success('Success', 'Registrasi berhasil, silahkan login untuk melanjutkan');
+            return redirect()->route('login');
+        } else if ($request->role == 'umum') {
+            $validator_umum = Validator::make($request->all(), [
+                'email' => 'required|email',
+                'password' => 'required',
+                'role' => 'required|in:umum',
+                'nama' => 'required|string',
+                'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'alamat' => 'required|string',
+                'jenis_kelamin' => 'required|in:L,P',
+                'agama' => 'required|in:Islam,Kristen,Katolik,Hindu,Budha,Konghucu',
+            ], [
+                'required' => ':attribute tidak boleh kosong',
+                'numeric' => ':attribute harus berupa angka',
+                'string' => ':attribute harus berupa huruf',
+                'image' => ':attribute harus berupa gambar',
+                'mimes' => ':attribute harus berupa gambar dengan format jpeg, png, jpg, gif, svg',
+                'max' => ':attribute tidak boleh lebih dari 2MB',
+                'in' => ':attribute harus salah satu dari :values',
+                'email' => ':attribute harus berupa email'
+            ]);
+
+            if ($validator_umum->fails()) {
+                Alert::error('Error', $validator_umum->errors()->all());
+                return redirect()->back()->withInput()->withErrors($validator_umum);
+            }
+
+            $user = new User();
+            $user->name = $request->nama;
+            $user->email = $request->email;
+            $user->password = bcrypt($request->password);
+            if ($request->hasFile('foto')) {
+                $file = $request->file('foto');
+                $filename = time() . Str::random(10) . '.' . $file->getClientOriginalExtension();
+                $user->photo = $file->storeAs('foto', $filename, 'public');
+            }
+            $user->save();
+
+            $user->assignRole('umum');
+
+            $user->umum()->create([
+                'alamat' => $request->alamat,
+                'jenis_kelamin' => $request->jenis_kelamin,
+                'agama' => $request->agama,
             ]);
 
             Alert::success('Success', 'Registrasi berhasil, silahkan login untuk melanjutkan');

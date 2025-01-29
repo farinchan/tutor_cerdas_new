@@ -72,8 +72,8 @@
                 </div>
             </div>
             <div class="d-flex flex-column-fluid flex-lg-row-auto justify-content-center justify-content-lg-end p-12">
-                <div class="bg-body d-flex flex-column flex-center rounded-4 w-md-600px p-10">
-                    <div class="d-flex flex-center flex-column align-items-stretch h-lg-100 w-md-400px">
+                <div class="bg-body d-flex flex-column flex-center rounded-4 w-md-700px p-10">
+                    <div class="d-flex flex-center flex-column align-items-stretch h-lg-100 w-md-550px">
                         @yield('content')
                         {{-- <div class="d-flex flex-stack">
                             <div class="me-10">

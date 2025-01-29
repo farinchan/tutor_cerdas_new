@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('exam', function (Blueprint $table) {
+        Schema::create('pretest', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('materi_id')->constrained('materi')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('kode_kelas', 10);
+            $table->foreign('kode_kelas')->references('kode_kelas')->on('kelas')->onUpdate('cascade')->onDelete('cascade');
             $table->text('description');
             $table->integer('duration');
-            $table->integer('minimum_score');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('exams');
+        Schema::dropIfExists('pretests');
     }
 };

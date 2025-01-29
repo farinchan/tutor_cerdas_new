@@ -1,8 +1,8 @@
 @extends('pages.auth.layout')
 @section('content')
     <div class="d-flex flex-center flex-column flex-column-fluid pb-15 pb-lg-20">
-        <form class="form w-120" novalidate="novalidate" id="kt_sign_up_form"
-            data-kt-redirect-url="authentication/layouts/overlay/sign-in.html" action="{{ route("register.process") }}" method="POST">
+        <form class="form w-120" novalidate="novalidate" id="kt_sign_up_form" enctype="multipart/form-data" action="{{ route('register.process') }}"
+            method="POST">
             @csrf
             <div class="text-center mb-11">
                 <h1 class="text-gray-900 fw-bolder mb-3">Buat Akun</h1>
@@ -11,12 +11,27 @@
             <div class="fv-row mb-8">
                 <div data-kt-buttons="true">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <input type="radio" class="btn-check" name="role" value="dosen" checked="checked"
                                 id="kt_radio_buttons_2_option_1" />
                             <label id="role_dosen"
                                 class="btn btn-outline btn-outline-dashed btn-active-light-primary p-7 d-flex align-items-center mb-5"
                                 for="kt_radio_buttons_2_option_1">
+                                <i class="ki-duotone ki-user fs-2x me-4">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
+                                <span class="d-block fw-semibold text-start">
+                                    <span class="text-gray-900 fw-bold d-block fs-3">Dosen</span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="radio" class="btn-check" name="role" value="mahasiswa"
+                                id="kt_radio_buttons_2_option_2" />
+                            <label id="role_mahasiswa"
+                                class="btn btn-outline btn-outline-dashed btn-active-light-primary p-7 d-flex align-items-center"
+                                for="kt_radio_buttons_2_option_2">
                                 <i class="ki-duotone ki-profile-user fs-2x me-4">
                                     <span class="path1"></span>
                                     <span class="path2"></span>
@@ -24,16 +39,16 @@
                                     <span class="path4"></span>
                                 </i>
                                 <span class="d-block fw-semibold text-start">
-                                    <span class="text-gray-900 fw-bold d-block fs-3">Dosen</span>
+                                    <span class="text-gray-900 fw-bold d-block fs-3">Mahasiswa</span>
                                 </span>
                             </label>
                         </div>
-                        <div class="col-md-6">
-                            <input type="radio" class="btn-check" name="role" value="mahasiswa"
-                                id="kt_radio_buttons_2_option_2" />
-                            <label id="role_mahasiswa"
+                        <div class="col-md-4">
+                            <input type="radio" class="btn-check" name="role" value="umum"
+                                id="kt_radio_buttons_2_option_3" />
+                            <label id="role_umum"
                                 class="btn btn-outline btn-outline-dashed btn-active-light-primary p-7 d-flex align-items-center"
-                                for="kt_radio_buttons_2_option_2">
+                                for="kt_radio_buttons_2_option_3">
                                 <i class="ki-duotone ki-people fs-2x me-4">
                                     <span class="path1"></span>
                                     <span class="path2"></span>
@@ -42,7 +57,7 @@
                                     <span class="path5"></span>
                                 </i>
                                 <span class="d-block fw-semibold text-start">
-                                    <span class="text-gray-900 fw-bold d-block fs-3">Mahasiswa</span>
+                                    <span class="text-gray-900 fw-bold d-block fs-3">Umum</span>
                                 </span>
                             </label>
                         </div>
@@ -91,8 +106,8 @@
             <div class="fv-row mb-5" data-kt-password-meter="true">
                 <div class="mb-1">
                     <div class="position-relative mb-3">
-                        <input class="form-control bg-transparent" type="password" placeholder="Password" name="password"
-                            autocomplete="off" />
+                        <input class="form-control bg-transparent" type="password" placeholder="Password"
+                            name="password" autocomplete="off" />
                         @error('email')
                             <small class="text-danger">*{{ $message }}</small>
                         @enderror
@@ -314,6 +329,63 @@
                     <div class="text-start mb-10">
                         <div class="text-gray-500 fw-semibold fs-6" data-kt-translate="general-desc">
                             Silahkan isi form berikut untuk membuat akun mahasiswa
+                        </div>
+                    </div>`);
+            }
+        );
+        $('#role_umum').click(
+            function() {
+                let form_umum = `
+                    <div class="fv-row mb-5">
+                        <input class="form-control form-control-lg" type="text"
+                            placeholder="Nama Lengkap" name="nama" autocomplete="off" value="{{ old('nama') }}"
+                            required />
+                        @error('nama')
+                            <small class="text-danger">*{{ $message }}</small>
+                        @enderror
+                    </div>
+                    <div class="row fv-row mb-5">
+                        <div class="col-xl-6">
+                            <select class="form-control form-control-lg" name="jenis_kelamin"
+                                required>
+                                <option value="" disabled selected>Jenis Kelamin</option>
+                                <option @if (old('jenis_kelamin') == 'L') selected @endif value="L">Laki-laki
+                                </option>
+                                <option @if (old('jenis_kelamin') == 'P') selected @endif value="P">Perempuan
+                                </option>
+                            </select>
+                            @error('jenis_kelamin')
+                                <small class="text-danger">*{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="col-xl-6">
+                            <select name="agama" class="form-control form-control-lg" required>
+                                <option value="" disabled selected>Agama</option>
+                                <option @if (old('agama') == 'Islam') selected @endif value="Islam">Islam</option>
+                                <option @if (old('agama') == 'Kristen') selected @endif value="Kristen">Kristen
+                                </option>
+                                <option @if (old('agama') == 'Hindu') selected @endif value="Hindu">Hindu</option>
+                                <option @if (old('agama') == 'Budha') selected @endif value="Budha">Budha</option>
+                                <option @if (old('agama') == 'konghucu') selected @endif value="konghucu">Konghucu
+                                </option>
+                            </select>
+                            @error('agama')
+                                <small class="text-danger">*{{ $message }}</small>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="fv-row mb-5">
+                        <textarea class="form-control form-control-lg" type="text" placeholder="Alamat" name="alamat"
+                            autocomplete="off" required>{{ old('alamat') }}</textarea>
+                        @error('alamat')
+                            <small class="text-danger">*{{ $message }}</small>
+                        @enderror
+                    </div>`
+                $('#form_register').html(form_umum);
+                $('#ket_akun').html(`
+                    <div class="text-start mb-10">
+                        <div class="text-gray-500 fw-semibold fs-6" data-kt-translate="general-desc">
+                            Silahkan isi form berikut untuk membuat akun umum
                         </div>
                     </div>`);
             }

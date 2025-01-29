@@ -135,6 +135,10 @@
                         <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab"
                             href="#kt_user_view_pengaturan">Pengaturan</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab"
+                            href="#kt_user_view_pretest">Pre-test</a>
+                    </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="kt_user_view_materi" role="tabpanel">
@@ -150,6 +154,9 @@
 
                     <div class="tab-pane fade" id="kt_user_view_pengaturan" role="tabpanel">
                         @include('pages.dosen.kelas.partials.pengaturan')
+                    </div>
+                    <div class="tab-pane fade" id="kt_user_view_pretest" role="tabpanel">
+                        @include('pages.dosen.kelas.partials.pretest')
                     </div>
                 </div>
             </div>
