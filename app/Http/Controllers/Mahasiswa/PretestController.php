@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Mahasiswa;
 
 use App\Http\Controllers\Controller;
 use App\Models\Kelas;
+use App\Models\Nilai;
 use App\Models\Pretest;
 use App\Models\PretestAnswer;
 use App\Models\PretestChoice;
@@ -144,9 +145,21 @@ class PretestController extends Controller
             return response()->json(['error' => 'Session not found'], 404);
         }
 
+        $score = PretestAnswer::where('pretest_session_id', $session_id)->where('is_correct', 1)->join('pretest_question', 'pretest_question.id', '=', 'pretest_answer.pretest_question_id')->sum('score');
+
         $session->end_time = now();
-        $session->score = PretestAnswer::where('pretest_session_id', $session_id)->where('is_correct', 1)->join('pretest_question', 'pretest_question.id', '=', 'pretest_answer.pretest_question_id')->sum('score');
+        $session->score = $score;
         $session->save();
+
+        $nilai = Nilai::updateOrCreate(
+            [
+                'nim' => Auth::user()->mahasiswa->nim,
+                'kode_kelas' => $kode_kelas
+            ],
+            [
+                'pretest' => $score
+            ]
+        );
 
         return redirect()->route('mahasiswa.kelas.show', $kode_kelas)->with('success', 'Pretest selesai');
     }

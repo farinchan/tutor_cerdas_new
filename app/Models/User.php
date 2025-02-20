@@ -65,7 +65,7 @@ class User extends Authenticatable
     public function umum()
     {
         return $this->hasOne(Umum::class);
-    }   
+    }
 
     public function role()
     {

@@ -12,6 +12,7 @@
                     <tr class="text-start text-muted text-uppercase gs-0">
                         <th class="min-w-100px">NIM</th>
                         <th>Nama</th>
+                        <th class="text-center">Pretest</th>
                         <th class="text-center">Tugas</th>
                         <th class="text-center">Quiz</th>
                         <th class="text-center">UTS</th>
@@ -20,10 +21,13 @@
                     </tr>
                 </thead>
                 <tbody class="fs-6 fw-semibold text-gray-600">
+                    {{-- @dd($list_nilai_mahasiswa) --}}
                     @foreach ($list_nilai_mahasiswa as $nilai_mahasiswa)
+
                         <tr>
                             <td>{{ $nilai_mahasiswa->nim }}</td>
                             <td>{{ $nilai_mahasiswa->name }}</td>
+                            <td class="text-center">{{ $nilai_mahasiswa->nilai_pretest ?? '-' }}
                             <td class="text-center">{{ $nilai_mahasiswa->nilai_tugas ?? '-' }}
                             </td>
                             <td class="text-center">{{ $nilai_mahasiswa->nilai_quiz ?? '-' }}</td>

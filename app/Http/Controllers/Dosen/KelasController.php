@@ -84,7 +84,7 @@ class KelasController extends Controller
                 ->leftJoin('nilai', 'mahasiswa.nim', 'nilai.nim')
                 ->where('kelas_mahasiswa.kode_kelas', $kode_kelas)
                 ->orderBy('mahasiswa.nim')
-                ->get(['mahasiswa.nim', 'users.name', 'nilai.nilai_tugas', 'nilai.nilai_quiz', 'nilai.nilai_uts', 'nilai.nilai_uas', 'nilai.nilai_akhir']),
+                ->get(['mahasiswa.nim', 'users.name','nilai.nilai_pretest', 'nilai.nilai_tugas', 'nilai.nilai_quiz', 'nilai.nilai_uts', 'nilai.nilai_uas', 'nilai.nilai_akhir']),
             'exam' => $kelas->pretest,
             'list_exam_question' => $kelas?->pretest?->id ? PretestQuestion::where('pretest_id', $kelas?->pretest?->id)->get() : []
 
@@ -355,6 +355,7 @@ class KelasController extends Controller
         Alert::success('Berhasil', 'Soal berhasil dihapus');
         return redirect()->route('dosen.kelas.show', $kode_kelas);
     }
+
 
 
 }

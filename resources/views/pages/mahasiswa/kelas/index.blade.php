@@ -42,13 +42,14 @@
     <div class="content flex-row-fluid" id="kt_content">
         <div class="row gy-0 gx-10">
             @forelse ($kelas as $row)
+            {{-- @dd($row->pretest, $row->pretest->session->isEmpty(), $row->pretest?->session?->first()?->score == null) --}}
                 <div class="col-xl-4 mb-xl-10">
                     <div class="card card-flush h-xl-100">
                         <div class="card-header rounded bgi-no-repeat bgi-size-cover bgi-position-y-top bgi-position-x-center align-items-start h-250px"
                             style="background-image:url('{{ asset('assets/media/svg/shapes/bg-kelas.png') }}"
                             data-bs-theme="light">
                             <h3 class="card-title align-items-start flex-column text-white pt-15">
-                                @if ($row->pretest && empty($row->pretest->session))
+                                @if ($row->pretest  && $row->pretest?->session?->first()?->score == null)
                                     <a class="fw-bold text-white fs-2x mb-3 text-hover-info" href="#"
                                         data-bs-toggle="modal" data-bs-target="#pretest_dialog">
                                         {{-- {{ route('mahasiswa.kelas.show', $row->kode_kelas) }}  --}}

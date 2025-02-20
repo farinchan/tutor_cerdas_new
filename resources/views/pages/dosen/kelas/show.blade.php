@@ -128,16 +128,16 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab"
+                            href="#kt_user_view_pretest">Pre-test</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab"
-                            href="#kt_user_view_penilaian">penilaian</a>
+                            href="#kt_user_view_penilaian">Penilaian</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab"
                             href="#kt_user_view_pengaturan">Pengaturan</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab"
-                            href="#kt_user_view_pretest">Pre-test</a>
                     </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
@@ -147,16 +147,14 @@
                     <div class="tab-pane fade" id="kt_user_view_mahasiswa" role="tabpanel">
                         @include('pages.dosen.kelas.partials.mahasiswa')
                     </div>
-
+                    <div class="tab-pane fade" id="kt_user_view_pretest" role="tabpanel">
+                        @include('pages.dosen.kelas.partials.pretest')
+                    </div>
                     <div class="tab-pane fade" id="kt_user_view_penilaian" role="tabpanel">
                         @include('pages.dosen.kelas.partials.penilaian')
                     </div>
-
                     <div class="tab-pane fade" id="kt_user_view_pengaturan" role="tabpanel">
                         @include('pages.dosen.kelas.partials.pengaturan')
-                    </div>
-                    <div class="tab-pane fade" id="kt_user_view_pretest" role="tabpanel">
-                        @include('pages.dosen.kelas.partials.pretest')
                     </div>
                 </div>
             </div>
@@ -174,10 +172,12 @@
             ]
         });
 
+
         const filterSearch = document.querySelector('[data-kt-user-table-filter="search"]');
         filterSearch.addEventListener('keyup', function(e) {
             datatable_mahasiswa_aktif.search(e.target.value).draw();
         });
+
 
         // Select elements
         const target = document.getElementById('kt_clipboard_1');
@@ -200,5 +200,7 @@
                 button.innerHTML = currentLabel;
             }, 3000)
         });
+
     </script>
+
 @endsection

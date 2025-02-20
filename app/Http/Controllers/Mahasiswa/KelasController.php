@@ -20,19 +20,22 @@ class KelasController extends Controller
             'title' => 'Kelas',
             'kode_kelas_new' => Str::random(10),
             'kelas' => Kelas::whereIn('kode_kelas', $kelas->pluck('kode_kelas'))->with([
-                'pretest.session' => function($query){
+                'pretest.session' => function ($query) {
                     $query->where('user_id', Auth::id());
-                }
-            , 'matakuliah', 'dosen'])->get(),
+                },
+                'matakuliah',
+                'dosen'
+            ])->get(),
         ];
         // dd($data);
         // return response()->json($data);
         return view('pages.mahasiswa.kelas.index', $data);
     }
 
-    public function join(){
+    public function join()
+    {
         $kelas = Kelas::where('kode_kelas', request()->kode_kelas)->first();
-        if(!$kelas){
+        if (!$kelas) {
             Alert::error('Error', 'kelas tidak ditemukan');
             return redirect()->back()->with('error', 'Kode kelas tidak ditemukan');
         }
@@ -61,7 +64,7 @@ class KelasController extends Controller
                 ->leftJoin('nilai', 'mahasiswa.nim', 'nilai.nim')
                 ->where('kelas_mahasiswa.kode_kelas', $kode_kelas)
                 ->where('mahasiswa.nim', Auth::user()->mahasiswa->nim)
-                ->first(['mahasiswa.nim', 'users.name', 'nilai.nilai_tugas', 'nilai.nilai_quiz', 'nilai.nilai_uts', 'nilai.nilai_uas', 'nilai.nilai_akhir'])
+                ->first(['mahasiswa.nim', 'users.name', 'nilai.nilai_pretest', 'nilai.nilai_tugas', 'nilai.nilai_quiz', 'nilai.nilai_uts', 'nilai.nilai_uas', 'nilai.nilai_akhir'])
 
         ];
         // return response()->json($data);

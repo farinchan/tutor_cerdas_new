@@ -289,6 +289,7 @@
                                                 <th class="text-center" colspan="6" >Nilai</th>
                                             </tr>
                                             <tr class="fw-bold fs-6 text-gray-800">
+                                                <th class="text-center">Pretest</th>
                                                 <th class="text-center">Tugas</th>
                                                 <th class="text-center">Quiz</th>
                                                 <th class="text-center">UTS</th>
@@ -298,6 +299,7 @@
                                         </thead>
                                         <tbody>
                                             <tr>
+                                                <td class="text-center">{{ $nilai_saya->nilai_pretest??"-" }}</td>
                                                 <td class="text-center">{{ $nilai_saya->nilai_tugas??"-" }}</td>
                                                 <td class="text-center">{{ $nilai_saya->nilai_quiz??"-" }}</td>
                                                 <td class="text-center">{{ $nilai_saya->nilai_uts??"-" }}</td>
