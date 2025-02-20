@@ -21,4 +21,9 @@ class Pretest extends Model
     {
         return $this->hasMany(PretestQuestion::class, 'pretest_id', 'id');
     }
+
+    public function session()
+    {
+        return $this->hasMany(PretestSession::class, 'pretest_id', 'id');
+    }
 }

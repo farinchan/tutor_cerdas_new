@@ -22,5 +22,12 @@ class PretestQuestion extends Model
         return $this->hasMany(PretestChoice::class, 'pretest_question_id', 'id');
     }
 
+    public function userAnswer()
+    {
+        return $this->hasOne(PretestAnswer::class, 'pretest_question_id', 'id');
+    }
+
+
+
 
 }

@@ -10,6 +10,7 @@ use App\Http\Controllers\Dosen\MateriController as DosenMateriController;
 
 use App\Http\Controllers\Mahasiswa\KelasController as MahasiswaKelasController;
 use App\Http\Controllers\Mahasiswa\MateriController as MahasiswaMateriController;
+use App\Http\Controllers\Mahasiswa\PretestController as MahasiswaPretestController;
 
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
@@ -100,8 +101,14 @@ Route::prefix('mahasiswa')->middleware(['auth', 'role:mahasiswa'])->name('mahasi
         Route::get('/{kode_kelas}', [MahasiswaKelasController::class, 'show'])->name('show');
         Route::get('/{kode_kelas}/materi/{id}', [MahasiswaMateriController::class, 'materi'])->name('materi');
         Route::get('/{kode_kelas}/materi/{id}/diskusi-pribadi', [MahasiswaMateriController::class, 'materiDiskusiPribadi'])->name('materiDiskusiPribadi');
-
         Route::post('/join', [MahasiswaKelasController::class, 'join'])->name('join');
+
+        Route::get('/{kode_kelas}/pretest', [MahasiswaPretestController::class, 'pretest'])->name('pretest');
+        Route::post('/{kode_kelas}/pretest/selesai', [MahasiswaPretestController::class, 'pretestSelesai'])->name('pretestSelesai');
+
+        Route::get('/pretest/api-soal', [MahasiswaPretestController::class, 'pretestSoal'])->name('pretestSoal');
+        Route::post('/pretest/api-jawab', [MahasiswaPretestController::class, 'pretestJawab'])->name('pretestJawab');
+
 
     });
 });

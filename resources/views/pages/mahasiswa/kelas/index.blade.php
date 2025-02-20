@@ -38,19 +38,28 @@
 @endsection
 
 @section('content')
+
     <div class="content flex-row-fluid" id="kt_content">
         <div class="row gy-0 gx-10">
-            @foreach ($kelas as $row)
+            @forelse ($kelas as $row)
                 <div class="col-xl-4 mb-xl-10">
                     <div class="card card-flush h-xl-100">
                         <div class="card-header rounded bgi-no-repeat bgi-size-cover bgi-position-y-top bgi-position-x-center align-items-start h-250px"
                             style="background-image:url('{{ asset('assets/media/svg/shapes/bg-kelas.png') }}"
                             data-bs-theme="light">
                             <h3 class="card-title align-items-start flex-column text-white pt-15">
-                                <a class="fw-bold text-white fs-2x mb-3 text-hover-info"
-                                    href="{{ route('mahasiswa.kelas.show', $row->kode_kelas) }} ">
-                                    {{ $row->nama_kelas }} - {{ $row->matakuliah->nama_mk }}
-                                </a>
+                                @if ($row->pretest && empty($row->pretest->session))
+                                    <a class="fw-bold text-white fs-2x mb-3 text-hover-info" href="#"
+                                        data-bs-toggle="modal" data-bs-target="#pretest_dialog">
+                                        {{-- {{ route('mahasiswa.kelas.show', $row->kode_kelas) }}  --}}
+                                        {{ $row->nama_kelas }} - {{ $row->matakuliah->nama_mk }}
+                                    </a>
+                                @else
+                                    <a class="fw-bold text-white fs-2x mb-3 text-hover-info"
+                                        href="{{ route('mahasiswa.kelas.show', $row->kode_kelas) }} ">
+                                        {{ $row->nama_kelas }} - {{ $row->matakuliah->nama_mk }}
+                                    </a>
+                                @endif
                                 <div class="fs-4 text-white">
                                     <span class="opacity-75">
                                         {{ $row->tingkat }} - {{ $row->jurusan }}
@@ -68,8 +77,7 @@
                                     <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                         <a href="#">
                                             <div class="symbol-label">
-                                                <img src="{{ $row->dosen?->getPhoto() }}" alt="Emma Smith"
-                                                    class="w-100">
+                                                <img src="{{ $row->dosen?->getPhoto() }}" alt="Emma Smith" class="w-100">
                                             </div>
                                         </a>
                                     </div>
@@ -86,7 +94,61 @@
                         </div>
                     </div>
                 </div>
-            @endforeach
+
+                <div class="modal fade" tabindex="-1" id="pretest_dialog">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title">Pengerjaan Pretest</h3>
+
+                                <!--begin::Close-->
+                                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                                    <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
+                                </div>
+                                <!--end::Close-->
+                            </div>
+
+                            <div class="modal-body">
+                                <p class="fs-4 fw-semibold text-muted">
+                                    {{ $row->pretest?->description ?? '-' }}
+                                </p>
+                                <table class="fs-6 fw-semibold text-muted">
+                                    <tr>
+                                        <td>Waktu Pengerjaan</td>
+                                        <td style="width: 20px; text-align: center">:</td>
+                                        <td>{{ $row->pretest?->duration }} Menit</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Jumlah Soal</td>
+                                        <td style="width: 20px; text-align: center">:</td>
+                                        <td>{{ $row->pretest?->soal->count() }} Soal</td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                <a href="{{ route("mahasiswa.kelas.pretest", $row->kode_kelas) }}" class="btn btn-primary">Kerjakan sekarang</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @empty
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-px text-center pt-15 pb-15">
+                            <h2 class="fs-2x fw-bold mb-0">Belum Ada Kelas</h2>
+                            <p class="text-gray-500 fs-4 fw-semibold py-7">
+                                Anda belum terdaftar pada kelas manapun. <br>
+                                Silahkan join ke kelas melalui tombol join kelas dibawah ini.
+
+                            </p>
+                            <a href="#" class="btn btn-primary er fs-6 px-8 py-4" data-bs-toggle="modal"
+                                data-bs-target="#join_kelas">Join Kelas</a>
+                        </div>
+                    </div>
+                </div>
+            @endforelse
         </div>
     </div>
 @endsection

@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('pretest_session', function (Blueprint $table) {
             $table->id();
             $table->foreignId('pretest_id')->constrained('pretest')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedBigInteger('nim');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamp('start_time')->nullable();
             $table->timestamp('end_time')->nullable();

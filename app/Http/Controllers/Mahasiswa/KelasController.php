@@ -15,13 +15,18 @@ class KelasController extends Controller
 {
     public function index()
     {
-        $kelas = KelasMahasiswa::where('nim', Auth::user()->mahasiswa->nim)->where('status', 'aktif')->with('kelas');
+        $kelas = KelasMahasiswa::where('nim', Auth::user()->mahasiswa->nim)->where('status', 'aktif')->with('kelas')->get();
         $data = [
             'title' => 'Kelas',
             'kode_kelas_new' => Str::random(10),
-            'kelas' => $kelas->get()->pluck('kelas'),
+            'kelas' => Kelas::whereIn('kode_kelas', $kelas->pluck('kode_kelas'))->with([
+                'pretest.session' => function($query){
+                    $query->where('user_id', Auth::id());
+                }
+            , 'matakuliah', 'dosen'])->get(),
         ];
         // dd($data);
+        // return response()->json($data);
         return view('pages.mahasiswa.kelas.index', $data);
     }
 

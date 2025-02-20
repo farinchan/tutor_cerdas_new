@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class PretestChoice extends Model
 {
@@ -17,5 +18,10 @@ class PretestChoice extends Model
         return $this->belongsTo(PretestQuestion::class, 'pretest_question_id', 'id');
     }
 
-    
+    public function getImage()
+    {
+        return Storage::url($this->image);
+    }
+
+
 }
