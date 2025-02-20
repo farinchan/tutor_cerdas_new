@@ -20,7 +20,7 @@ class PretestChoice extends Model
 
     public function getImage()
     {
-        return Storage::url($this->image);
+        return Storage::url($this->choice_image);
     }
 
 

@@ -211,9 +211,8 @@
                                         onclick="submitAnswer(${choice.id})"
                                         ${data.question.user_answer?.pretest_choice_id == choice.id ? 'checked' : ''}>
                                     <label class="form-check-label">
-                                        ${choice.choice_image ? `<img class="img-fluid" src="${choice.image}" alt="">` : ''}
-                                        <div class=" text-gray
-                                            800">${choice.choice_text}</div>
+                                        ${choice.choice_image ? `<img class="img-fluid" src="/storage/${choice.choice_image}" alt="">` : ''}
+                                        <div class=" text-gray-800">${choice.choice_text}</div>
                                     </label>
                                 </div>
                             </div>
