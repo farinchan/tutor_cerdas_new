@@ -157,7 +157,7 @@ class PretestController extends Controller
                 'kode_kelas' => $kode_kelas
             ],
             [
-                'pretest' => $score
+                'nilai_pretest' => $score
             ]
         );
 
