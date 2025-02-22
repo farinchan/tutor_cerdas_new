@@ -10,6 +10,7 @@ use App\Http\Controllers\Dosen\MateriController as DosenMateriController;
 
 use App\Http\Controllers\Mahasiswa\KelasController as MahasiswaKelasController;
 use App\Http\Controllers\Mahasiswa\MateriController as MahasiswaMateriController;
+use App\Http\Controllers\Mahasiswa\ExamController as MahasiswaExamController;
 use App\Http\Controllers\Mahasiswa\PretestController as MahasiswaPretestController;
 
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
@@ -98,16 +99,21 @@ Route::prefix('dosen')->middleware(['auth', 'role:dosen'])->name('dosen.')->grou
 Route::prefix('mahasiswa')->middleware(['auth', 'role:mahasiswa'])->name('mahasiswa.')->group(function () {
     Route::prefix('kelas')->name('kelas.')->group(function () {
         Route::get('/', [MahasiswaKelasController::class, 'index'])->name('index');
-        Route::get('/{kode_kelas}', [MahasiswaKelasController::class, 'show'])->name('show');
-        Route::get('/{kode_kelas}/materi/{id}', [MahasiswaMateriController::class, 'materi'])->name('materi');
-        Route::get('/{kode_kelas}/materi/{id}/diskusi-pribadi', [MahasiswaMateriController::class, 'materiDiskusiPribadi'])->name('materiDiskusiPribadi');
         Route::post('/join', [MahasiswaKelasController::class, 'join'])->name('join');
 
         Route::get('/{kode_kelas}/pretest', [MahasiswaPretestController::class, 'pretest'])->name('pretest');
-        Route::post('/{kode_kelas}/pretest/selesai', [MahasiswaPretestController::class, 'pretestSelesai'])->name('pretestSelesai');
-
         Route::get('/pretest/api-soal', [MahasiswaPretestController::class, 'pretestSoal'])->name('pretestSoal');
         Route::post('/pretest/api-jawab', [MahasiswaPretestController::class, 'pretestJawab'])->name('pretestJawab');
+        Route::post('/{kode_kelas}/pretest/selesai', [MahasiswaPretestController::class, 'pretestSelesai'])->name('pretestSelesai');
+
+        Route::get('/{kode_kelas}', [MahasiswaKelasController::class, 'show'])->name('show');
+        Route::get('/{kode_kelas}/materi/{id}', [MahasiswaMateriController::class, 'materi'])->name('materi');
+        Route::get('/{kode_kelas}/materi/{id}/diskusi-pribadi', [MahasiswaMateriController::class, 'materiDiskusiPribadi'])->name('materiDiskusiPribadi');
+
+        Route::get('/{kode_kelas}/materi/{id}/exam', [MahasiswaExamController::class, 'exam'])->name('exam');
+        Route::get('/materi/exam-soal', [MahasiswaExamController::class, 'examSoal'])->name('examSoal');
+        Route::post('/materi/exam-jawab', [MahasiswaExamController::class, 'examJawab'])->name('examJawab');
+        Route::post('/{kode_kelas}/materi/{id}/exam/selesai', [MahasiswaExamController::class, 'examSelesai'])->name('examSelesai');
 
 
     });

@@ -71,9 +71,34 @@
                     <hr class=" mb-5">
                     {!! $materi->isi_materi !!}
                     @foreach ($materi->materiFiles as $file)
-                    <Embed type="application/pdf" src="{{ asset('storage/' . $file->file) }}" width="600"
-                        height="400"></Embed>
-                @endforeach
+                        <Embed type="application/pdf" src="{{ asset('storage/' . $file->file) }}" width="600"
+                            height="400"></Embed>
+                    @endforeach
+                    <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed mb-9 p-6 mt-15">
+                        <i class="ki-outline ki-pin fs-2tx text-primary me-4"></i>
+
+                        <div class="d-flex flex-stack flex-grow-1 ">
+                            <div class=" fw-semibold">
+                                <h4 class="text-gray-900 fw-bold">Ujian Materi</h4>
+                                    <div class="fs-6 text-gray-700">
+                                        Anda Belum lulus pada ujian materi ini, silahkan ikuti ujian untuk melanjutkan materi selanjutnya <br>
+                                        Deskripsi : {{ $materi->exam?->description ?? 'Belum ada ujian' }}
+                                    </div>
+                                    <div class="fs-6 text-gray-700">
+                                        Durasi :
+                                        {{ $materi->exam?->duration?? 'Belum ada ujian' }}
+                                    </div>
+                                    <div class="fs-6 text-gray-700">
+                                        Minimal Nilai :
+                                        {{ $materi->exam?->minimum_score?? 'Belum ada ujian' }}
+                                    </div>
+
+                                    <a href="{{ route("mahasiswa.kelas.exam", [$kode_kelas, $materi_id]) }}" class="btn btn-light-success btn-active-light-primary btn-sm mt-3">Ikuti Ujian</a>
+
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
                 <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
                     <li class="nav-item mt-2">
@@ -81,7 +106,11 @@
                     </li>
                     <li class="nav-item mt-2">
                         <a class="nav-link text-active-primary ms-0 me-10 py-5"
-                            href="{{ route("mahasiswa.kelas.materiDiskusiPribadi", [$kode_kelas, $materi_id]) }}">Diskusi Pribadi + AI</a>
+                            href="{{ route('mahasiswa.kelas.materiDiskusiPribadi', [$kode_kelas, $materi_id]) }}">Diskusi
+                            Pribadi + AI</a>
+                    </li>
+                    <li class="nav-item mt-2">
+                        <a class="nav-link text-active-primary ms-0 me-10 py-5" href="#">History Ujian</a>
                     </li>
                 </ul>
             </div>
@@ -132,12 +161,11 @@
                                                             class="fs-5 fw-bold text-gray-900 text-hover-primary ms-1">You</a>
                                                     </div>
                                                     <div class="symbol symbol-35px symbol-circle">
-                                                        <img alt="Pic" src="
-                                                        @if ($diskusi->user->role() == 'mahasiswa')
-                                                            {{ $diskusi->user?->getPhoto() }}
+                                                        <img alt="Pic"
+                                                            src="
+                                                        @if ($diskusi->user->role() == 'mahasiswa') {{ $diskusi->user?->getPhoto() }}
                                                         @else
-                                                            {{ $diskusi->user?->getPhoto() }}
-                                                        @endif
+                                                            {{ $diskusi->user?->getPhoto() }} @endif
                                                         " />
                                                     </div>
                                                 </div>
@@ -170,18 +198,17 @@
                                         </div>
                                     @endif
                                 @empty
-                                        <div class="d-flex justify-content-center mb-10">
-                                            <div class="d-flex flex-column align-items-center">
-                                                <div class="d-flex align-items-center mb-2">
-                                                    <div class="me-3">
-                                                        <span class="text-muted fs-7 mb-1">
-                                                            Belum ada diskusi
-                                                        </span>
-                                                    </div>
+                                    <div class="d-flex justify-content-center mb-10">
+                                        <div class="d-flex flex-column align-items-center">
+                                            <div class="d-flex align-items-center mb-2">
+                                                <div class="me-3">
+                                                    <span class="text-muted fs-7 mb-1">
+                                                        Belum ada diskusi
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
-
+                                    </div>
                                 @endforelse
                             </div>
                         </div>
@@ -286,7 +313,8 @@
                 success: function(data) {
                     console.log(data);
                     $('[data-kt-element="input"]').val('');
-                    $('[data-kt-element="messages"]').scrollTop($('[data-kt-element="messages"]')[0].scrollHeight);
+                    $('[data-kt-element="messages"]').scrollTop($('[data-kt-element="messages"]')[0]
+                        .scrollHeight);
 
                 },
                 error: function(err) {

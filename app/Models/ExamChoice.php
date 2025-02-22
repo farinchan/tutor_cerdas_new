@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class ExamChoice extends Model
 {
@@ -15,5 +16,10 @@ class ExamChoice extends Model
     public function examQuestion()
     {
         return $this->belongsTo(ExamQuestion::class, 'exam_question_id', 'id');
+    }
+
+    public function getImage()
+    {
+        return Storage::url($this->choice_image);
     }
 }

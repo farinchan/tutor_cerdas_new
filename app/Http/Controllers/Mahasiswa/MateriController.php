@@ -19,7 +19,7 @@ class MateriController extends Controller
 {
     public function materi($kode_kelas, $id)
     {
-        $materi = Materi::where('id', $id)->where('kode_kelas', $kode_kelas)->with('kelas')->first();
+        $materi = Materi::where('id', $id)->where('kode_kelas', $kode_kelas)->with(['kelas', 'exam'])->first();
         $data = [
             'title' => 'Materi',
             'menu' => 'kelas',
@@ -82,7 +82,7 @@ class MateriController extends Controller
             'list_mahasiswa' => KelasMahasiswa::where('kode_kelas', $kode_kelas)->with('mahasiswa')->where('status', 'aktif')->get(),
             'list_diskusi_pribadi' => DiskusiPribadi::where('user_chat_id', $diskusi_id)->where('materi_id', $id)->orderBy('created_at', 'asc')->with('user')->get()
         ];
-        // return response()->json($data);
+        return response()->json($data);
         return view('pages.mahasiswa.materi.diskusi-pribadi-show', $data);
     }
 
