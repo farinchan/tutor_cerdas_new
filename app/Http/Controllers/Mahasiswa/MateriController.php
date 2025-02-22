@@ -7,6 +7,7 @@ use App\Events\DiskusiPribadiCreated;
 use App\Http\Controllers\Controller;
 use App\Models\DiskusiGrup;
 use App\Models\DiskusiPribadi;
+use App\Models\Exam;
 use App\Models\KelasMahasiswa;
 use Illuminate\Http\Request;
 use App\Models\Materi;
@@ -28,7 +29,12 @@ class MateriController extends Controller
             'materi_id' => $id,
             'materi' => $materi,
             'list_mahasiswa' => KelasMahasiswa::where('kode_kelas', $kode_kelas)->with('mahasiswa')->where('status', 'aktif')->get(),
-            'list_diskusi_grup' => DiskusiGrup::where('materi_id', $id)->orderBy('created_at', 'asc')->with('user')->get()
+            'list_diskusi_grup' => DiskusiGrup::where('materi_id', $id)->orderBy('created_at', 'asc')->with('user')->get(),
+            'exam' => Exam::where('materi_id', $id)->with([
+                'examSessions' => function ($query) {
+                    $query->where('user_id', Auth::user()->id);
+                }
+                ])->first()
         ];
         // return response()->json($data);
         return view('pages.mahasiswa.materi.show', $data);
@@ -64,26 +70,15 @@ class MateriController extends Controller
             'materi_id' => $id,
             'materi' => $materi,
             'list_mahasiswa' => KelasMahasiswa::where('kode_kelas', $kode_kelas)->with('mahasiswa')->where('status', 'aktif')->get(),
-            'list_diskusi_pribadi' => DiskusiPribadi::where('user_chat_id', Auth::user()->id)->where('materi_id', $id)->orderBy('created_at', 'asc')->with('user')->get()
+            'list_diskusi_pribadi' => DiskusiPribadi::where('user_chat_id', Auth::user()->id)->where('materi_id', $id)->orderBy('created_at', 'asc')->with('user')->get(),
+            'exam' => Exam::where('materi_id', $id)->with([
+                'examSessions' => function ($query) {
+                    $query->where('user_id', Auth::user()->id);
+                }
+                ])->first()
         ];
         // return response()->json($data);
         return view('pages.mahasiswa.materi.diskusi-pribadi', $data);
-    }
-    public function materiDiskusiPribadiShow($kode_kelas, $id, $diskusi_id)
-    {
-        $materi = Materi::where('id', $id)->where('kode_kelas', $kode_kelas)->with('kelas')->first();
-        $data = [
-            'title' => 'Materi',
-            'menu' => 'kelas',
-            'sub_menu' => 'materi',
-            'kode_kelas' => $kode_kelas,
-            'materi_id' => $id,
-            'materi' => $materi,
-            'list_mahasiswa' => KelasMahasiswa::where('kode_kelas', $kode_kelas)->with('mahasiswa')->where('status', 'aktif')->get(),
-            'list_diskusi_pribadi' => DiskusiPribadi::where('user_chat_id', $diskusi_id)->where('materi_id', $id)->orderBy('created_at', 'asc')->with('user')->get()
-        ];
-        return response()->json($data);
-        return view('pages.mahasiswa.materi.diskusi-pribadi-show', $data);
     }
 
     public function kirimDiskusiPribadi(Request $request, $materi_id)
@@ -131,6 +126,45 @@ class MateriController extends Controller
         ]);
     }
 
+    public function historyUjian($kode_kelas, $id)
+    {
+        $materi = Materi::where('id', $id)->where('kode_kelas', $kode_kelas)->with(['kelas', 'exam'])->first();
+        $data = [
+            'title' => 'Materi',
+            'menu' => 'kelas',
+            'kode_kelas' => $kode_kelas,
+            'materi_id' => $id,
+            'materi' => $materi,
+
+            'exam' => Exam::where('materi_id', $id)->with([
+                'examSessions' => function ($query) {
+                    $query->where('user_id', Auth::user()->id)->orderBy('id', 'desc');
+                }
+                ])->first()
+        ];
+        // return response()->json($data);
+        return view('pages.mahasiswa.materi.exam-history', $data);
+    }
+
+    public function materiDiskusiPribadiShow($kode_kelas, $id, $diskusi_id)
+    {
+        $materi = Materi::where('id', $id)->where('kode_kelas', $kode_kelas)->with('kelas')->first();
+        $data = [
+            'title' => 'Materi',
+            'menu' => 'kelas',
+            'sub_menu' => 'materi',
+            'kode_kelas' => $kode_kelas,
+            'materi_id' => $id,
+            'materi' => $materi,
+            'list_mahasiswa' => KelasMahasiswa::where('kode_kelas', $kode_kelas)->with('mahasiswa')->where('status', 'aktif')->get(),
+            'list_diskusi_pribadi' => DiskusiPribadi::where('user_chat_id', $diskusi_id)->where('materi_id', $id)->orderBy('created_at', 'asc')->with('user')->get()
+        ];
+        return response()->json($data);
+        return view('pages.mahasiswa.materi.diskusi-pribadi-show', $data);
+    }
+
+
+
     public function testKirimDiskusiPribadi(Request $request, $materi_id)
     {
 
@@ -156,4 +190,6 @@ class MateriController extends Controller
 
 
     }
+
+
 }

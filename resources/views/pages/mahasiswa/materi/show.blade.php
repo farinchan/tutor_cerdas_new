@@ -80,20 +80,29 @@
                         <div class="d-flex flex-stack flex-grow-1 ">
                             <div class=" fw-semibold">
                                 <h4 class="text-gray-900 fw-bold">Ujian Materi</h4>
-                                    <div class="fs-6 text-gray-700">
-                                        Anda Belum lulus pada ujian materi ini, silahkan ikuti ujian untuk melanjutkan materi selanjutnya <br>
-                                        Deskripsi : {{ $materi->exam?->description ?? 'Belum ada ujian' }}
-                                    </div>
-                                    <div class="fs-6 text-gray-700">
-                                        Durasi :
-                                        {{ $materi->exam?->duration?? 'Belum ada ujian' }}
-                                    </div>
-                                    <div class="fs-6 text-gray-700">
-                                        Minimal Nilai :
-                                        {{ $materi->exam?->minimum_score?? 'Belum ada ujian' }}
-                                    </div>
+                                <div class="fs-6 text-gray-700">
+                                    {{-- @dd($exam->examSessions) --}}
+                                    @if (!$exam->examSessions->contains('status', 'lulus'))
+                                        <span class="text-danger">
+                                            Anda belum lulus pada ujian materi ini, silahkan ikuti ujian untuk melanjutkan
+                                            materi selanjutnya
+                                        </span>
+                                        <br>
+                                    @endif
 
-                                    <a href="{{ route("mahasiswa.kelas.exam", [$kode_kelas, $materi_id]) }}" class="btn btn-light-success btn-active-light-primary btn-sm mt-3">Ikuti Ujian</a>
+                                    Deskripsi : {{ $materi->exam?->description ?? 'Belum ada ujian' }}
+                                </div>
+                                <div class="fs-6 text-gray-700">
+                                    Durasi :
+                                    {{ $materi->exam?->duration ?? 'Belum ada ujian' }}
+                                </div>
+                                <div class="fs-6 text-gray-700">
+                                    Minimal Nilai :
+                                    {{ $materi->exam?->minimum_score ?? 'Belum ada ujian' }}
+                                </div>
+
+                                <a href="{{ route('mahasiswa.kelas.exam', [$kode_kelas, $materi_id]) }}"
+                                    class="btn btn-light-success btn-active-light-primary btn-sm mt-3">Ikuti Ujian</a>
 
                             </div>
 
@@ -110,7 +119,10 @@
                             Pribadi + AI</a>
                     </li>
                     <li class="nav-item mt-2">
-                        <a class="nav-link text-active-primary ms-0 me-10 py-5" href="#">History Ujian</a>
+                        <a class="nav-link text-active-primary ms-0 me-10 py-5"
+                            href="{{ route('mahasiswa.kelas.historyUjian', [$kode_kelas, $materi_id]) }}">
+                            History Ujian
+                        </a>
                     </li>
                 </ul>
             </div>

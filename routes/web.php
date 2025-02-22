@@ -109,6 +109,7 @@ Route::prefix('mahasiswa')->middleware(['auth', 'role:mahasiswa'])->name('mahasi
         Route::get('/{kode_kelas}', [MahasiswaKelasController::class, 'show'])->name('show');
         Route::get('/{kode_kelas}/materi/{id}', [MahasiswaMateriController::class, 'materi'])->name('materi');
         Route::get('/{kode_kelas}/materi/{id}/diskusi-pribadi', [MahasiswaMateriController::class, 'materiDiskusiPribadi'])->name('materiDiskusiPribadi');
+        Route::get('/{kode_kelas}/materi/{id}/history-ujian', [MahasiswaMateriController::class, 'historyUjian'])->name('historyUjian');
 
         Route::get('/{kode_kelas}/materi/{id}/exam', [MahasiswaExamController::class, 'exam'])->name('exam');
         Route::get('/materi/exam-soal', [MahasiswaExamController::class, 'examSoal'])->name('examSoal');

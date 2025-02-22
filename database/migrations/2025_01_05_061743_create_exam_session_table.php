@@ -18,6 +18,7 @@ return new class extends Migration
             $table->timestamp('start_time')->nullable();
             $table->timestamp('end_time')->nullable();
             $table->integer('score')->nullable();
+            $table->enum('status', ['lulus', 'tidak lulus'])->nullable();
             $table->timestamps();
         });
     }

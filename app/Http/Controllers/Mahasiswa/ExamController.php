@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Mahasiswa;
 
 use App\Http\Controllers\Controller;
+use App\Models\Exam;
 use App\Models\ExamAnswer;
 use App\Models\ExamChoice;
 use App\Models\ExamQuestion;
@@ -41,8 +42,9 @@ class ExamController extends Controller
         ])->get()->shuffle();
 
         $data = [
-            'title' => 'exam',
+            'title' => 'Ujian Materi ' . $materi->judul,
             'menu' => 'kelas',
+            'sub_menu' => "",
             'kode_kelas' => $kode_kelas,
             'materi_id' => $id,
             'session_id' => $session_id,
@@ -142,9 +144,11 @@ class ExamController extends Controller
         }
 
         $score = ExamAnswer::where('exam_session_id', $session_id)->where('is_correct', 1)->join('exam_question', 'exam_question.id', '=', 'exam_answer.exam_question_id')->sum('score');
+        $exam = Exam::where('materi_id', $id)->first();
 
         $session->end_time = now();
         $session->score = $score;
+        $session->status = $score >= $exam->minimum_score ? 'lulus' : 'tidak lulus';
         $session->save();
 
         return redirect()->route('mahasiswa.kelas.materi', [$kode_kelas, $id])->with('success', 'exam selesai');
