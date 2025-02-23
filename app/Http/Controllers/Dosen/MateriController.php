@@ -18,7 +18,10 @@ use App\Models\Exam;
 use App\Models\ExamChoice;
 use App\Models\ExamQuestion;
 use App\Models\MateriFile;
+use App\Models\User;
 use RealRashid\SweetAlert\Facades\Alert;
+use Spatie\Permission\Models\Role;
+
 
 class MateriController extends Controller
 {
@@ -70,7 +73,7 @@ class MateriController extends Controller
         }
 
         $fotoPath = null;
-        if($request->hasFile('foto')){
+        if ($request->hasFile('foto')) {
             $foto = $request->file('foto');
             $fotoNewName = Str::random(10) . "_" . $foto->getClientOriginalName();
             $fotoPath = $foto->storeAs('public/materi/foto', $fotoNewName);
@@ -245,7 +248,6 @@ class MateriController extends Controller
 
         Alert::success('Berhasil', 'ujian berhasil dibuat');
         return redirect()->back();
-
     }
 
     public function ujianSoalQuestionCreate($kode_kelas, $id)
@@ -308,7 +310,6 @@ class MateriController extends Controller
 
         Alert::success('Berhasil', 'Soal berhasil ditambahkan');
         return redirect()->route('dosen.kelas.materi.ujianSoal', [$kode_kelas, $id]);
-
     }
 
     public function ujianSoalQuestionEdit($kode_kelas, $id, $question_id)
@@ -412,6 +413,33 @@ class MateriController extends Controller
         return redirect()->route('dosen.kelas.materi.ujianSoal', [$kode_kelas, $id]);
     }
 
-
-
+    public function ujianNilai($kode_kelas, $id)
+    {
+        $materi = Materi::where('id', $id)->where('kode_kelas', $kode_kelas)->with('kelas')->first();
+        $data = [
+            'title' => 'Nilai Ujian',
+            'menu' => 'kelas',
+            'sub_menu' => 'materi',
+            'kode_kelas' => $kode_kelas,
+            'materi_id' => $id,
+            'materi' => $materi,
+            'exam_mahasiswa' => User::whereHas('roles', function ($query) {
+                $query->where('name', 'mahasiswa');
+            })
+                ->with([
+                    'mahasiswa',
+                    'examSessions' => function ($query) use($materi) {
+                        $query->where(
+                            'exam_id',
+                            $materi->exam->id
+                        )->latest();
+                    }
+                ])
+                ->whereHas('examSessions.exam', function ($query) use ($materi) {
+                    $query->where('materi_id', $materi->id);
+                })->get()
+        ];
+        // return response()->json($data);
+        return view('pages.dosen.materi.ujian-nilai', $data);
+    }
 }

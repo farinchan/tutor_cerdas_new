@@ -72,6 +72,7 @@ Route::prefix('dosen')->middleware(['auth', 'role:dosen'])->name('dosen.')->grou
         Route::put('/{kode_kelas}/materi/{id}/soal-ujian-edit/{question_id}', [DosenMateriController::class, 'ujianSoalQuestionUpdate'])->name('materi.ujianSoalQuestionUpdate');
         Route::delete('/{kode_kelas}/materi/{id}/soal-ujian-delete/{question_id}', [DosenMateriController::class, 'ujianSoalQuestionDelete'])->name('materi.ujianSoalQuestionDelete');
 
+        Route::get('/{kode_kelas}/materi/{id}/nilai-ujian', [DosenMateriController::class, 'ujianNilai'])->name('materi.ujianNilai');
 
     });
 

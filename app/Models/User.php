@@ -72,6 +72,11 @@ class User extends Authenticatable
         return $this->getRoleNames()->first();
     }
 
+    public function examSessions()
+    {
+        return $this->hasMany(ExamSession::class, 'user_id', 'id');
+    }
+
     public function getPhoto(){
         return $this->photo ? Storage::url($this->photo) : "https://ui-avatars.com/api/?background=000C32&color=fff&name=".$this->name;
     }
