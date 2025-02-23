@@ -39,46 +39,46 @@
             <div class="flex-column flex-lg-row-auto w-lg-250px w-xl-350px mb-10">
                 <div class="card card-flush mb-5">
                     <div class="card-header rounded bgi-no-repeat bgi-size-cover bgi-position-y-top bgi-position-x-center align-items-start h-250px"
-                            style="background-image:url('{{ asset('assets/media/svg/shapes/bg-kelas.png') }}"
-                            data-bs-theme="light">
-                            <h3 class="card-title align-items-start flex-column text-white pt-15">
-                                <a class="fw-bold text-white fs-2x mb-3 text-hover-info"
-                                    href="{{ route('mahasiswa.kelas.show', $kelas->kode_kelas) }} ">
-                                    {{ $kelas->nama_kelas }} - {{ $kelas->matakuliah->nama_mk }}
-                                </a>
-                                <div class="fs-4 text-white">
-                                    <span class="opacity-75">
-                                        {{ $kelas->tingkat }} - {{ $kelas->jurusan }}
-                                    </span>
+                        style="background-image:url('{{ asset('assets/media/svg/shapes/bg-kelas.png') }}"
+                        data-bs-theme="light">
+                        <h3 class="card-title align-items-start flex-column text-white pt-15">
+                            <a class="fw-bold text-white fs-2x mb-3 text-hover-info"
+                                href="{{ route('mahasiswa.kelas.show', $kelas->kode_kelas) }} ">
+                                {{ $kelas->nama_kelas }} - {{ $kelas->matakuliah->nama_mk }}
+                            </a>
+                            <div class="fs-4 text-white">
+                                <span class="opacity-75">
+                                    {{ $kelas->tingkat }} - {{ $kelas->jurusan }}
+                                </span>
+                            </div>
+                        </h3>
+                    </div>
+                    <div class="card-body mt-n20 mb-10">
+                        <div class="bg-gray-100 bg-opacity-70 rounded-2 px-6 py-5">
+                            <div class="d-flex flex-column">
+                                <span class="text-gray-800  mb-3">Dosen/Pengajar :</span>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <!--begin:: Avatar -->
+                                <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                    <a href="#">
+                                        <div class="symbol-label">
+                                            <img src="{{ $kelas->dosen?->user?->getPhoto() }}" alt="Emma Smith"
+                                                class="w-100">
+                                        </div>
+                                    </a>
                                 </div>
-                            </h3>
-                        </div>
-                        <div class="card-body mt-n20 mb-10">
-                            <div class="bg-gray-100 bg-opacity-70 rounded-2 px-6 py-5">
+                                <!--end::Avatar-->
+                                <!--begin::User details-->
                                 <div class="d-flex flex-column">
-                                    <span class="text-gray-800  mb-3">Dosen/Pengajar :</span>
+                                    <a href="#"
+                                        class="text-gray-800 text-hover-primary mb-1">{{ $kelas->dosen?->user?->name }}</a>
+                                    <span>NIDN. {{ $kelas->dosen?->nidn }}</span>
                                 </div>
-                                <div class="d-flex align-items-center">
-                                    <!--begin:: Avatar -->
-                                    <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
-                                        <a href="#">
-                                            <div class="symbol-label">
-                                                <img src="{{ $kelas->dosen?->user?->getPhoto() }}" alt="Emma Smith"
-                                                    class="w-100">
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <!--end::Avatar-->
-                                    <!--begin::User details-->
-                                    <div class="d-flex flex-column">
-                                        <a href="#"
-                                            class="text-gray-800 text-hover-primary mb-1">{{ $kelas->dosen?->user?->name }}</a>
-                                        <span>NIDN. {{ $kelas->dosen?->nidn }}</span>
-                                    </div>
-                                    <!--begin::User details-->
-                                </div>
+                                <!--begin::User details-->
                             </div>
                         </div>
+                    </div>
                 </div>
                 <div class="card mb-5 mb-xl-8">
                     <div class="card-header border-0">
@@ -124,21 +124,36 @@
                                         Materi Pembelajaran
                                     </h2>
                                     <div class="fs-6 fw-semibold text-muted">
-                                        Total Materi: {{ $kelas->materi->count() }}
+                                        Total Materi: {{ $materi_list->count() }}
                                     </div>
                                 </div>
                             </div>
                             <div class="card-body p-9 pt-4">
-                                @foreach ($kelas->materi as $materi)
+                                @foreach ($materi_list as $materi)
                                     <div class="card card-dashed h-xl-100 flex-row flex-stack flex-wrap p-6 mb-5">
                                         <div class="d-flex flex-column py-2" style="width: 100%">
                                             <div class="d-flex align-items-center">
 
                                                 <div class="mx-3">
-                                                    <a href="{{ route("mahasiswa.kelas.materi", [$kelas->kode_kelas, $materi->id]) }}"
-                                                        class="fs-4 fw-bold text-hover-primary text-gray-800">
-                                                        {{ $materi->judul }}
-                                                    </a>
+                                                    @if ($materi->is_locked)
+                                                        <span
+                                                            class="fs-4 fw-bold text-gray-800">
+                                                            {{ $materi->judul }}
+                                                            <span class="badge badge-light-danger">
+                                                                <i class="ki-duotone ki-lock-3 text-danger">
+                                                                    <span class="path1"></span>
+                                                                    <span class="path2"></span>
+                                                                    <span class="path3"></span>
+                                                                </i>
+                                                                Terkunci
+                                                            </span>
+                                                        </span>
+                                                        @else
+                                                        <a href="{{ route('mahasiswa.kelas.materi', [$kelas->kode_kelas, $materi->id]) }}"
+                                                            class="fs-4 fw-bold text-hover-primary text-gray-800">
+                                                            {{ $materi->judul }}</a>
+
+                                                    @endif
                                                     <div class="fs-6 fw-semibold text-gray-500">
                                                         {{ $materi->deskripsi }}
                                                     </div>
@@ -149,11 +164,14 @@
                                                     </small>
                                                 </div>
                                             </div>
-                                            <div class="separator separator-dashed my-7"></div>
-                                            <div class="text-end">
-                                                <a href="{{ route("mahasiswa.kelas.materi", [$kelas->kode_kelas, $materi->id]) }}" class="btn btn-sm btn-light btn-active-light-primary">Pelajari
-                                                    Sekarang</a>
-                                            </div>
+                                            @if (!$materi->is_locked)
+                                                <div class="separator separator-dashed my-7"></div>
+                                                <div class="text-end">
+                                                    <a href="{{ route('mahasiswa.kelas.materi', [$kelas->kode_kelas, $materi->id]) }}"
+                                                        class="btn btn-sm btn-light btn-active-light-primary">Pelajari
+                                                        Sekarang</a>
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
                                 @endforeach
@@ -246,7 +264,8 @@
                                                             </div>
                                                             <!--end::Close-->
                                                         </div>
-                                                        <form action="{{ route('dosen.mahasiswa.kick', $mahasiswa->id) }}" method="POST">
+                                                        <form action="{{ route('dosen.mahasiswa.kick', $mahasiswa->id) }}"
+                                                            method="POST">
                                                             @csrf
                                                             @method('delete')
                                                             <div class="modal-body">
@@ -286,7 +305,7 @@
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr class="fw-bold fs-6 text-gray-800">
-                                                <th class="text-center" colspan="6" >Nilai</th>
+                                                <th class="text-center" colspan="6">Nilai</th>
                                             </tr>
                                             <tr class="fw-bold fs-6 text-gray-800">
                                                 <th class="text-center">Pretest</th>
@@ -299,12 +318,12 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td class="text-center">{{ $nilai_saya->nilai_pretest??"-" }}</td>
-                                                <td class="text-center">{{ $nilai_saya->nilai_tugas??"-" }}</td>
-                                                <td class="text-center">{{ $nilai_saya->nilai_quiz??"-" }}</td>
-                                                <td class="text-center">{{ $nilai_saya->nilai_uts??"-" }}</td>
-                                                <td class="text-center">{{ $nilai_saya->nilaiuas??"-" }}</td>
-                                                <td class="text-center">{{ $nilai_saya->nilai_akhir??"-" }}</td>
+                                                <td class="text-center">{{ $nilai_saya->nilai_pretest ?? '-' }}</td>
+                                                <td class="text-center">{{ $nilai_saya->nilai_tugas ?? '-' }}</td>
+                                                <td class="text-center">{{ $nilai_saya->nilai_quiz ?? '-' }}</td>
+                                                <td class="text-center">{{ $nilai_saya->nilai_uts ?? '-' }}</td>
+                                                <td class="text-center">{{ $nilai_saya->nilaiuas ?? '-' }}</td>
+                                                <td class="text-center">{{ $nilai_saya->nilai_akhir ?? '-' }}</td>
                                             </tr>
                                         </tbody>
                                     </table>

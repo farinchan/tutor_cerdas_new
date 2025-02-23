@@ -74,40 +74,44 @@
                         <Embed type="application/pdf" src="{{ asset('storage/' . $file->file) }}" width="600"
                             height="400"></Embed>
                     @endforeach
-                    <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed mb-9 p-6 mt-15">
-                        <i class="ki-outline ki-pin fs-2tx text-primary me-4"></i>
+                    @if ($exam)
+                        <div
+                            class="notice d-flex bg-light-primary rounded border-primary border border-dashed mb-9 p-6 mt-15">
+                            <i class="ki-outline ki-pin fs-2tx text-primary me-4"></i>
 
-                        <div class="d-flex flex-stack flex-grow-1 ">
-                            <div class=" fw-semibold">
-                                <h4 class="text-gray-900 fw-bold">Ujian Materi</h4>
-                                <div class="fs-6 text-gray-700">
-                                    {{-- @dd($exam->examSessions) --}}
-                                    @if (!$exam->examSessions->contains('status', 'lulus'))
-                                        <span class="text-danger">
-                                            Anda belum lulus pada ujian materi ini, silahkan ikuti ujian untuk melanjutkan
-                                            materi selanjutnya
-                                        </span>
-                                        <br>
-                                    @endif
+                            <div class="d-flex flex-stack flex-grow-1 ">
+                                <div class=" fw-semibold">
+                                    <h4 class="text-gray-900 fw-bold">Ujian Materi</h4>
+                                    <div class="fs-6 text-gray-700">
+                                        {{-- @dd($exam->examSessions) --}}
+                                        @if (!$exam->examSessions?->contains('status', 'lulus'))
+                                            <span class="text-danger">
+                                                Anda belum lulus pada ujian materi ini, silahkan ikuti ujian untuk
+                                                melanjutkan
+                                                materi selanjutnya
+                                            </span>
+                                            <br>
+                                        @endif
 
-                                    Deskripsi : {{ $materi->exam?->description ?? 'Belum ada ujian' }}
-                                </div>
-                                <div class="fs-6 text-gray-700">
-                                    Durasi :
-                                    {{ $materi->exam?->duration ?? 'Belum ada ujian' }}
-                                </div>
-                                <div class="fs-6 text-gray-700">
-                                    Minimal Nilai :
-                                    {{ $materi->exam?->minimum_score ?? 'Belum ada ujian' }}
-                                </div>
+                                        Deskripsi : {{ $materi->exam?->description ?? 'Belum ada ujian' }}
+                                    </div>
+                                    <div class="fs-6 text-gray-700">
+                                        Durasi :
+                                        {{ $materi->exam?->duration ?? 'Belum ada ujian' }}
+                                    </div>
+                                    <div class="fs-6 text-gray-700">
+                                        Minimal Nilai :
+                                        {{ $materi->exam?->minimum_score ?? 'Belum ada ujian' }}
+                                    </div>
 
-                                <a href="{{ route('mahasiswa.kelas.exam', [$kode_kelas, $materi_id]) }}"
-                                    class="btn btn-light-success btn-active-light-primary btn-sm mt-3">Ikuti Ujian</a>
+                                    <a href="{{ route('mahasiswa.kelas.exam', [$kode_kelas, $materi_id]) }}"
+                                        class="btn btn-light-success btn-active-light-primary btn-sm mt-3">Ikuti Ujian</a>
+
+                                </div>
 
                             </div>
-
                         </div>
-                    </div>
+                    @endif
                 </div>
                 <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
                     <li class="nav-item mt-2">
@@ -150,7 +154,7 @@
                                     </thead>
                                     <tbody>
                                         {{-- @dd($exam) --}}
-                                        @forelse ($exam->examSessions as $exam_session)
+                                        @forelse ($exam?->examSessions ?? [] as $exam_session)
                                             <tr>
                                                 <td>{{ \Carbon\Carbon::parse($exam_session->updated_at)->format('d M Y H:i') }}
                                                 </td>

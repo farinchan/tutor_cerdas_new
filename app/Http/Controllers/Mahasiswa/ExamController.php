@@ -22,17 +22,38 @@ class ExamController extends Controller
         }
 
 
-        $session = ExamSession::where('user_id', Auth::id())->where('exam_id', $materi->exam->id)->first();
+        $session = ExamSession::where('user_id', Auth::id())->where('exam_id', $materi->exam->id)->latest()->first();
         $session_id =  null;
 
-        $session_new = new ExamSession();
-        $session_new->user_id = Auth::id();
-        $session_new->exam_id = $materi->exam->id;
-        $session_new->start_time = now();
-        $session_new->save();
+        if ($session) {
+            if ($session->end_time == null && $session->status == null) {
+                $session->delete();
 
-        $session_id = $session_new->id;
+                $session_new = new ExamSession();
+                $session_new->user_id = Auth::id();
+                $session_new->exam_id = $materi->exam->id;
+                $session_new->start_time = now();
+                $session_new->save();
 
+                $session_id = $session_new->id;
+            } else {
+                $session_new = new ExamSession();
+                $session_new->user_id = Auth::id();
+                $session_new->exam_id = $materi->exam->id;
+                $session_new->start_time = now();
+                $session_new->save();
+
+                $session_id = $session_new->id;
+            }
+        } else {
+            $session_new = new ExamSession();
+            $session_new->user_id = Auth::id();
+            $session_new->exam_id = $materi->exam->id;
+            $session_new->start_time = now();
+            $session_new->save();
+
+            $session_id = $session_new->id;
+        }
 
         $examQuestion = ExamQuestion::where('exam_id', $materi->exam->id)->with([
             'examChoices',
