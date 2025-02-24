@@ -18,6 +18,7 @@ class PretestController extends Controller
     public function pretest($kode_kelas)
     {
         $kelas = Kelas::with(['matakuliah', 'dosen', 'materi'])->where('kode_kelas', $kode_kelas)->first();
+        // dd($kelas);
 
         if (!$kelas) {
             return abort(404);

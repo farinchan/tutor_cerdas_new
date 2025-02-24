@@ -41,7 +41,9 @@
 
     <div class="content flex-row-fluid" id="kt_content">
         <div class="row gy-0 gx-10">
+
             @forelse ($kelas as $row)
+            {{-- {{$row->kode_kelas}} --}}
             {{-- @dd($row->pretest, $row->pretest->session->isEmpty(), $row->pretest?->session?->first()?->score == null) --}}
                 <div class="col-xl-4 mb-xl-10">
                     <div class="card card-flush h-xl-100">
@@ -51,7 +53,7 @@
                             <h3 class="card-title align-items-start flex-column text-white pt-15">
                                 @if ($row->pretest  && $row->pretest?->session?->first()?->score == null)
                                     <a class="fw-bold text-white fs-2x mb-3 text-hover-info" href="#"
-                                        data-bs-toggle="modal" data-bs-target="#pretest_dialog">
+                                        data-bs-toggle="modal" data-bs-target="#pretest_dialog_{{ $row->kode_kelas }}">
                                         {{-- {{ route('mahasiswa.kelas.show', $row->kode_kelas) }}  --}}
                                         {{ $row->nama_kelas }} - {{ $row->matakuliah->nama_mk }}
                                     </a>
@@ -96,7 +98,7 @@
                     </div>
                 </div>
 
-                <div class="modal fade" tabindex="-1" id="pretest_dialog">
+                <div class="modal fade" tabindex="-1" id="pretest_dialog_{{ $row->kode_kelas }}">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
