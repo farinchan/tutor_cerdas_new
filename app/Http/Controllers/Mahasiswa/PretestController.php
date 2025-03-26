@@ -52,6 +52,8 @@ class PretestController extends Controller
             'kode_kelas' => $kode_kelas,
             'session_id' => $session_id,
             'sub_menu' => $kode_kelas->nama_kelas ?? 'Pretest Kelas',
+            'pretest' => $kelas->pretest,
+            'session' => $session,
             'random_pretest' => $pretest->pluck('id')->toArray(),
             // 'question_last_id' => $pretest->last()->id,
             'question' => PretestQuestion::where('pretest_id', $kelas->pretest->id)->where('id', $pretest->first()->id)->with([

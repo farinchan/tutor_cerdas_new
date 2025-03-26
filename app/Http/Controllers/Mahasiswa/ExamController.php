@@ -69,6 +69,8 @@ class ExamController extends Controller
             'kode_kelas' => $kode_kelas,
             'materi_id' => $id,
             'session_id' => $session_id,
+            'exam' => $materi->exam,
+            'session' => $session,
             'sub_menu' => $kode_kelas->nama_kelas ?? 'exam Kelas',
             'random_exam' => $examQuestion->pluck('id')->toArray(),
             // 'question_last_id' => $exam->last()->id,

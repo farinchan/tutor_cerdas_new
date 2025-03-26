@@ -93,6 +93,12 @@
                 <div class="card shadow-sm" style="width: 100%;">
                     <div class="card-header">
                         <h3 class="card-title">Soal</h3>
+                        <div class="card-toolbar">
+                            <div class="d-flex justify-content-end">
+                                <span class="fw-semibold fs-5 text-gray-800 me-5">Sisa Waktu:</span>
+                                <span class="fw-semibold fs-5 text-danger" id="timer">00:00:00</span>
+                            </div>
+                        </div>
 
                     </div>
                     <div class="card-body">
@@ -154,7 +160,7 @@
                     </div>
                     <!--end::Close-->
                 </div>
-                <form action="{{ route('mahasiswa.kelas.pretestSelesai', $kode_kelas) }}" method="POST">
+                <form action="{{ route('mahasiswa.kelas.pretestSelesai', $kode_kelas) }}" method="POST" id="end_exam_form">
                     @csrf
 
                     <input type="hidden" name="session_id" value="{{ $session_id }}">
@@ -307,5 +313,43 @@
                 }
             });
         }
+
+        let duration = @json($pretest->duration);
+        let start_time = @json($session->start_time);
+
+        // Durasi dalam menit diambil dari exam.durasi
+        var durationInMinutes = @json($pretest->duration);
+
+        // Waktu mulai diambil dari exam_session.start_time
+        var startTime = new Date(start_time).getTime();
+
+        console.log(startTime);
+        console.log(durationInMinutes);
+
+        // Hitung waktu selesai berdasarkan startTime + durasi
+        var countDownDate = new Date(startTime + durationInMinutes * 60 * 1000).getTime();
+
+        var x = setInterval(function() {
+            var now = new Date().getTime();
+
+            var distance = countDownDate - now;
+
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("timer").innerHTML = days + "d " + hours + "h " +
+                minutes + "m " + seconds + "s ";
+
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("timer").innerHTML = "EXPIRED";
+
+                alert('Waktu pengerjaan ujian telah habis', 'warning', 5000);
+                // @this.call('endExam');
+                $('#end_exam_form').submit();
+            }
+        }, 1000);
     </script>
 @endsection

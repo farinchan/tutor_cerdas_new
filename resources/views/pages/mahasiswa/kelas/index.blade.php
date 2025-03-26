@@ -51,7 +51,7 @@
                             style="background-image:url('{{ asset('assets/media/svg/shapes/bg-kelas.png') }}"
                             data-bs-theme="light">
                             <h3 class="card-title align-items-start flex-column text-white pt-15">
-                                @if ($row->pretest  && $row->pretest?->session?->first()?->score == null)
+                                @if ($row->pretest  && $row->pretest?->session?->first()?->score === null)
                                     <a class="fw-bold text-white fs-2x mb-3 text-hover-info" href="#"
                                         data-bs-toggle="modal" data-bs-target="#pretest_dialog_{{ $row->kode_kelas }}">
                                         {{-- {{ route('mahasiswa.kelas.show', $row->kode_kelas) }}  --}}
