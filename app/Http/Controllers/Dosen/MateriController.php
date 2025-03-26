@@ -172,7 +172,7 @@ class MateriController extends Controller
         ]);
     }
 
-    public function materiDiskusiPribadi($kode_kelas, $id)
+    public function materiDiskusiPribadi($kode_kelas, $id, ?string $chat_id = null)
     {
         $materi = Materi::where('id', $id)->where('kode_kelas', $kode_kelas)->with('kelas')->first();
         $data = [
@@ -181,20 +181,24 @@ class MateriController extends Controller
             'sub_menu' => 'materi',
             'kode_kelas' => $kode_kelas,
             'materi_id' => $id,
+            'chat_id' => $chat_id ? $chat_id : 0,
             'materi' => $materi,
             'list_mahasiswa' => KelasMahasiswa::where('kode_kelas', $kode_kelas)->with('mahasiswa')->where('status', 'aktif')->get(),
-            'list_diskusi_pribadi' => DiskusiPribadi::where('materi_id', $id)->orderBy('created_at', 'asc')->with('user')->get()
+            'list_diskusi_pribadi' => $chat_id ? DiskusiPribadi::where('user_chat_id', $chat_id)->where('materi_id', $id)->orderBy('created_at', 'asc')->with('user')->get() : null,
         ];
         // return response()->json($data);
         return view('pages.dosen.materi.diskusi-pribadi', $data);
     }
 
-    public function kirimDiskusiPribadi(Request $request, $materi_id)
+
+
+    public function kirimDiskusiPribadi(Request $request, $materi_id, $chat_id)
     {
         $diskusi_pribadi = DiskusiPribadi::create([
             'materi_id' => $materi_id,
             'user_id' =>  Auth::user()->id,
-            'pesan' => $request->pesan
+            'pesan' => $request->pesan,
+            'user_chat_id' => $chat_id
         ]);
 
         Broadcast(new DiskusiPribadiCreated(
@@ -428,7 +432,7 @@ class MateriController extends Controller
             })
                 ->with([
                     'mahasiswa',
-                    'examSessions' => function ($query) use($materi) {
+                    'examSessions' => function ($query) use ($materi) {
                         $query->where(
                             'exam_id',
                             $materi->exam->id

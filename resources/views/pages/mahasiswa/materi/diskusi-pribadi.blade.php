@@ -269,6 +269,7 @@
 @section('scripts')
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
     <script>
+        let url =  '/storage/';
         // Enable pusher logging - don't include this in production
         Pusher.logToConsole = true;
 
@@ -290,7 +291,7 @@
                                     <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary ms-1">You</a>
                                 </div>
                                 <div class="symbol symbol-35px symbol-circle">
-                                    <img alt="Pic" src="${result.user.photo ? result.user.photo : 'https://ui-avatars.com/api/?background=000C32&color=fff&name=' + result.user.name}" />
+                                    <img alt="Pic" src="${result.user.photo ? url + result.user.photo : 'https://ui-avatars.com/api/?background=000C32&color=fff&name=' + result.user.name}" />
                                 </div>
                             </div>
                             <div class="p-5 rounded bg-light-primary text-gray-900 fw-semibold mw-lg-400px text-end"
@@ -329,7 +330,7 @@
                             <div class="d-flex flex-column align-items-start">
                                 <div class="d-flex align-items-center mb-2">
                                     <div class="symbol symbol-35px symbol-circle">
-                                        <img alt="Pic" src="${result.user.photo ? result.user.photo : 'https://ui-avatars.com/api/?background=000C32&color=fff&name=' + result.user.name}" />
+                                        <img alt="Pic" src="${result.user.photo ? url + result.user.photo : 'https://ui-avatars.com/api/?background=000C32&color=fff&name=' + result.user.name}" />
                                     </div>
                                     <div class="ms-3">
                                         <a href="#"

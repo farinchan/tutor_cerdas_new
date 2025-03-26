@@ -44,8 +44,7 @@
             </li>
             <li class="nav-item mt-2">
                 <a class="nav-link text-active-primary ms-0 me-10 py-5 @if (request()->routeIs('dosen.kelas.materi.diskusiPribadi')) active @endif"
-                    href="{{ route('dosen.kelas.materi.diskusiPribadi', [$kode_kelas, $materi_id]) }}">Diskusi Pribadi +
-                    AI</a>
+                    href="{{ route('dosen.kelas.materi.diskusiPribadi', [$kode_kelas, $materi_id]) }}">Diskusi Pribadi </a>
             </li>
             <li class="nav-item mt-2">
                 <a class="nav-link text-active-primary ms-0 me-10 py-5 @if (request()->routeIs('dosen.kelas.materi.ujianSoal')) active @endif"

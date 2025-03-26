@@ -58,9 +58,7 @@ Route::prefix('dosen')->middleware(['auth', 'role:dosen'])->name('dosen.')->grou
         Route::delete('pretest/{kode_kelas}/soal/delete/{question_id}', [DosenKelasController::class, 'pretestQuestionDelete'])->name('pretestQuestionDelete');
 
         Route::get('/{kode_kelas}/materi/{id}', [DosenMateriController::class, 'materi'])->name('materi.show');
-        Route::get('/{kode_kelas}/materi/{id}/diskusi-pribadi', [DosenMateriController::class, 'materiDiskusiPribadi'])->name('materi.diskusiPribadi');
-        Route::get('/{kode_kelas}/materi/{id}/diskusi-pribadi/{diskusi_id}', [DosenMateriController::class, 'materiDiskusiPribadiShow'])->name('materi.diskusiPribadi.show');
-
+        Route::get('/{kode_kelas}/materi/{id}/diskusi-pribadi/{chat_id?}', [DosenMateriController::class, 'materiDiskusiPribadi'])->name('materi.diskusiPribadi');
 
         //ujian
         Route::get('/{kode_kelas}/materi/{id}/soal-ujian', [DosenMateriController::class, 'ujianSoal'])->name('materi.ujianSoal');
@@ -97,6 +95,9 @@ Route::prefix('dosen')->middleware(['auth', 'role:dosen'])->name('dosen.')->grou
 
 });
 
+Route::post('/kirimDiskusiPribadDosen/{materi_id}/chat/{chat_id}', [DosenMateriController::class, 'kirimDiskusiPribadi'])->name('kirimDiskusiPribadiDosen');
+
+
 Route::prefix('mahasiswa')->middleware(['auth', 'role:mahasiswa'])->name('mahasiswa.')->group(function () {
     Route::prefix('kelas')->name('kelas.')->group(function () {
         Route::get('/', [MahasiswaKelasController::class, 'index'])->name('index');
@@ -120,6 +121,8 @@ Route::prefix('mahasiswa')->middleware(['auth', 'role:mahasiswa'])->name('mahasi
 
     });
 });
+
+
 
 Route::post('/kirimDiskusiGrup/{materi_id}', [MahasiswaMateriController::class, 'kirimDiskusiGrup'])->name('kirimDiskusiGrup');
 Route::post('/kirimDiskusiPribadi/{materi_id}', [MahasiswaMateriController::class, 'kirimDiskusiPribadi'])->name('kirimDiskusiPribadi');
