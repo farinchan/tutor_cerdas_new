@@ -68,7 +68,7 @@
                                         placeholder="Cari" name="q" value="{{ request()->q }}" />
                                 </form>
                             </div> --}}
-                                <a href="#" class='btn btn-bg-light btn-active-color-danger btn-sm'
+                                {{-- <a href="#" class='btn btn-bg-light btn-active-color-danger btn-sm'
                                     data-bs-toggle="modal" data-bs-target="#reset">
                                     <i class="ki-duotone ki-file-deleted fs-2">
                                         <span class="path1"></span>
@@ -81,13 +81,23 @@
                                         <span class="path1"></span>
                                         <span class="path2"></span>
                                     </i>
-                                    Import</a>
+                                    Import</a> --}}
                                 <a href="{{ route('dosen.kelas.materi.ujianSoalQuestionCreate', [$kode_kelas, $materi_id]) }}"
-                                    class='btn btn-primary btn-sm fw-bolder' class="btn btn-primary">
+                                    class='btn btn-primary btn-sm fw-bolder'>
                                     <i class="ki-duotone ki-plus fs-2"></i>
                                     Tambah Soal</a>
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#edit_exam"
+                                    class='btn btn-light-warning btn-sm fw-bolder ms-2'>
+                                    <i class="ki-duotone ki-wrench fs-2">
+                                        <span class="path1"></span>
+                                        <span class="path2"></span>
+                                    </i>
+                                    Edit Ujian
+                                </a>
                             </div>
                         </div>
+
+
 
                         <div class="row g-6 g-xl-9">
                             @foreach ($list_exam_question as $question)
@@ -165,15 +175,34 @@
                                                         <label for="nama_kelas"
                                                             class="form-label required">Deskripsi</label>
                                                         <textarea class="form-control form-control-solid" id="description" name="description" placeholder="Deskripsi Ujian"
-                                                            required></textarea>
+                                                            required> {{ old('description') }} </textarea>
+                                                        @error('description')
+                                                            <div class="text-danger">{{ $message }}</div>
+                                                        @enderror
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="nama_kelas" class="form-label required">Durasi
                                                             Ujian</label>
                                                         <input type="number" class="form-control form-control-solid"
                                                             id="duration" name="duration" placeholder="Durasi Ujian"
-                                                            required />
+                                                            value="{{ old('duration') }}" required />
+                                                        @error('duration')
+                                                            <div class="text-danger">{{ $message }}</div>
+                                                        @enderror
                                                         <span class="form-text text-muted">Durasi Ujian dalam menit</span>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="nama_kelas" class="form-label required">Minimum
+                                                            Nilai</label>
+                                                        <input type="number" class="form-control form-control-solid"
+                                                            id="minimum_score" name="minimum_score"
+                                                            value="{{ old('minimum_score') }}"
+                                                            placeholder="Minimum Nilai" required />
+                                                        @error('minimum_score')
+                                                            <div class="text-danger">{{ $message }}</div>
+                                                        @enderror
+                                                        <span class="form-text text-muted">Minimum Nilai yang harus dicapai
+                                                            untuk lulus</span>
                                                     </div>
                                                 </div>
 
@@ -190,6 +219,66 @@
                         </div>
                     @endif
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" id="edit_exam">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Edit Ujian</h3>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+                        aria-label="Close">
+                        <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <form action="{{ route('dosen.kelas.materi.ujianSoal.update', [$kode_kelas, $materi_id]) }}"
+                    method="post">
+                    @method('PUT')
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="nama_kelas" class="form-label required">Deskripsi</label>
+                            <textarea class="form-control form-control-solid" id="description" name="description" placeholder="Deskripsi Ujian"
+                                required> {{ $exam->description }} </textarea>
+                            @error('description')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="nama_kelas" class="form-label required">Durasi
+                                Ujian</label>
+                            <input type="number" class="form-control form-control-solid" id="duration" name="duration"
+                                placeholder="Durasi Ujian" value="{{ $exam->duration }}" required />
+                            @error('duration')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                            <span class="form-text text-muted">Durasi Ujian dalam menit</span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="nama_kelas" class="form-label required">Minimum
+                                Nilai</label>
+                            <input type="number" class="form-control form-control-solid" id="minimum_score"
+                                name="minimum_score" value="{{ $exam->minimum_score }}" placeholder="Minimum Nilai"
+                                required />
+                            @error('minimum_score')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                            <span class="form-text text-muted">Minimum Nilai yang harus dicapai
+                                untuk lulus</span>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

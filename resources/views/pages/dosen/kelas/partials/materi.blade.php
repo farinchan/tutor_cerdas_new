@@ -44,8 +44,7 @@
                     <div class="separator separator-dashed my-7"></div>
                     <div class="text-end">
                         <a href="{{ route("dosen.kelas.materi.show", [$kelas->kode_kelas, $materi->id]) }}"
-                         class="btn btn-sm btn-light btn-active-light-primary">Pelajari
-                            Sekarang</a>
+                         class="btn btn-sm btn-light btn-active-light-primary">Lihat</a>
                     </div>
                 </div>
             </div>

@@ -63,6 +63,7 @@ Route::prefix('dosen')->middleware(['auth', 'role:dosen'])->name('dosen.')->grou
         //ujian
         Route::get('/{kode_kelas}/materi/{id}/soal-ujian', [DosenMateriController::class, 'ujianSoal'])->name('materi.ujianSoal');
         Route::post('/{kode_kelas}/materi/{id}/soal-ujian', [DosenMateriController::class, 'ujianSoalStore'])->name('materi.ujianSoal.store');
+        Route::put('/{kode_kelas}/materi/{id}/soal-ujian', [DosenMateriController::class, 'ujianSoalUpdate'])->name('materi.ujianSoal.update');
 
         Route::get('/{kode_kelas}/materi/{id}/soal-ujian-create', [DosenMateriController::class, 'ujianSoalQuestionCreate'])->name('materi.ujianSoalQuestionCreate');
         Route::post('/{kode_kelas}/materi/{id}/soal-ujian-create', [DosenMateriController::class, 'ujianSoalQuestionStore'])->name('materi.ujianSoalQuestionStore');

@@ -26,7 +26,7 @@
                                 placeholder="Cari" name="q" value="{{ request()->q }}" />
                         </form>
                     </div> --}}
-                        <a href="#" class='btn btn-bg-light btn-active-color-danger btn-sm'
+                        {{-- <a href="#" class='btn btn-bg-light btn-active-color-danger btn-sm'
                             data-bs-toggle="modal" data-bs-target="#reset">
                             <i class="ki-duotone ki-file-deleted fs-2">
                                 <span class="path1"></span>
@@ -39,7 +39,7 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            Import</a>
+                            Import</a> --}}
                         <a href="{{ route('dosen.kelas.pretestQuestionCreate', $kelas->kode_kelas) }}"
                             class='btn btn-primary btn-sm fw-bolder' class="btn btn-primary">
                             <i class="ki-duotone ki-plus fs-2"></i>

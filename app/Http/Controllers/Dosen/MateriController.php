@@ -190,8 +190,6 @@ class MateriController extends Controller
         return view('pages.dosen.materi.diskusi-pribadi', $data);
     }
 
-
-
     public function kirimDiskusiPribadi(Request $request, $materi_id, $chat_id)
     {
         $diskusi_pribadi = DiskusiPribadi::create([
@@ -234,9 +232,7 @@ class MateriController extends Controller
         $validator = Validator::make($request->all(), [
             'description' => 'required',
             'duration' => 'required|numeric',
-        ], [
-            'required' => ':attribute tidak boleh kosong',
-            'numeric' => ':attribute harus berupa angka',
+            'minimum_score' => 'required|numeric',
         ]);
 
         if ($validator->fails()) {
@@ -247,10 +243,35 @@ class MateriController extends Controller
         $exam = Exam::create([
             'materi_id' => $id,
             'description' => $request->description,
-            'duration' => $request->duration
+            'duration' => $request->duration,
+            'minimum_score' => $request->minimum_score,
         ]);
 
         Alert::success('Berhasil', 'ujian berhasil dibuat');
+        return redirect()->back();
+    }
+
+    public function ujianSoalUpdate(Request $request, $kode_kelas, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'description' => 'required',
+            'duration' => 'required|numeric',
+            'minimum_score' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            Alert::error('Gagal', $validator->errors()->all());
+            return redirect()->back();
+        }
+
+        $exam = Exam::where('materi_id', $id)->first();
+        $exam->update([
+            'description' => $request->description,
+            'duration' => $request->duration,
+            'minimum_score' => $request->minimum_score,
+        ]);
+
+        Alert::success('Berhasil', 'ujian berhasil diupdate');
         return redirect()->back();
     }
 
