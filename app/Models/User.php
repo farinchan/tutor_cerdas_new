@@ -67,7 +67,7 @@ class User extends Authenticatable
         return $this->hasOne(Umum::class);
     }
 
-    public function role()
+    public function roleName()
     {
         return $this->getRoleNames()->first();
     }
