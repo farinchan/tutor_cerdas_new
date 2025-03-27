@@ -34,13 +34,13 @@
             <a href="#" class="btn bg-body d-flex flex-center h-35px h-lg-40px" data-bs-toggle="modal"
                 data-bs-target="#buat_kelas">
                 <i class="ki-duotone ki-plus fs-2"></i>
-                Buat Kelas
+                {{ __('class.create_class') }}
             </a>
             <div class="modal fade" tabindex="-1" id="buat_kelas">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h3 class="modal-title">Buat Kelas Baru</h3>
+                            <h3 class="modal-title">{{ __('class.create_class_title') }}</h3>
                             <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
                                 aria-label="Close">
                                 <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span
@@ -53,8 +53,9 @@
                             <div class="modal-body">
                                 @csrf
                                 <div class="mb-3">
-                                    <label for="matkul" class="form-label required">Mata Kuliah</label>
-                                    <select class="form-select form-select-solid" id="matkul" name="kode_mk" data-control="select2" data-placeholder="Pilih Mata Kuliah" data-dropdown-parent="#buat_kelas" required>
+                                    <label for="matkul" class="form-label required">
+                                        {{ __('class.class_subject') }}</label>
+                                    <select class="form-select form-select-solid" id="matkul" name="kode_mk" data-control="select2" data-placeholder=" {{ __('class.class_subject_select') }}" data-dropdown-parent="#buat_kelas" required>
                                         <option ></option>
                                         @foreach ($list_matakuliah as $matakuliah)
                                             <option value="{{ $matakuliah->kode_mk }}">{{ $matakuliah->nama_mk }}
@@ -64,13 +65,15 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="nama_kelas" class="form-label required">Nama kelas</label>
+                                    <label for="nama_kelas" class="form-label required">
+                                        {{ __('class.class_name') }}</label>
                                     <input type="text" class="form-control form-control-solid" id="nama_kelas" name="nama_kelas" placeholder="Nama kelas"
                                         required>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="kode_kelas" class="form-label required">Kode kelas</label>
+                                    <label for="kode_kelas" class="form-label required">
+                                        {{ __('class.class_code') }}</label>
                                     <input type="text" class="form-control form-control-solid" id="kode_kelas" name="kode_kelas" placeholder="Kode kelas" value="{{ $kode_kelas_new }}"
                                      readonly
                                         required>
@@ -78,24 +81,28 @@
 
                                 <div class="row mb-3">
                                     <div class="col-md-4">
-                                        <label for="tingkat" class="form-label required">Tingkat</label>
+                                        <label for="tingkat" class="form-label required">{{ __('class.class_level') }}</label>
                                         <select class="form-select form-select-solid" id="tingkat" name="tingkat" required>
-                                            <option value="">Pilih Tingkat</option>
+                                            <option value="">{{ __('class.class_level_select') }}</option>
                                             <option value="S1">S1</option>
                                             <option value="S2">S2</option>
                                             <option value="S3">S3</option>
                                         </select>
                                     </div>
                                     <div class="col-md-8">
-                                        <label for="jurusan" class="form-label required">Jurusan</label>
+                                        <label for="jurusan" class="form-label required"> {{ __('class.class_major') }}</label>
                                         <input type="text" class="form-control form-control-solid" id="jurusan" name="jurusan" placeholder="Jurusan" required>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
-                                <button type="submit" class="btn btn-primary">Buat kelas</button>
+                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+                                    {{ __('class.close') }}
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    {{ __('class.create_class') }}
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -142,7 +149,7 @@
                                             <div class="m-0">
                                                 <span
                                                     class="text-gray-700 fw-bolder d-block fs-2qx lh-1 ls-n1 mb-1">{{ $row->materi->count() }}</span>
-                                                <span class="text-gray-500 fw-semibold fs-6">Materi</span>
+                                                <span class="text-gray-500 fw-semibold fs-6">{{ __('class.material') }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -162,7 +169,7 @@
                                             <div class="m-0">
                                                 <span
                                                     class="text-gray-700 fw-bolder d-block fs-2qx lh-1 ls-n1 mb-1">{{ $row->mahasiswa->count() }}</span>
-                                                <span class="text-gray-500 fw-semibold fs-6">Mahasiswa</span>
+                                                <span class="text-gray-500 fw-semibold fs-6">{{ __('class.student') }}</span>
                                             </div>
                                         </div>
                                     </div>

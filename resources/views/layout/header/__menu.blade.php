@@ -12,7 +12,7 @@
             class="menu-item menu-here-bg menu-lg-down-accordion me-0 me-lg-2 @if (request()->routeIs('home')) here @endif">
             <a class="menu-link py-3" href="{{ route('home') }}">
                 <span class="menu-title">
-                    Home
+                {{ __('header.home') }}
                 </span>
                 <span class="menu-arrow d-lg-none"></span>
             </a>
@@ -23,7 +23,7 @@
                 class="menu-item menu-here-bg menu-lg-down-accordion me-0 me-lg-2 @if (request()->routeIs('mahasiswa.*')) here @endif">
                 <a class="menu-link py-3" href="{{ route('mahasiswa.kelas.index') }}">
                     <span class="menu-title">
-                        Kelas
+                        {{ __('header.class') }}
                     </span>
                     <span class="menu-arrow d-lg-none"></span>
                 </a>
@@ -35,7 +35,7 @@
                 class="menu-item menu-here-bg menu-lg-down-accordion me-0 me-lg-2 @if (request()->routeIs('mahasiswa.*')) here @endif">
                 <a class="menu-link py-3" href="{{ route('mahasiswa.kelas.index') }}">
                     <span class="menu-title">
-                        Kelas
+                        {{ __('header.class') }}
                     </span>
                     <span class="menu-arrow d-lg-none"></span>
                 </a>
@@ -47,7 +47,7 @@
                 class="menu-item menu-here-bg menu-lg-down-accordion me-0 me-lg-2 @if (request()->routeIs('dosen.*')) here @endif">
                 <a class="menu-link py-3" href="{{ route('dosen.kelas.index') }}">
                     <span class="menu-title">
-                        Mengajar
+                        {{ __('header.teaching') }}
                     </span>
                     <span class="menu-arrow d-lg-none"></span>
                 </a>
@@ -59,7 +59,7 @@
                 class="menu-item menu-here-bg menu-lg-down-accordion me-0 me-lg-2 @if (request()->routeIs('admin.*')) here @endif">
                 <a class="menu-link py-3" href="{{ route('admin.dashboard') }}">
                     <span class="menu-title">
-                        Administrator
+                        {{ __('header.administrator') }}
                     </span>
                     <span class="menu-arrow d-lg-none"></span>
                 </a>
@@ -70,7 +70,7 @@
             <div class="menu-item menu-here-bg menu-lg-down-accordion me-0 me-lg-2">
                 <a href="{{ route("profile") }}" class="menu-link py-3">
                     <span class="menu-title">
-                        Profil Saya
+                        {{ __('header.my_profile') }}
                     </span>
                     <span class="menu-arrow d-lg-none"></span>
                 </a>

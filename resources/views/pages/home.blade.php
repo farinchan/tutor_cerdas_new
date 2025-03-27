@@ -22,11 +22,12 @@
         <div class="mb-18 mt-18">
             <div class="text-center mb-12">
                 <h3 class="fs-2hx  mb-5 ">
-                    <a class="text-gray-900 text-hover-primary" href="#">Bersama Dengan Dosen profesional</a>
+                    <a class="text-gray-900 text-hover-primary" href="#">
+                        {{ __('home.lecture_title') }}
+                    </a>
                 </h3>
                 <div class="fs-5 text-muted fw-semibold">
-                    Dengan Dosen yang berpengalaman di bidangnya, kami siap membantu anda untuk mencapai tujuan belajar
-                    anda. <br>
+                    {{ __('home.lecture_description') }}
                 </div>
             </div>
             <div class="tns tns-default mb-10">
@@ -59,12 +60,12 @@
             <div class="card-body py-15">
                 <div class="text-center mb-12">
                     <h3 class="fs-2hx  mb-5 ">
-                        <a class="text-gray-900 text-hover-primary" href="#">Mengenai Kami</a>
+                        <a class="text-gray-900 text-hover-primary" href="#">
+                            {{ __('home.about_title') }}
+                        </a>
                     </h3>
-                    <div class="fs-5 text-muted fw-semibold">
-                        Tutor Cerdas adalah platform pembelajaran online yang menyediakan berbagai kursus dan pelatihan
-                        untuk membantu Anda mencapai tujuan belajar Anda. <br> Kami memiliki tim pengajar yang berpengalaman
-                        dan berkualitas untuk memberikan pengalaman belajar yang terbaik.
+                    <div class="fs-5 text-muted fw-semibold px-lg-20">
+                        {{ __('home.about_description') }}
                     </div>
                 </div>
                 <div class="d-flex flex-center">
@@ -79,7 +80,7 @@
                                         </div>
                                     </div>
                                     <span class="text-gray-600 fw-semibold fs-5 lh-0">
-                                        Dosen Profesional
+                                        {{ __('home.lecture') }}</span>
                                     </span>
                                 </div>
                             </div>
@@ -93,7 +94,9 @@
                                             data-kt-countup-value="{{ $mahasiswa_count }}">0
                                         </div>
                                     </div>
-                                    <span class="text-gray-600 fw-semibold fs-5 lh-0">Mahasiswa Aktif</span>
+                                    <span class="text-gray-600 fw-semibold fs-5 lh-0">
+                                        {{ __('home.student') }}
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -101,12 +104,14 @@
                             <div class="text-center">
                                 <i class="ki-outline ki-user-tick fs-2tx text-info"></i>
                                 <div class="mt-1">
-                                    <div class="fs-lg-2hx fs-2x fw-bold text-gray-800 d-flex align-items-center">
+                                    <div class="fs-lg-2hx fs-2x fw-bold text-gray-800 d-flex justify-content-center">
                                         <div class="min-w-50px" data-kt-countup="true"
                                             data-kt-countup-value="{{ $umum_count }}">0
                                         </div>
                                     </div>
-                                    <span class="text-gray-600 fw-semibold fs-5 lh-0">Umum</span>
+                                    <span class="text-gray-600 fw-semibold fs-5 lh-0">
+                                        {{ __('home.general') }}
+                                    </span>
                                 </div>
                             </div>
                         </div>

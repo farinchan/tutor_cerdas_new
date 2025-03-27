@@ -58,37 +58,43 @@
                         <span class="path2"></span>
                         <span class="path3"></span>
                     </i>
-                    <span class="d-none d-md-inline ms-2">Join Kelas</span>
+                    <span class="d-none d-md-inline ms-2">
+                        {{ __('header.join_class') }}
+                    </span>
                 </a>
             </div>
             <div class="modal fade" tabindex="-1" id="join_kelas">
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                     <div class="modal-content">
 
-                        <div class="card border-0 h-md-100" data-bs-theme="light" style="background-color: #1C325E;"> 
-                            <div class="card-body"> 
+                        <div class="card border-0 h-md-100" data-bs-theme="light" style="background-color: #1C325E;">
+                            <div class="card-body">
                                 <form action="{{ route('mahasiswa.kelas.join') }}" method="POST">
                                     @csrf
                                 <div class="row align-items-center h-100">
                                     <div class="col-7 ps-xl-13">
                                         <div class="text-white mb-6 pt-6">
-                                            <span class="fs-2qx fw-bold">Join Kelas</span>
+                                            <span class="fs-2qx fw-bold">
+                                                {{ __('header.join_class') }}
+                                            </span>
                                         </div>
                                         <span class="fw-semibold text-white fs-6 mb-8 d-block opacity-75">
-                                            Join kelas dengan memasukkan kode kelas yang diberikan oleh dosen
+                                            {{ __('header.join_class_code_info') }}
                                         </span>
                                         <div class="d-flex align-items-center flex-wrap d-grid gap-2 mb-10 mb-xl-20">
                                             <div class="d-flex align-items-center me-5 me-xl-13">
                                                 <input type="text" class="form-control form-control-lg form-control-solid" placeholder="Masukkan Kode Kelas" name="kode_kelas" />
-                                            </div>                       
+                                            </div>
                                         </div>
                                         <div class="d-flex flex-column flex-sm-row d-grid gap-2">
-                                            <button  type="submit" class="btn btn-success flex-shrink-0 me-lg-2" >join</button>
-                                            <button type="button" data-bs-dismiss="modal" class="btn btn-primary flex-shrink-0" style="background: rgba(255, 255, 255, 0.2)" >Batal</button>
+                                            <button  type="submit" class="btn btn-success flex-shrink-0 me-lg-2" >{{ __('header.join_class_code_button') }}</button>
+                                            <button type="button" data-bs-dismiss="modal" class="btn btn-primary flex-shrink-0" style="background: rgba(255, 255, 255, 0.2)" >
+                                                {{ __('header.join_class_code_button_cancel') }}
+                                            </button>
                                         </div>
                                     </div>
                                     <div class="col-5 pt-10">
-                                        <div class="bgi-no-repeat bgi-size-contain bgi-position-x-end h-225px" style="background-image:url('{{ asset("assets/media/illustrations/sigma-1/17-dark.png") }}">                 
+                                        <div class="bgi-no-repeat bgi-size-contain bgi-position-x-end h-225px" style="background-image:url('{{ asset("assets/media/illustrations/sigma-1/17-dark.png") }}">
                                         </div>
                                     </div>
                                 </form>
@@ -115,7 +121,9 @@
                 <span class="path1"></span>
                 <span class="path2"></span>
             </i>
-            <span class="d-none d-md-inline ms-2">Masuk</span>
+            <span class="d-none d-md-inline ms-2">
+                {{ __('header.login') }}
+            </span>
         </a>
         <a href="{{ route('register') }}"
             class="btn btn-flex flex-center btn-primary align-self-center px-0 px-md-3 h-30px w-30px w-md-auto h-lg-40px ms-2 ms-lg-4">
@@ -124,7 +132,9 @@
                 <span class="path2"></span>
                 <span class="path3"></span>
             </i>
-            <span class="d-none d-md-inline ms-2">Daftar</span>
+            <span class="d-none d-md-inline ms-2">
+                {{ __('header.register') }}
+            </span>
         </a>
     @endauth
     <!--end::User menu-->
