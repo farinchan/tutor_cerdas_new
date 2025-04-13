@@ -81,7 +81,8 @@
                                         data-kt-user-table-filter="role" data-hide-search="true">
                                         <option></option>
                                         <option value="admin">admin</option>
-                                        <option value="user">user</option>
+                                        <option value="dosen">dosen</option>
+                                        <option value="mahasiswa">mahasiswa</option>
                                     </select>
                                 </div>
                                 <div class="d-flex justify-content-end">
