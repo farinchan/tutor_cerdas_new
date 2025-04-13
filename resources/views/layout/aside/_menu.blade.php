@@ -109,14 +109,14 @@
                         <span class="menu-title">Website</span>
                     </a>
                 </div>
-                <div class="menu-item">
+                {{-- <div class="menu-item">
                     <a class="menu-link @if (request()->routeIs('admin.setting.banner')) active @endif" href="#">
                         <span class="menu-bullet">
                             <span class="bullet bullet-dot"></span>
                         </span>
                         <span class="menu-title">Banner</span>
                     </a>
-                </div>
+                </div> --}}
             </div>
         </div>
 

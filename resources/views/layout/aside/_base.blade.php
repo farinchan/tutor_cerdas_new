@@ -24,13 +24,13 @@
     </div>
     <!--end::Aside menu-->
     <!--begin::Footer-->
-    <div class="aside-footer flex-column-auto pt-5 pb-7 px-5" id="kt_aside_footer">
+    {{-- <div class="aside-footer flex-column-auto pt-5 pb-7 px-5" id="kt_aside_footer">
         <a href="https://preview.keenthemes.com/html/metronic/docs" class="btn btn-custom btn-primary w-100" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss-="click" title="200+ in-house components and 3rd-party plugins">
             <span class="btn-label">
                 Docs & Components
             </span>
             <i class="ki-duotone ki-document btn-icon fs-2"><span class="path1"></span><span class="path2"></span></i>        </a>
-    </div>
+    </div> --}}
     <!--end::Footer-->
 </div>
 <!--end::Aside-->
