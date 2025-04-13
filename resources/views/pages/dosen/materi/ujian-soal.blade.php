@@ -196,8 +196,8 @@
                                                             Nilai</label>
                                                         <input type="number" class="form-control form-control-solid"
                                                             id="minimum_score" name="minimum_score"
-                                                            value="{{ old('minimum_score') }}"
-                                                            placeholder="Minimum Nilai" required />
+                                                            value="{{ old('minimum_score') }}" placeholder="Minimum Nilai"
+                                                            required />
                                                         @error('minimum_score')
                                                             <div class="text-danger">{{ $message }}</div>
                                                         @enderror
@@ -245,7 +245,8 @@
                         <div class="mb-3">
                             <label for="nama_kelas" class="form-label required">Deskripsi</label>
                             <textarea class="form-control form-control-solid" id="description" name="description" placeholder="Deskripsi Ujian"
-                                required> {{ $exam->description }} </textarea>
+                                required> {{ $exam->description ?? '' }}
+                            </textarea>
                             @error('description')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -254,7 +255,7 @@
                             <label for="nama_kelas" class="form-label required">Durasi
                                 Ujian</label>
                             <input type="number" class="form-control form-control-solid" id="duration" name="duration"
-                                placeholder="Durasi Ujian" value="{{ $exam->duration }}" required />
+                                placeholder="Durasi Ujian" value="{{ $exam->duration ?? 0 }}" required />
                             @error('duration')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -264,7 +265,7 @@
                             <label for="nama_kelas" class="form-label required">Minimum
                                 Nilai</label>
                             <input type="number" class="form-control form-control-solid" id="minimum_score"
-                                name="minimum_score" value="{{ $exam->minimum_score }}" placeholder="Minimum Nilai"
+                                name="minimum_score" value="{{ $exam->minimum_score ?? 0 }}" placeholder="Minimum Nilai"
                                 required />
                             @error('minimum_score')
                                 <div class="text-danger">{{ $message }}</div>
