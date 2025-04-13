@@ -89,11 +89,7 @@
                                                     </div>
                                                     <div class="symbol symbol-35px symbol-circle">
                                                         <img alt="Pic" src="
-                                                        @if ($diskusi->user->role() == 'mahasiswa')
                                                             {{ $diskusi->user?->getPhoto() }}
-                                                        @else
-                                                            {{ $diskusi->user?->getPhoto() }}
-                                                        @endif
                                                         " />
                                                     </div>
                                                 </div>
