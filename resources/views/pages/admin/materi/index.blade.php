@@ -145,7 +145,7 @@
                             @method('DELETE')
                             @csrf
                             <p class="text-center">
-                                Apakah Anda Yakin Ingin Menghapus materi <strong>{{ $materi->judul }} (Kelas : 
+                                Apakah Anda Yakin Ingin Menghapus materi <strong>{{ $materi->judul }} (Kelas :
                                     {{ $materi->kelas->nama_kelas }} )</strong> ?
                             </p>
                             <div class="text-center pt-10">

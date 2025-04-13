@@ -25,11 +25,27 @@ class MateriController extends Controller
 
     public function show($id)
     {
+        $materi = Materi::find($id);
         $data = [
             'title' => 'Materi Management',
             'menu' => 'materi',
             'sub_menu' => 'materi',
-            'materi' => Materi::find($id),
+            'materi' => $materi,
+            'exam_mahasiswa' => User::whereHas('roles', function ($query) {
+                $query->where('name', 'mahasiswa');
+            })
+                ->with([
+                    'mahasiswa',
+                    'examSessions' => function ($query) use ($materi) {
+                        $query->where(
+                            'exam_id',
+                            $materi->exam->id
+                        )->latest();
+                    }
+                ])
+                ->whereHas('examSessions.exam', function ($query) use ($materi) {
+                    $query->where('materi_id', $materi->id);
+                })->get()
         ];
 
         return view('pages.admin.materi.show', $data);
