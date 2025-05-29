@@ -164,11 +164,7 @@
                                                     </div>
                                                     <div class="symbol symbol-35px symbol-circle">
                                                         <img alt="Pic"
-                                                            src="
-                                                        @if ($diskusi->user->role() == 'mahasiswa') {{ $diskusi->user?->getPhoto() }}
-                                                        @else
-                                                            {{ $diskusi->user?->getPhoto() }} @endif
-                                                        " />
+                                                            src=" {{ $diskusi->user?->getPhoto() }}" />
                                                     </div>
                                                 </div>
                                                 <div class="p-5 rounded bg-light-primary text-gray-900 fw-semibold mw-lg-400px text-end"
