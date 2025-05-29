@@ -96,7 +96,7 @@ class MateriController extends Controller
 
         $responseChatbot = null;
         try {
-            $response = Http::post('http://127.0.0.1:5000/chatbot', [
+            $response = Http::post('https://chatbot.gariskode.me/chatbot', [
                 'materi_id' => $materi_id,
                 'user_id' => Auth::user()->id,
                 'user_chat_id' => Auth::user()->id,
