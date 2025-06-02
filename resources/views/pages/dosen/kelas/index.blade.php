@@ -55,11 +55,14 @@
                                 <div class="mb-3">
                                     <label for="matkul" class="form-label required">
                                         {{ __('class.class_subject') }}</label>
-                                    <select class="form-select form-select-solid" id="matkul" name="kode_mk" data-control="select2" data-placeholder=" {{ __('class.class_subject_select') }}" data-dropdown-parent="#buat_kelas" required>
-                                        <option ></option>
+                                    <select class="form-select form-select-solid" id="matkul" name="kode_mk"
+                                        data-control="select2" data-placeholder=" {{ __('class.class_subject_select') }}"
+                                        data-dropdown-parent="#buat_kelas" required>
+                                        <option></option>
                                         @foreach ($list_matakuliah as $matakuliah)
                                             <option value="{{ $matakuliah->kode_mk }}">{{ $matakuliah->nama_mk }}
-                                                ({{ $matakuliah->kode_mk }})</option>
+                                                ({{ $matakuliah->kode_mk }})
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -67,22 +70,24 @@
                                 <div class="mb-3">
                                     <label for="nama_kelas" class="form-label required">
                                         {{ __('class.class_name') }}</label>
-                                    <input type="text" class="form-control form-control-solid" id="nama_kelas" name="nama_kelas" placeholder="Nama kelas"
-                                        required>
+                                    <input type="text" class="form-control form-control-solid" id="nama_kelas"
+                                        name="nama_kelas" placeholder="Nama kelas" required>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="kode_kelas" class="form-label required">
                                         {{ __('class.class_code') }}</label>
-                                    <input type="text" class="form-control form-control-solid" id="kode_kelas" name="kode_kelas" placeholder="Kode kelas" value="{{ $kode_kelas_new }}"
-                                     readonly
+                                    <input type="text" class="form-control form-control-solid" id="kode_kelas"
+                                        name="kode_kelas" placeholder="Kode kelas" value="{{ $kode_kelas_new }}" readonly
                                         required>
                                 </div>
 
                                 <div class="row mb-3">
                                     <div class="col-md-4">
-                                        <label for="tingkat" class="form-label required">{{ __('class.class_level') }}</label>
-                                        <select class="form-select form-select-solid" id="tingkat" name="tingkat" required>
+                                        <label for="tingkat"
+                                            class="form-label required">{{ __('class.class_level') }}</label>
+                                        <select class="form-select form-select-solid" id="tingkat" name="tingkat"
+                                            required>
                                             <option value="">{{ __('class.class_level_select') }}</option>
                                             <option value="S1">S1</option>
                                             <option value="S2">S2</option>
@@ -90,8 +95,10 @@
                                         </select>
                                     </div>
                                     <div class="col-md-8">
-                                        <label for="jurusan" class="form-label required"> {{ __('class.class_major') }}</label>
-                                        <input type="text" class="form-control form-control-solid" id="jurusan" name="jurusan" placeholder="Jurusan" required>
+                                        <label for="jurusan" class="form-label required">
+                                            {{ __('class.class_major') }}</label>
+                                        <input type="text" class="form-control form-control-solid" id="jurusan"
+                                            name="jurusan" placeholder="Jurusan" required>
                                     </div>
                                 </div>
                             </div>
@@ -149,7 +156,8 @@
                                             <div class="m-0">
                                                 <span
                                                     class="text-gray-700 fw-bolder d-block fs-2qx lh-1 ls-n1 mb-1">{{ $row->materi->count() }}</span>
-                                                <span class="text-gray-500 fw-semibold fs-6">{{ __('class.material') }}</span>
+                                                <span
+                                                    class="text-gray-500 fw-semibold fs-6">{{ __('class.material') }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -168,8 +176,9 @@
                                             </div>
                                             <div class="m-0">
                                                 <span
-                                                    class="text-gray-700 fw-bolder d-block fs-2qx lh-1 ls-n1 mb-1">{{ $row->mahasiswa->count() }}</span>
-                                                <span class="text-gray-500 fw-semibold fs-6">{{ __('class.student') }}</span>
+                                                    class="text-gray-700 fw-bolder d-block fs-2qx lh-1 ls-n1 mb-1">{{ $row->mahasiswa->where('status', 'aktif')->count() }}</span>
+                                                <span
+                                                    class="text-gray-500 fw-semibold fs-6">{{ __('class.student') }}</span>
                                             </div>
                                         </div>
                                     </div>

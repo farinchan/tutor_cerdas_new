@@ -43,7 +43,7 @@ Route::prefix('dosen')->middleware(['auth', 'role:dosen'])->name('dosen.')->grou
     Route::prefix('kelas')->name('kelas.')->group(function () {
         Route::get('/', [DosenKelasController::class, 'index'])->name('index');
         Route::post('/store', [DosenKelasController::class, 'store'])->name('store');
-        Route::get('/{kode_kelas}/update', [DosenKelasController::class, 'update'])->name('update');
+        Route::put('/{kode_kelas}/update', [DosenKelasController::class, 'update'])->name('update');
         Route::post('/{kode_kelas}/delete', [DosenKelasController::class, 'delete'])->name('delete');
 
         Route::get('/{kode_kelas}', [DosenKelasController::class, 'show'])->name('show');

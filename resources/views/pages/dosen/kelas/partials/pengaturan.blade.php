@@ -5,38 +5,38 @@
         </div>
     </div>
     <div class="card-body pt-0 pb-5">
-        <form action="{{ route('dosen.kelas.store') }}" method="POST">
+        <form action="{{ route('dosen.kelas.update', $kelas->kode_kelas) }}" method="POST">
             @csrf
+            @method("PUT")
 
             <div class="modal-body">
                 <div class="row mb-8">
-                    <div class="col-lg-8">
-                        <label class="form-label fw-bold required">Mata Kuliah:</label>
-                        <input type="text" class="form-control " placeholder="Mata Kuliah"
-                            name="matakuliah" value="{{ old('') }}" />
-                    </div>
-                    <div class="col-lg-4">
-                        <label class="form-label fw-bold required">SKS:</label>
-                        <input type="number" class="form-control " placeholder="SKS"
-                            name="sks" value="{{ old('sks') }}" />
-                    </div>
+                    <label class="form-label fw-bold required">{{ __('class.class_subject') }}:</label>
+                    <select class="form-select form-select-solid" id="matkul" name="kode_mk" data-control="select2"
+                        data-placeholder=" {{ __('class.class_subject_select') }}"
+                        required>
+                        <option></option>
+                        @foreach ($list_matakuliah as $matakuliah)
+                            <option value="{{ $matakuliah->kode_mk }}" {{$kelas->kode_mk == $matakuliah->kode_mk ? "selected" : ""}}>
+                                {{ $matakuliah->nama_mk }} ({{ $matakuliah->kode_mk }})
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
-                <hr>
 
                 <div class="mb-8 mt-8">
-                    <label class="form-label fw-bold required">Kode Kelas:</label>
+                    <label class="form-label fw-bold required">{{ __('class.class_code') }}:</label>
                     <input type="text" class="form-control " placeholder="Kode Kelas"
                         value="{{ $kelas->kode_kelas }}" readonly />
                 </div>
                 <div class="mb-8 mt-5">
-                    <label class="form-label fw-bold required">Nama Kelas:</label>
-                    <input type="text" class="form-control " name="nama_kelas"
-                        placeholder="Nama Kelas" value="{{ $kelas->nama_kelas }}" />
+                    <label class="form-label fw-bold required">{{ __('class.class_name') }}:</label>
+                    <input type="text" class="form-control " name="nama_kelas" placeholder="Nama Kelas"
+                        value="{{ $kelas->nama_kelas }}" />
                 </div>
                 <div class="mb-8">
-                    <label class="form-label fw-bold required">Tingkat:</label>
-                    <select class="form-select" data-placeholder="Pilih Tingkat" name="tingkat"
-                        required>
+                    <label class="form-label fw-bold required">{{ __('class.class_level') }}:</label>
+                    <select class="form-select" data-placeholder="Pilih Tingkat" name="tingkat" required>
                         <option>Pilih Tingkat</option>
                         <option value="D3" {{ $kelas->tingkat == 'D3' ? 'selected' : '' }}>D3
                         </option>
@@ -51,16 +51,15 @@
                     </select>
                 </div>
                 <div class="mb-8">
-                    <label class="form-label fw-bold required">Jurusan:</label>
-                    <input type="text" class="form-control " placeholder="Jurusan"
-                        name="jurusan" value="{{ $kelas->jurusan }}" required />
+                    <label class="form-label fw-bold required">{{ __('class.class_major') }}:</label>
+                    <input type="text" class="form-control " placeholder="Jurusan" name="jurusan"
+                        value="{{ $kelas->jurusan }}" required />
                 </div>
             </div>
 
             <div class="modal-footer">
-                <button type="reset" class="btn btn-light"
-                    data-bs-dismiss="modal">Batal</button>
-                <button type="submit" class="btn btn-primary">Buat Sekarang</button>
+                <button type="reset" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary">Update</button>
             </div>
         </form>
     </div>

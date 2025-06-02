@@ -56,7 +56,7 @@
                     <div class="card-body mt-n20 mb-10">
                         <div class="bg-gray-100 bg-opacity-70 rounded-2 px-6 py-5">
                             <div class="d-flex flex-column">
-                                <span class="text-gray-800  mb-3">Dosen/Pengajar :</span>
+                                <span class="text-gray-800  mb-3">{{ __('class.lecturer') }}  :</span>
                             </div>
                             <div class="d-flex align-items-center">
                                 <!--begin:: Avatar -->

@@ -45,14 +45,21 @@ class MahasiswaController extends Controller
 
         $mahasiswa = Mahasiswa::where('nim', request()->nim)->join('users', 'mahasiswa.user_id', '=', 'users.id')->first();
         $kelas = Kelas::where('kode_kelas', $kode_kelas)->first();
-        Mail::to($mahasiswa->user->email)->send(new InviteMahasiswaMail([
-            'nama' => $mahasiswa->nama,
-            'nim' => $mahasiswa->nim,
-            'kode_kelas' => $kelas->kode_kelas,
-            'nama_kelas' => $kelas->nama_kelas,
-            'matakuliah' => $kelas->matakuliah->nama_mk,
-            'dosen' => $kelas->dosen->user->name,
-        ]));
+
+        try {
+            Mail::to($mahasiswa->user->email)->send(new InviteMahasiswaMail([
+                'nama' => $mahasiswa->nama,
+                'nim' => $mahasiswa->nim,
+                'kode_kelas' => $kelas->kode_kelas,
+                'nama_kelas' => $kelas->nama_kelas,
+                'matakuliah' => $kelas->matakuliah->nama_mk,
+                'dosen' => $kelas->dosen->user->name,
+            ]));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+
+
 
 
         Alert::success('Berhasil', 'Mahasiswa berhasil diundang');
@@ -63,14 +70,19 @@ class MahasiswaController extends Controller
     {
         $mahasiswa = Mahasiswa::where('nim', KelasMahasiswa::find($id)->nim)->join('users', 'mahasiswa.user_id', '=', 'users.id')->first();
         $kelas = Kelas::where('kode_kelas', KelasMahasiswa::find($id)->kode_kelas)->first();
-        Mail::to($mahasiswa->user->email)->send(new AcceptMahasiswaMail([
-            'nama' => $mahasiswa->nama,
-            'nim' => $mahasiswa->nim,
-            'kode_kelas' => $kelas->kode_kelas,
-            'nama_kelas' => $kelas->nama_kelas,
-            'matakuliah' => $kelas->matakuliah->nama_mk,
-            'dosen' => $kelas->dosen->user->name,
-        ]));
+        try {
+            Mail::to($mahasiswa->user->email)->send(new AcceptMahasiswaMail([
+                'nama' => $mahasiswa->nama,
+                'nim' => $mahasiswa->nim,
+                'kode_kelas' => $kelas->kode_kelas,
+                'nama_kelas' => $kelas->nama_kelas,
+                'matakuliah' => $kelas->matakuliah->nama_mk,
+                'dosen' => $kelas->dosen->user->name,
+            ]));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+
 
         KelasMahasiswa::find($id)->update(['status' => 'aktif']);
         Alert::success('Berhasil', 'Mahasiswa berhasil diterima');
@@ -81,14 +93,19 @@ class MahasiswaController extends Controller
     {
         $mahasiswa = Mahasiswa::where('nim', KelasMahasiswa::find($id)->nim)->join('users', 'mahasiswa.user_id', '=', 'users.id')->first();
         $kelas = Kelas::where('kode_kelas', KelasMahasiswa::find($id)->kode_kelas)->first();
-        Mail::to($mahasiswa->user->email)->send(new RejectMahasiswaMail([
-            'nama' => $mahasiswa->nama,
-            'nim' => $mahasiswa->nim,
-            'kode_kelas' => $kelas->kode_kelas,
-            'nama_kelas' => $kelas->nama_kelas,
-            'matakuliah' => $kelas->matakuliah->nama_mk,
-            'dosen' => $kelas->dosen->user->name,
-        ]));
+        try {
+            Mail::to($mahasiswa->user->email)->send(new RejectMahasiswaMail([
+                'nama' => $mahasiswa->nama,
+                'nim' => $mahasiswa->nim,
+                'kode_kelas' => $kelas->kode_kelas,
+                'nama_kelas' => $kelas->nama_kelas,
+                'matakuliah' => $kelas->matakuliah->nama_mk,
+                'dosen' => $kelas->dosen->user->name,
+            ]));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+
 
         KelasMahasiswa::find($id)->delete();
         Alert::success('Berhasil', 'Mahasiswa berhasil ditolak');
@@ -99,19 +116,23 @@ class MahasiswaController extends Controller
     {
         $mahasiswa = Mahasiswa::where('nim', KelasMahasiswa::find($id)->nim)->join('users', 'mahasiswa.user_id', '=', 'users.id')->first();
         $kelas = Kelas::where('kode_kelas', KelasMahasiswa::find($id)->kode_kelas)->first();
-        Mail::to($mahasiswa->user->email)->send(new KickMahasiswaMail([
-            'nama' => $mahasiswa->nama,
-            'nim' => $mahasiswa->nim,
-            'kode_kelas' => $kelas->kode_kelas,
-            'nama_kelas' => $kelas->nama_kelas,
-            'matakuliah' => $kelas->matakuliah->nama_mk,
-            'dosen' => $kelas->dosen->user->name,
-        ]));
+
+        try {
+            Mail::to($mahasiswa->user->email)->send(new KickMahasiswaMail([
+                'nama' => $mahasiswa->nama,
+                'nim' => $mahasiswa->nim,
+                'kode_kelas' => $kelas->kode_kelas,
+                'nama_kelas' => $kelas->nama_kelas,
+                'matakuliah' => $kelas->matakuliah->nama_mk,
+                'dosen' => $kelas->dosen->user->name,
+            ]));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+
 
         KelasMahasiswa::find($id)->delete();
         Alert::success('Berhasil', 'Mahasiswa berhasil dikeluarkan');
         return redirect()->back();
     }
-
-
 }

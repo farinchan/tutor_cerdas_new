@@ -86,7 +86,8 @@ class KelasController extends Controller
                 ->orderBy('mahasiswa.nim')
                 ->get(['mahasiswa.nim', 'users.name','nilai.nilai_pretest', 'nilai.nilai_tugas', 'nilai.nilai_quiz', 'nilai.nilai_uts', 'nilai.nilai_uas', 'nilai.nilai_akhir']),
             'exam' => $kelas->pretest,
-            'list_exam_question' => $kelas?->pretest?->id ? PretestQuestion::where('pretest_id', $kelas?->pretest?->id)->get() : []
+            'list_exam_question' => $kelas?->pretest?->id ? PretestQuestion::where('pretest_id', $kelas?->pretest?->id)->get() : [],
+            'list_matakuliah' => Matakuliah::all(),
 
         ];
         // return response()->json($data);
@@ -96,6 +97,7 @@ class KelasController extends Controller
     public function update($kode_kelas)
     {
         $validator = Validator::make(request()->all(), [
+            'kode_mk' => 'required',
             'nama_kelas' => 'required',
             'tingkat' => 'required',
             'jurusan' => 'required',
@@ -109,6 +111,7 @@ class KelasController extends Controller
         }
 
         Kelas::where('kode_kelas', $kode_kelas)->update([
+            'kode_mk' => request()->kode_mk,
             'nama_kelas' => request()->nama_kelas,
             'tingkat' => request()->tingkat,
             'jurusan' => request()->jurusan

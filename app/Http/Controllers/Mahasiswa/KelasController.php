@@ -41,14 +41,34 @@ class KelasController extends Controller
             return redirect()->back()->with('error', 'Kode kelas tidak ditemukan');
         }
 
-        KelasMahasiswa::create([
-            'nim' => Auth::user()->mahasiswa->nim,
-            'kode_kelas' => $kelas->kode_kelas,
-            'status' => 'nonaktif'
-        ]);
+        $kelas_mahasiswa = KelasMahasiswa::where('nim', Auth::user()->mahasiswa->nim)->where("kode_kelas", request()->kode_kelas)->first();
 
-        Alert::success('Berhasil', 'Permintaan bergabung berhasil dikirim, silahkan tunggu konfirmasi dari dosen, cek email secara berkala');
-        return redirect()->back();
+        if ($kelas_mahasiswa) {
+            if ($kelas_mahasiswa->status == "nonaktif") {
+                Alert::error('Error', 'Anda sudah mengirim permintaan bergabung, silahkan tunggu konfirmasi dari dosen');
+                return redirect()->back();
+            } elseif ($kelas_mahasiswa->status == "aktif") {
+                Alert::error('Error', 'Anda sudah bergabung di kelas ini');
+                return redirect()->back();
+            } else {
+                Alert::error('Error', 'Status kelas tidak valid');
+                return redirect()->back();
+            }
+        } else {
+
+            KelasMahasiswa::create([
+                'nim' => Auth::user()->mahasiswa->nim,
+                'kode_kelas' => $kelas->kode_kelas,
+                'status' => 'nonaktif'
+            ]);
+
+            Alert::success('Berhasil', 'Permintaan bergabung berhasil dikirim, silahkan tunggu konfirmasi dari dosen, cek email secara berkala');
+            return redirect()->back();
+        }
+
+         Alert::error('Error', 'Terjadi kesalahan');
+            return redirect()->back();
+
     }
 
     public function show($kode_kelas)
@@ -78,7 +98,7 @@ class KelasController extends Controller
 
                         $examSession = $materi_sebelumnya->exam?->examSessions?->contains('status', 'lulus') ?? false;
 
-                        if (!$examSession ) {
+                        if (!$examSession) {
                             $materi->is_locked = true; // Kunci materi jika ujian sebelumnya belum lulus
                         }
                     }

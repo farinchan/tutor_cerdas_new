@@ -316,7 +316,7 @@
             });
         }
 
-        let start_time = @json($session->start_time);
+        let start_time = @json($session->start_time ?? now());
 
         // Durasi dalam menit diambil dari exam.durasi
         var durationInMinutes = @json($exam->duration);

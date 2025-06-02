@@ -115,7 +115,8 @@
                 </div>
                 <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
                     <li class="nav-item mt-2">
-                        <a class="nav-link text-active-primary ms-0 me-10 py-5 " href="{{ route('mahasiswa.kelas.materi', [$kode_kelas, $materi_id]) }}">Diskusi Kelas</a>
+                        <a class="nav-link text-active-primary ms-0 me-10 py-5 "
+                            href="{{ route('mahasiswa.kelas.materi', [$kode_kelas, $materi_id]) }}">Diskusi Kelas</a>
                     </li>
                     <li class="nav-item mt-2">
                         <a class="nav-link text-active-primary ms-0 me-10 py-5"
@@ -167,10 +168,14 @@
 
                                                 </td>
                                                 <td>
-                                                    @if ($exam_session->status == 'lulus')
-                                                        <span class="badge badge-light-success">Lulus</span>
+                                                    @if ($exam_session->endtime)
+                                                        @if ($exam_session->status == 'lulus')
+                                                            <span class="badge badge-light-success">Lulus</span>
+                                                        @else
+                                                            <span class="badge badge-light-danger">Tidak Lulus</span>
+                                                        @endif
                                                     @else
-                                                        <span class="badge badge-light-danger">Tidak Lulus</span>
+                                                        <span class="badge badge-light-warning">Sedang berlangsung</span>
                                                     @endif
                                                 </td>
                                             </tr>
