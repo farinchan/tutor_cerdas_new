@@ -7,4 +7,7 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-
+Route::get('/chatbot-restart', [
+    \App\Http\Controllers\Api\DockerController::class,
+    'restart'
+]);
