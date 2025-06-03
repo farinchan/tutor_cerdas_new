@@ -111,6 +111,16 @@
                         </div>
                     @endif
                 </div>
+                <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
+
+                    <li class="nav-item mt-2">
+                        <a class="nav-link text-active-primary ms-0 me-10 py-5"
+                            href="{{ route('umum.kelas.materiDiskusiPribadi', [$kode_kelas, $materi_id]) }}">{{ __('class.dicussion_ai') }}</a>
+                    </li>
+                    <li class="nav-item mt-2">
+                        <a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="#">{{ __('class.exam_history') }}</a>
+                    </li>
+                </ul>
             </div>
         </div>
         <div class="row g-5 g-xxl-8">

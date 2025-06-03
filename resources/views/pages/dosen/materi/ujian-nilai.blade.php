@@ -52,10 +52,12 @@
                             <div class="card-toolbar">
                                 <ul class="nav nav-tabs nav-line-tabs nav-stretch fs-6 border-0">
                                     <li class="nav-item">
-                                        <a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_pane_7">{{ __('class.student') }}</a>
+                                        <a class="nav-link active" data-bs-toggle="tab"
+                                            href="#kt_tab_pane_7">{{ __('class.student') }}</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_8">{{ __('class.general') }}</a>
+                                        <a class="nav-link" data-bs-toggle="tab"
+                                            href="#kt_tab_pane_8">{{ __('class.general') }}</a>
                                     </li>
                                 </ul>
                             </div>
@@ -115,17 +117,12 @@
 
                                                                     </td>
                                                                     <td>
-                                                                        @if ($session->endtime)
-                                                                            @if ($session->status == 'lulus')
-                                                                                <span
-                                                                                    class="badge badge-light-success">Lulus</span>
-                                                                            @else
-                                                                                <span class="badge badge-light-danger">Tidak
-                                                                                    Lulus</span>
-                                                                            @endif
+                                                                        @if ($session->status == 'lulus')
+                                                                            <span
+                                                                                class="badge badge-light-success">Lulus</span>
                                                                         @else
-                                                                            <span class="badge badge-light-warning">Sedang
-                                                                                berlangsung</span>
+                                                                            <span class="badge badge-light-danger">Tidak
+                                                                                Lulus</span>
                                                                         @endif
                                                                     </td>
                                                                 </tr>
@@ -141,7 +138,9 @@
                                 </div>
                             @empty
                                 <div class="card">
-
+                                    <div class="card-body">
+                                        <p class="text-center">Tidak ada mahasiswa ujian</p>
+                                    </div>
                                 </div>
                             @endforelse
 
@@ -149,7 +148,85 @@
                         </div>
 
                         <div class="tab-pane fade" id="kt_tab_pane_8" role="tabpanel">
-                            ...
+                            @forelse ($exam_umum as $list_umum)
+                                <div class="card mt-3">
+                                    <div class="card-body">
+                                        <div class="py-0" data-kt-customer-payment-method="row">
+                                            <div class="py-3 d-flex flex-stack flex-wrap">
+                                                <div class="d-flex align-items-center collapsible collapsed rotate"
+                                                    data-bs-toggle="collapse"
+                                                    href="#kt_customer_view_payment_method_{{ $list_umum->id }}"
+                                                    role="button" aria-expanded="false"
+                                                    aria-controls="kt_customer_view_payment_method_{{ $list_umum->id }}">
+                                                    <div class="me-3 rotate-90">
+                                                        <i class="ki-outline ki-right fs-3"></i>
+                                                    </div>
+                                                    <img src="{{ $list_umum->getPhoto() }}"
+                                                        class="w-40px h-40px me-3 object-fit-cover" alt="" />
+                                                    <div class="me-3">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="text-gray-800 fw-bold">{{ $list_umum->name }}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div id="kt_customer_view_payment_method_{{ $list_umum->id }}"
+                                                class="collapse fs-6 ps-10"
+                                                data-bs-parent="#kt_customer_view_payment_method">
+
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr class="fw-bold fs-6 text-gray-800">
+                                                                <th>{{ __('class.date_time') }}</th>
+                                                                <th>{{ __('class.score') }}</th>
+                                                                <th>Status</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($list_umum->examSessions as $session)
+                                                                <tr>
+                                                                    <td>{{ \Carbon\Carbon::parse($session->updated_at)->format('d M Y H:i') }}
+                                                                    </td>
+                                                                    <td>
+                                                                        @if ($session->score >= $session->exam->minimum_score)
+                                                                            <span
+                                                                                class="text-success">{{ $session->score }}</span>
+                                                                        @else
+                                                                            <span
+                                                                                class="text-danger">{{ $session->score }}</span>
+                                                                        @endif
+
+                                                                    </td>
+                                                                    <td>
+                                                                        @if ($session->status == 'lulus')
+                                                                            <span
+                                                                                class="badge badge-light-success">Lulus</span>
+                                                                        @else
+                                                                            <span class="badge badge-light-danger">Tidak
+                                                                                Lulus</span>
+                                                                        @endif
+
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            @empty
+                                <div class="card">
+                                    <div class="card-body">
+                                        <p class="text-center">Tidak ada pengguna umum ujian</p>
+                                    </div>
+                                </div>
+                            @endforelse
                         </div>
 
                     </div>

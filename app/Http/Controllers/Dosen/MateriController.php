@@ -462,7 +462,21 @@ class MateriController extends Controller
                 ])
                 ->whereHas('examSessions.exam', function ($query) use ($materi) {
                     $query->where('materi_id', $materi->id);
-                })->get()
+                })->get(),
+            'exam_umum' => User::whereHas('roles', function ($query) {
+                $query->where('name', 'umum');
+            })
+                ->with([
+                    'examSessions' => function ($query) use ($materi) {
+                        $query->where(
+                            'exam_id',
+                            $materi->exam->id
+                        )->latest();
+                    }
+                ])
+                ->whereHas('examSessions.exam', function ($query) use ($materi) {
+                    $query->where('materi_id', $materi->id);
+                })->get(),
         ];
         // return response()->json($data);
         return view('pages.dosen.materi.ujian-nilai', $data);

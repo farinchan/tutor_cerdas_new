@@ -11,6 +11,8 @@ use App\Models\Nilai;
 use App\Models\Pretest;
 use App\Models\PretestChoice;
 use App\Models\PretestQuestion;
+use App\Models\PretestSession;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -72,6 +74,7 @@ class KelasController extends Controller
     public function show($kode_kelas)
     {
         $kelas = Kelas::where('kode_kelas', $kode_kelas)->with(['matakuliah', 'dosen', 'materi'])->first();
+        $general_users = User::role('umum')->get()->pluck('id');
         $data = [
             'title' => "Kelas " . $kelas->nama_kelas,
             'menu' => 'kelas',
@@ -84,10 +87,13 @@ class KelasController extends Controller
                 ->leftJoin('nilai', 'mahasiswa.nim', 'nilai.nim')
                 ->where('kelas_mahasiswa.kode_kelas', $kode_kelas)
                 ->orderBy('mahasiswa.nim')
-                ->get(['mahasiswa.nim', 'users.name','nilai.nilai_pretest', 'nilai.nilai_tugas', 'nilai.nilai_quiz', 'nilai.nilai_uts', 'nilai.nilai_uas', 'nilai.nilai_akhir']),
+                ->get(['mahasiswa.nim', 'users.name', 'nilai.nilai_pretest', 'nilai.nilai_tugas', 'nilai.nilai_quiz', 'nilai.nilai_uts', 'nilai.nilai_uas', 'nilai.nilai_akhir']),
             'exam' => $kelas->pretest,
             'list_exam_question' => $kelas?->pretest?->id ? PretestQuestion::where('pretest_id', $kelas?->pretest?->id)->get() : [],
             'list_matakuliah' => Matakuliah::all(),
+            'general_pretests' => PretestSession::with(['user', 'pretest'])->whereHas('pretest', function ($query) use ($kode_kelas) {
+                $query->where('kode_kelas', $kode_kelas);
+            })->whereIn('user_id', $general_users)->get(),
 
         ];
         // return response()->json($data);
@@ -166,7 +172,8 @@ class KelasController extends Controller
         return redirect()->back();
     }
 
-    public function pretestCreate(Request $request, $kode_kelas){
+    public function pretestCreate(Request $request, $kode_kelas)
+    {
         $validator = Validator::make($request->all(), [
             'description' => 'required',
             'duration' => 'required|numeric',
@@ -253,7 +260,6 @@ class KelasController extends Controller
 
         Alert::success('Berhasil', 'Soal berhasil ditambahkan');
         return redirect()->route('dosen.kelas.show', $kode_kelas);
-
     }
 
     public function pretestQuestionEdit($kode_kelas, $question_id)
@@ -358,7 +364,4 @@ class KelasController extends Controller
         Alert::success('Berhasil', 'Soal berhasil dihapus');
         return redirect()->route('dosen.kelas.show', $kode_kelas);
     }
-
-
-
 }

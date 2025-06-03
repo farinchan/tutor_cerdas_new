@@ -83,4 +83,7 @@ return [
 
     'lecturer' => 'Lecturer/Instructor',
 
+    'general_user_pretest_score' => 'General User Pre-Test Score',
+    'dicussion_ai' => 'Discussion with AI',
+
 ];

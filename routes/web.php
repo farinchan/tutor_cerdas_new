@@ -77,7 +77,6 @@ Route::prefix('dosen')->middleware(['auth', 'role:dosen'])->name('dosen.')->grou
         Route::delete('/{kode_kelas}/materi/{id}/soal-ujian-delete/{question_id}', [DosenMateriController::class, 'ujianSoalQuestionDelete'])->name('materi.ujianSoalQuestionDelete');
 
         Route::get('/{kode_kelas}/materi/{id}/nilai-ujian', [DosenMateriController::class, 'ujianNilai'])->name('materi.ujianNilai');
-
     });
 
     Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
@@ -95,10 +94,7 @@ Route::prefix('dosen')->middleware(['auth', 'role:dosen'])->name('dosen.')->grou
         Route::post('/store', [DosenMateriController::class, 'store'])->name('store');
 
         Route::get('/{id}', [DosenMateriController::class, 'show'])->name('show');
-
-
     });
-
 });
 
 Route::post('/kirimDiskusiPribadDosen/{materi_id}/chat/{chat_id}', [DosenMateriController::class, 'kirimDiskusiPribadi'])->name('kirimDiskusiPribadiDosen');
@@ -123,8 +119,6 @@ Route::prefix('mahasiswa')->middleware(['auth', 'role:mahasiswa'])->name('mahasi
         Route::get('/materi/exam-soal', [MahasiswaExamController::class, 'examSoal'])->name('examSoal');
         Route::post('/materi/exam-jawab', [MahasiswaExamController::class, 'examJawab'])->name('examJawab');
         Route::post('/{kode_kelas}/materi/{id}/exam/selesai', [MahasiswaExamController::class, 'examSelesai'])->name('examSelesai');
-
-
     });
 });
 
@@ -138,14 +132,13 @@ Route::prefix('umum')->middleware(['auth', 'role:umum'])->name('umum.')->group(f
         Route::post('/{kode_kelas}/pretest/selesai', [UmumPretestController::class, 'pretestSelesai'])->name('pretestSelesai');
 
         Route::get('/{kode_kelas}', [UmumKelasController::class, 'show'])->name('show');
+        Route::get('/{kode_kelas}/materi/{id}/diskusi-pribadi', [UmumMateriController::class, 'materiDiskusiPribadi'])->name('materiDiskusiPribadi');
         Route::get('/{kode_kelas}/materi/{id}/history-ujian', [UmumMateriController::class, 'historyUjian'])->name('historyUjian');
 
         Route::get('/{kode_kelas}/materi/{id}/exam', [UmumExamController::class, 'exam'])->name('exam');
         Route::get('/materi/exam-soal', [UmumExamController::class, 'examSoal'])->name('examSoal');
         Route::post('/materi/exam-jawab', [UmumExamController::class, 'examJawab'])->name('examJawab');
         Route::post('/{kode_kelas}/materi/{id}/exam/selesai', [UmumExamController::class, 'examSelesai'])->name('examSelesai');
-
-
     });
 });
 

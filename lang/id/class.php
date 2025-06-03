@@ -81,4 +81,7 @@ return [
 
     'lecturer' => 'Dosen/Pengajar',
 
+    'general_user_pretest_score' => 'Nilai Pre-Test Pengguna Umum',
+    'dicussion_ai' => 'Diskusi dengan AI',
+
 ];
