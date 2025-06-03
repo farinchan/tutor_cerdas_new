@@ -91,7 +91,8 @@
                                             <br>
                                         @endif
 
-                                        {{ __('class.description') }} : {{ $materi->exam?->description ?? 'Belum ada ujian' }}
+                                        {{ __('class.description') }} :
+                                        {{ $materi->exam?->description ?? 'Belum ada ujian' }}
                                     </div>
                                     <div class="fs-6 text-gray-700">
                                         {{ __('class.duration') }} :
@@ -102,8 +103,15 @@
                                         {{ $materi->exam?->minimum_score ?? 'Belum ada ujian' }}
                                     </div>
 
-                                    <a href="{{ route('umum.kelas.exam', [$kode_kelas, $materi_id]) }}"
-                                        class="btn btn-light-success btn-active-light-primary btn-sm mt-3">{{ __('class.do_exam') }}</a>
+                                    @if ($materi->exam?->examQuestions->count() > 0)
+                                        <a href="{{ route('umum.kelas.exam', [$kode_kelas, $materi_id]) }}"
+                                            class="btn btn-light-success btn-active-light-primary btn-sm mt-3">{{ __('class.do_exam') }}</a>
+                                    @else
+                                        <br>
+                                        <span class="text-danger">
+                                            *{{ __('class.exam_question_notfound') }}
+                                        </span>
+                                    @endif
 
                                 </div>
 
@@ -118,7 +126,8 @@
                             href="{{ route('umum.kelas.materiDiskusiPribadi', [$kode_kelas, $materi_id]) }}">{{ __('class.dicussion_ai') }}</a>
                     </li>
                     <li class="nav-item mt-2">
-                        <a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="#">{{ __('class.exam_history') }}</a>
+                        <a class="nav-link text-active-primary ms-0 me-10 py-5 active"
+                            href="#">{{ __('class.exam_history') }}</a>
                     </li>
                 </ul>
             </div>
@@ -162,11 +171,13 @@
 
                                                 </td>
                                                 <td>
-                                                        @if ($exam_session->status == 'lulus')
-                                                            <span class="badge badge-light-success">{{ __('class.passed') }}</span>
-                                                        @else
-                                                            <span class="badge badge-light-danger">{{ __('class.not_passed') }}</span>
-                                                        @endif
+                                                    @if ($exam_session->status == 'lulus')
+                                                        <span
+                                                            class="badge badge-light-success">{{ __('class.passed') }}</span>
+                                                    @else
+                                                        <span
+                                                            class="badge badge-light-danger">{{ __('class.not_passed') }}</span>
+                                                    @endif
                                                 </td>
                                             </tr>
 

@@ -145,7 +145,7 @@
                                                                     <span class="path2"></span>
                                                                     <span class="path3"></span>
                                                                 </i>
-                                                                Terkunci
+                                                                {{ __('class.locked') }}
                                                             </span>
                                                         </span>
                                                         @else

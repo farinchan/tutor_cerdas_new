@@ -90,7 +90,8 @@
                                             <br>
                                         @endif
 
-                                        {{ __('class.description') }} : {{ $materi->exam?->description ?? 'Belum ada ujian' }}
+                                        {{ __('class.description') }} :
+                                        {{ $materi->exam?->description ?? 'Belum ada ujian' }}
                                     </div>
                                     <div class="fs-6 text-gray-700">
                                         {{ __('class.duration') }} :
@@ -101,8 +102,19 @@
                                         {{ $materi->exam?->minimum_score ?? 'Belum ada ujian' }}
                                     </div>
 
-                                    <a href="{{ route('umum.kelas.exam', [$kode_kelas, $materi_id]) }}"
-                                        class="btn btn-light-success btn-active-light-primary btn-sm mt-3">{{ __('class.do_exam') }}</a>
+                                    {{-- @dd($materi->exam?->examQuestions->count()) --}}
+
+                                    @if ($materi->exam?->examQuestions->count() > 0)
+                                        <a href="{{ route('umum.kelas.exam', [$kode_kelas, $materi_id]) }}"
+                                            class="btn btn-light-success btn-active-light-primary btn-sm mt-3">{{ __('class.do_exam') }}</a>
+                                    @else
+                                        <br>
+                                        <span class="text-danger">
+                                            *{{ __('class.exam_question_notfound') }}
+                                        </span>
+                                    @endif
+
+
 
                                 </div>
 
@@ -113,7 +125,8 @@
                 <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
 
                     <li class="nav-item mt-2">
-                        <a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="#">{{ __('class.dicussion_ai') }}</a>
+                        <a class="nav-link text-active-primary ms-0 me-10 py-5 active"
+                            href="#">{{ __('class.dicussion_ai') }}</a>
                     </li>
                     <li class="nav-item mt-2">
                         <a class="nav-link text-active-primary ms-0 me-10 py-5"
@@ -157,8 +170,7 @@
                                                             class="fs-5 fw-bold text-gray-900 text-hover-primary ms-1">You</a>
                                                     </div>
                                                     <div class="symbol symbol-35px symbol-circle">
-                                                        <img alt="Pic"
-                                                            src=" {{ $diskusi->user?->getPhoto() }}" />
+                                                        <img alt="Pic" src=" {{ $diskusi->user?->getPhoto() }}" />
                                                     </div>
                                                 </div>
                                                 <div class="p-5 rounded bg-light-primary text-gray-900 fw-semibold mw-lg-400px text-end"
@@ -259,7 +271,7 @@
 @section('scripts')
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
     <script>
-        let url =  '/storage/';
+        let url = '/storage/';
         // Enable pusher logging - don't include this in production
         Pusher.logToConsole = true;
 

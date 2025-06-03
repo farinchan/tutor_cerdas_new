@@ -102,8 +102,15 @@
                                         {{ $materi->exam?->minimum_score ?? 'Belum ada ujian' }}
                                     </div>
 
-                                    <a href="{{ route('mahasiswa.kelas.exam', [$kode_kelas, $materi_id]) }}"
-                                        class="btn btn-light-success btn-active-light-primary btn-sm mt-3">{{ __('class.do_exam') }}</a>
+                                    @if ($materi->exam?->examQuestions->count() > 0)
+                                        <a href="{{ route('mahasiswa.kelas.exam', [$kode_kelas, $materi_id]) }}"
+                                            class="btn btn-light-success btn-active-light-primary btn-sm mt-3">{{ __('class.do_exam') }}</a>
+                                    @else
+                                        <br>
+                                        <span class="text-danger">
+                                            *{{ __('class.exam_question_notfound') }}
+                                        </span>
+                                    @endif
 
                                 </div>
 
