@@ -60,6 +60,18 @@ return [
     'exam_notfound' => 'You have not created an exam for this material yet, please create an exam first',
     'exam_create' => 'Create Exam',
 
+    'exam_not_passed' => 'You have not passed the exam for this material, please take the exam to continue to the next material',
+    'minimal_score' => 'Minimum Score',
+    'do_exam' => 'Take Exam',
+
+    'do_it_now' => 'Do It Now',
+    'exam_question_notfound' => 'No questions yet',
+    'pretest' => 'Pre-Test',
+    'question' => 'Question',
+
+    'passed' => 'Passed',
+    'not_passed' => 'Not Passed',
+
 
 
     'save' => 'Save',

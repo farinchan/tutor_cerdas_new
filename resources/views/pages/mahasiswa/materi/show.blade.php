@@ -81,31 +81,29 @@
 
                             <div class="d-flex flex-stack flex-grow-1 ">
                                 <div class=" fw-semibold">
-                                    <h4 class="text-gray-900 fw-bold">Ujian Materi</h4>
+                                    <h4 class="text-gray-900 fw-bold">{{ __('class.exam') }}</h4>
                                     <div class="fs-6 text-gray-700">
                                         {{-- @dd($exam->examSessions) --}}
                                         @if (!$exam->examSessions?->contains('status', 'lulus'))
                                             <span class="text-danger">
-                                                Anda belum lulus pada ujian materi ini, silahkan ikuti ujian untuk
-                                                melanjutkan
-                                                materi selanjutnya
+                                                {{ __('class.exam_not_passed') }}
                                             </span>
                                             <br>
                                         @endif
 
-                                        Deskripsi : {{ $materi->exam?->description ?? 'Belum ada ujian' }}
+                                        {{ __('class.description') }} : {{ $materi->exam?->description ?? 'Belum ada ujian' }}
                                     </div>
                                     <div class="fs-6 text-gray-700">
-                                        Durasi :
+                                        {{ __('class.duration') }} :
                                         {{ $materi->exam?->duration ?? 'Belum ada ujian' }}
                                     </div>
                                     <div class="fs-6 text-gray-700">
-                                        Minimal Nilai :
+                                        {{ __('class.minimal_score') }} :
                                         {{ $materi->exam?->minimum_score ?? 'Belum ada ujian' }}
                                     </div>
 
                                     <a href="{{ route('mahasiswa.kelas.exam', [$kode_kelas, $materi_id]) }}"
-                                        class="btn btn-light-success btn-active-light-primary btn-sm mt-3">Ikuti Ujian</a>
+                                        class="btn btn-light-success btn-active-light-primary btn-sm mt-3">{{ __('class.do_exam') }}</a>
 
                                 </div>
 

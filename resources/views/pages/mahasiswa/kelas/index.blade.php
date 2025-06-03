@@ -103,7 +103,7 @@
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h3 class="modal-title">Pengerjaan Pretest</h3>
+                                <h3 class="modal-title">{{ __('class.pretest') }}</h3>
 
                                 <!--begin::Close-->
                                 <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
@@ -118,21 +118,25 @@
                                 </p>
                                 <table class="fs-6 fw-semibold text-muted">
                                     <tr>
-                                        <td>Waktu Pengerjaan</td>
+                                        <td>{{ __('class.duration') }}</td>
                                         <td style="width: 20px; text-align: center">:</td>
-                                        <td>{{ $row->pretest?->duration }} Menit</td>
+                                        <td>{{ $row->pretest?->duration }} Minute</td>
                                     </tr>
                                     <tr>
-                                        <td>Jumlah Soal</td>
+                                        <td>{{ __('class.question') }}</td>
                                         <td style="width: 20px; text-align: center">:</td>
-                                        <td>{{ $row->pretest?->soal->count() }} Soal</td>
+                                        <td>{{ $row->pretest?->soal->count() }} Question</td>
                                     </tr>
                                 </table>
                             </div>
 
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                <a href="{{ route("mahasiswa.kelas.pretest", $row->kode_kelas) }}" class="btn btn-primary">Kerjakan sekarang</a>
+                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">{{ __('class.cancel') }}</button>
+                                @if ($row->pretest?->soal->count() > 0 )
+                                    <a href="{{ route("mahasiswa.kelas.pretest", $row->kode_kelas) }}" class="btn btn-primary">{{ __('class.do_it_now') }}</a>
+                                    @else
+                                    <button type="button" class="btn btn-danger" disabled>{{ __('class.exam_question_notfound') }}</button>
+                                @endif
                             </div>
                         </div>
                     </div>

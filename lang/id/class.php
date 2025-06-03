@@ -59,6 +59,17 @@ return [
     'exam' => 'Ujian',
     'exam_notfound' => 'Anda Belum Membuat Ujian dari Materi ini, silahkan buat ujian terlebih dahulu',
     'exam_create' => 'Buat Ujian',
+    'exam_not_passed' => 'Anda belum lulus pada ujian materi ini, silahkan ikuti ujian untuk melanjutkan materi selanjutnya',
+    'minimal_score' => 'Nilai Minimal',
+    'do_exam' => 'Kerjakan Ujian',
+
+    'do_it_now' => 'Kerjakan Sekarang',
+    'exam_question_notfound' => 'belum ada soal',
+    'pretest' => 'Pre-Test',
+    'question' => 'Soal',
+
+    'passed' => 'Lulus',
+    'not_passed' => 'Tidak Lulus',
 
 
     'save' => 'Simpan',
