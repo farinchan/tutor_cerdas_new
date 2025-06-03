@@ -4,6 +4,7 @@ return [
 
     'home' => 'Home',
     'class' => 'Class',
+    'class_general' => 'General Class',
     'administrator' => 'Administrator',
     'my_profile' => 'My Profile',
     'teaching' => 'Teaching',

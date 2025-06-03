@@ -57,7 +57,7 @@
                                             </button>
                                         </div>
                                     @else
-                                        @if ($question_item->userAnswer)
+                                        @if ($question_item->examAnswers)
                                             <div class="col-4">
                                                 <button id="side_question_number"
                                                     onclick="selectQuestion({{ $question_item->id }})"
@@ -99,7 +99,6 @@
                                 <span class="fw-semibold fs-5 text-danger" id="timer">00:00:00</span>
                             </div>
                         </div>
-
                     </div>
                     <div class="card-body">
                         <p id="question_text" class="fs-5 text-gray-800">
@@ -107,13 +106,13 @@
                         </p>
                         <div class="separator my-10"></div>
                         <div class="mb-5" id="question_choices">
-                            @foreach ($question->choices as $choice)
-                                {{-- @dd($question->userAnswer) --}}
+                            @foreach ($question->examChoices as $choice)
+                                {{-- @dd($question->examAnswers) --}}
                                 <div class="d-flex fv-row">
                                     <div class="form-check form-check-custom form-check-solid">
                                         <input class="form-check-input me-3" type="radio" name="choice"
                                             onclick="submitAnswer({{ $choice->id }})"
-                                            @if ($question->userAnswer?->pretest_choice_id == $choice->id) checked @endif>
+                                            @if ($question->examAnswers?->exam_choice_id == $choice->id) checked @endif>
                                         <label class="form-check-label">
                                             @if ($choice->choice_image)
                                                 <img class="img-fluid" src="{{ $choice->getImage() }}" alt="">
@@ -129,16 +128,16 @@
 
                     <div class="card-footer d-flex justify-content-end" id="question_footer">
                         @php
-                            $question_last_id = end($random_pretest);
-                            // $random_pretest = json_encode($random_pretest);
-                            $next_question = array_search($question->id, $random_pretest) + 1;
+                            $question_last_id = end($random_exam);
+                            // $random_exam = json_encode($random_exam);
+                            $next_question = array_search($question->id, $random_exam) + 1;
                         @endphp
                         @if ($question->id == $question_last_id)
                             <button type="button" class="btn btn-light-success" data-bs-toggle="modal"
                                 data-bs-target="#end_exam">Selesaikan Ujian {{ $question->id }} - {{ $question_last_id }}
                             </button>
                         @else
-                            <button type="button" onclick="selectQuestion({{ $random_pretest[$next_question] }})"
+                            <button type="button" onclick="selectQuestion({{ $random_exam[$next_question] }})"
                                 class="btn btn-light-primary">Selanjutnya</button>
                         @endif
                     </div>
@@ -160,7 +159,8 @@
                     </div>
                     <!--end::Close-->
                 </div>
-                <form action="{{ route('mahasiswa.kelas.pretestSelesai', $kode_kelas) }}" method="POST" id="end_exam_form">
+                <form action="{{ route('umum.kelas.examSelesai', [$kode_kelas, $materi_id]) }}" id="end_exam_form"
+                    method="POST">
                     @csrf
 
                     <input type="hidden" name="session_id" value="{{ $session_id }}">
@@ -173,7 +173,7 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success" >Ya, Selesai</button>
+                        <button type="submit" class="btn btn-success">Ya, Selesai</button>
                     </div>
                 </form>
             </div>
@@ -186,9 +186,9 @@
         let question = @json($question);
         let question_list = @json($question_list);
         let session_id = @json($session_id);
-        let random_pretest = @json($random_pretest);
+        let random_exam = @json($random_exam);
 
-        // console.log(question, question_list, session_id, random_pretest);
+        // console.log(question, question_list, session_id, random_exam);
 
         $('#question_text').html(question.question);
 
@@ -196,26 +196,28 @@
         function selectQuestion(question_id) {
             console.log('Selecting question:', question_id);
             $.ajax({
-                url: '{{ route('mahasiswa.kelas.pretestSoal') }}',
+                url: '{{ route('umum.kelas.examSoal') }}',
                 method: 'GET',
                 data: {
                     session_id: session_id,
                     question_id: question_id,
-                    random_pretest: random_pretest
+                    random_exam: random_exam
                 },
                 success: function(data) {
+                    console.log(data.question.exam_answers);
+
                     question_list = data.question_list;
                     question = data.question;
                     $('#question_text').html(data.question.question);
 
                     $('#question_choices').html('');
-                    data.question.choices.forEach(choice => {
+                    data.question.exam_choices.forEach(choice => {
                         $('#question_choices').append(`
                             <div class="d-flex fv-row">
                                 <div class="form-check form-check-custom form-check-solid">
                                     <input class="form-check-input me-3" type="radio" name="choice" id=""
                                         onclick="submitAnswer(${choice.id})"
-                                        ${data.question.user_answer?.pretest_choice_id == choice.id ? 'checked' : ''}>
+                                        ${data.question.exam_answers?.exam_choice_id == choice.id ? 'checked' : ''}>
                                     <label class="form-check-label">
                                         ${choice.choice_image ? `<img class="img-fluid" src="/storage/${choice.choice_image}" alt="">` : ''}
                                         <div class=" text-gray-800">${choice.choice_text}</div>
@@ -239,7 +241,7 @@
                                 </div>
                             `);
                         } else {
-                            if (question.user_answer) {
+                            if (question.exam_answers) {
                                 $('#side_question').append(`
                                 <div class="col-4">
                                     <button id="side_question_number" onclick="selectQuestion(${question.id})"
@@ -264,15 +266,15 @@
                     });
 
                     $('#question_footer').html('');
-                    console.log(question_id, random_pretest[random_pretest.length - 1]);
-                    if (question_id == random_pretest[random_pretest.length - 1]) {
+                    console.log(question_id, random_exam[random_exam.length - 1]);
+                    if (question_id == random_exam[random_exam.length - 1]) {
                         $('#question_footer').append(`
                             <button type="button" class="btn btn-light-success" data-bs-toggle="modal"
                                 data-bs-target="#end_exam">Selesaikan Ujian</button>
                         `);
                     } else {
                         $('#question_footer').append(`
-                            <button type="button" onclick="selectQuestion(${random_pretest[random_pretest.indexOf(question_id) + 1]})"
+                            <button type="button" onclick="selectQuestion(${random_exam[random_exam.indexOf(question_id) + 1]})"
                             class="btn btn-light-primary">Selanjutnya</button>
                         `);
                     }
@@ -293,7 +295,7 @@
 
         function submitAnswer(choice_id) {
             $.ajax({
-                url: '{{ route('mahasiswa.kelas.pretestJawab') }}',
+                url: '{{ route('umum.kelas.examJawab') }}',
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
@@ -314,11 +316,10 @@
             });
         }
 
-        let duration = @json($pretest->duration);
         let start_time = @json($session->start_time ?? now());
 
         // Durasi dalam menit diambil dari exam.durasi
-        var durationInMinutes = @json($pretest->duration);
+        var durationInMinutes = @json($exam->duration);
 
         // Waktu mulai diambil dari exam_session.start_time
         var startTime = new Date(start_time).getTime();

@@ -4,6 +4,7 @@ return [
 
     'home' => 'Beranda',
     'class' => 'Kelas',
+    'class_general' => 'Kelas Umum',
     'administrator' => 'Administrator',
     'my_profile' => 'Profil Saya',
     'teaching' => 'Mengajar',

@@ -160,7 +160,7 @@
                     </div>
                     <!--end::Close-->
                 </div>
-                <form action="{{ route('mahasiswa.kelas.pretestSelesai', $kode_kelas) }}" method="POST" id="end_exam_form">
+                <form action="{{ route('umum.kelas.pretestSelesai', $kode_kelas) }}" method="POST" id="end_exam_form">
                     @csrf
 
                     <input type="hidden" name="session_id" value="{{ $session_id }}">
@@ -196,7 +196,7 @@
         function selectQuestion(question_id) {
             console.log('Selecting question:', question_id);
             $.ajax({
-                url: '{{ route('mahasiswa.kelas.pretestSoal') }}',
+                url: '{{ route('umum.kelas.pretestSoal') }}',
                 method: 'GET',
                 data: {
                     session_id: session_id,
@@ -293,7 +293,7 @@
 
         function submitAnswer(choice_id) {
             $.ajax({
-                url: '{{ route('mahasiswa.kelas.pretestJawab') }}',
+                url: '{{ route('umum.kelas.pretestJawab') }}',
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'

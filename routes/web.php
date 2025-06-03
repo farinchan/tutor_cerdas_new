@@ -13,6 +13,11 @@ use App\Http\Controllers\Mahasiswa\MateriController as MahasiswaMateriController
 use App\Http\Controllers\Mahasiswa\ExamController as MahasiswaExamController;
 use App\Http\Controllers\Mahasiswa\PretestController as MahasiswaPretestController;
 
+use App\Http\Controllers\Umum\KelasController as UmumKelasController;
+use App\Http\Controllers\Umum\MateriController as UmumMateriController;
+use App\Http\Controllers\Umum\ExamController as UmumExamController;
+use App\Http\Controllers\Umum\PretestController as UmumPretestController;
+
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\MatakuliahController as AdminMatakuliahController;
@@ -118,6 +123,27 @@ Route::prefix('mahasiswa')->middleware(['auth', 'role:mahasiswa'])->name('mahasi
         Route::get('/materi/exam-soal', [MahasiswaExamController::class, 'examSoal'])->name('examSoal');
         Route::post('/materi/exam-jawab', [MahasiswaExamController::class, 'examJawab'])->name('examJawab');
         Route::post('/{kode_kelas}/materi/{id}/exam/selesai', [MahasiswaExamController::class, 'examSelesai'])->name('examSelesai');
+
+
+    });
+});
+
+Route::prefix('umum')->middleware(['auth', 'role:umum'])->name('umum.')->group(function () {
+    Route::prefix('kelas')->name('kelas.')->group(function () {
+        Route::get('/', [UmumKelasController::class, 'index'])->name('index');
+
+        Route::get('/{kode_kelas}/pretest', [UmumPretestController::class, 'pretest'])->name('pretest');
+        Route::get('/pretest/api-soal', [UmumPretestController::class, 'pretestSoal'])->name('pretestSoal');
+        Route::post('/pretest/api-jawab', [UmumPretestController::class, 'pretestJawab'])->name('pretestJawab');
+        Route::post('/{kode_kelas}/pretest/selesai', [UmumPretestController::class, 'pretestSelesai'])->name('pretestSelesai');
+
+        Route::get('/{kode_kelas}', [UmumKelasController::class, 'show'])->name('show');
+        Route::get('/{kode_kelas}/materi/{id}/history-ujian', [UmumMateriController::class, 'historyUjian'])->name('historyUjian');
+
+        Route::get('/{kode_kelas}/materi/{id}/exam', [UmumExamController::class, 'exam'])->name('exam');
+        Route::get('/materi/exam-soal', [UmumExamController::class, 'examSoal'])->name('examSoal');
+        Route::post('/materi/exam-jawab', [UmumExamController::class, 'examJawab'])->name('examJawab');
+        Route::post('/{kode_kelas}/materi/{id}/exam/selesai', [UmumExamController::class, 'examSelesai'])->name('examSelesai');
 
 
     });

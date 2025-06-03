@@ -20,10 +20,10 @@
 
         @role('umum')
             <div
-                class="menu-item menu-here-bg menu-lg-down-accordion me-0 me-lg-2 @if (request()->routeIs('mahasiswa.*')) here @endif">
-                <a class="menu-link py-3" href="{{ route('mahasiswa.kelas.index') }}">
+                class="menu-item menu-here-bg menu-lg-down-accordion me-0 me-lg-2 @if (request()->routeIs('umum.*')) here @endif">
+                <a class="menu-link py-3" href="{{ route('umum.kelas.index') }}">
                     <span class="menu-title">
-                        {{ __('header.class') }}
+                        {{ __('header.class_general') }}
                     </span>
                     <span class="menu-arrow d-lg-none"></span>
                 </a>
