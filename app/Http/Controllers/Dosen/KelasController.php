@@ -7,6 +7,7 @@ use App\Models\Kelas;
 use App\Models\KelasMahasiswa;
 use App\Models\Mahasiswa;
 use App\Models\Matakuliah;
+use App\Models\MateriFile;
 use App\Models\Nilai;
 use App\Models\Pretest;
 use App\Models\PretestChoice;
@@ -130,10 +131,23 @@ class KelasController extends Controller
     public function delete($kode_kelas)
     {
         $kelas = Kelas::where('kode_kelas', $kode_kelas)->first();
-        Storage::delete($kelas->matakuliah->file);
+        $materi_files = MateriFile::whereHas('materi', function ($query) use ($kode_kelas) {
+            $query->where('kode_kelas', $kode_kelas);
+        })->get();
+        if (!$kelas) {
+            Alert::error('Gagal', 'Kelas tidak ditemukan');
+            return redirect()->back();
+        }
+        // Hapus materi files yang terkait dengan kelas ini
+        foreach ($materi_files as $file) {
+            if (Storage::disk('public')->exists($file->file)) {
+                Storage::disk('public')->delete($file->file);
+            }
+        }
+
         $kelas->delete();
         Alert::success('Berhasil', 'Kelas berhasil dihapus');
-        return redirect()->back();
+        return redirect()->route('dosen.kelas.index');
     }
 
 

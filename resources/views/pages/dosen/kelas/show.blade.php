@@ -201,6 +201,17 @@
             }, 3000)
         });
 
+
+
+    </script>
+    <script>
+          $('#deactivate').change(function() {
+                if ($(this).is(':checked')) {
+                    $('#delete_issue').css('display', 'block');
+                } else {
+                    $('#delete_issue').css('display', 'none');
+                }
+            });
     </script>
 
 @endsection

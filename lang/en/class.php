@@ -87,4 +87,9 @@ return [
     'dicussion_ai' => 'Discussion with AI',
     'locked' => 'Locked',
 
+    'delete_class' => 'Delete Class',
+    'delete_class_confirmation' => 'Are you sure you want to delete this class?',
+    'delete_class_placeholder' => 'If you delete this class, all materials, exams, and discussions related to this class will also be permanently deleted. This cannot be undone.',
+    'delete_class_confirm' => 'I am sure I want to delete this class',
+
 ];

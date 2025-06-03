@@ -15,4 +15,9 @@ class MateriFile extends Model
         'materi_id',
         'file'
     ];
+
+    public function materi()
+    {
+        return $this->belongsTo(Materi::class, 'materi_id');
+    }
 }

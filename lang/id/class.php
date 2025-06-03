@@ -85,4 +85,9 @@ return [
     'dicussion_ai' => 'Diskusi dengan AI',
     'locked' => 'Terkunci',
 
+    'delete_class' => 'Hapus Kelas',
+    'delete_class_confirmation' => 'Apakah Anda yakin ingin menghapus kelas ini?',
+    'delete_class_placeholder' => 'jika kelas ini dihapus, semua materi, ujian, dan diskusi yang terkait dengan kelas ini juga akan dihapus secara permanen. Ini tidak dapat dibatalkan.',
+    'delete_class_confirm' => 'Saya yakin ingin menghapus kelas ini',
+
 ];
