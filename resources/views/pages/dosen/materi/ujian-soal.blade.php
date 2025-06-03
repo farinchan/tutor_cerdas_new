@@ -136,10 +136,10 @@
                             <div class="card-body d-flex flex-column flex-center">
                                 <div class="mb-2">
                                     <h1 class="fw-semibold text-gray-800 text-center lh-lg">
-                                        Ujian Materi
+                                        {{ __('class.exam') }}
                                     </h1>
                                     <span class="">
-                                        Anda Belum Membuat Ujian dari Materi ini, silahkan buat ujian terlebih dahulu
+                                        {{ __('class.exam_notfound') }}
                                     </span>
                                     <div class="py-5 text-center">
                                         {{-- <img src="{{asset("assets/media/svg/illustrations/easy/3.svg")}} " class="theme-light-show w-200px" alt="" />
@@ -148,14 +148,14 @@
                                 </div>
                                 <div class="text-center mb-1">
                                     <a class="btn btn-sm btn-primary me-2" data-bs-target="#create_exam"
-                                        data-bs-toggle="modal">Buat Ujian Sekarang</a>
+                                        data-bs-toggle="modal">{{ __('class.exam_create') }}</a>
 
                                 </div>
                                 <div class="modal fade" tabindex="-1" id="create_exam">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h3 class="modal-title">Buat Ujian</h3>
+                                                <h3 class="modal-title">{{ __('class.exam_create') }}</h3>
 
                                                 <!--begin::Close-->
                                                 <div class="btn btn-icon btn-sm btn-active-light-primary ms-2"
@@ -173,7 +173,7 @@
                                                 <div class="modal-body">
                                                     <div class="mb-3">
                                                         <label for="nama_kelas"
-                                                            class="form-label required">Deskripsi</label>
+                                                            class="form-label required">{{ __('class.description') }}</label>
                                                         <textarea class="form-control form-control-solid" id="description" name="description" placeholder="Deskripsi Ujian"
                                                             required> {{ old('description') }} </textarea>
                                                         @error('description')
@@ -181,19 +181,18 @@
                                                         @enderror
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label for="nama_kelas" class="form-label required">Durasi
-                                                            Ujian</label>
+                                                        <label for="nama_kelas" class="form-label required">{{ __('class.duration') }}</label>
                                                         <input type="number" class="form-control form-control-solid"
                                                             id="duration" name="duration" placeholder="Durasi Ujian"
                                                             value="{{ old('duration') }}" required />
                                                         @error('duration')
                                                             <div class="text-danger">{{ $message }}</div>
                                                         @enderror
-                                                        <span class="form-text text-muted">Durasi Ujian dalam menit</span>
+                                                        <span class="form-text text-muted">{{ __('class.duration_placeholder') }}</span>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="nama_kelas" class="form-label required">Minimum
-                                                            Nilai</label>
+                                                            {{ __('class.score') }}</label>
                                                         <input type="number" class="form-control form-control-solid"
                                                             id="minimum_score" name="minimum_score"
                                                             value="{{ old('minimum_score') }}" placeholder="Minimum Nilai"
@@ -201,15 +200,13 @@
                                                         @error('minimum_score')
                                                             <div class="text-danger">{{ $message }}</div>
                                                         @enderror
-                                                        <span class="form-text text-muted">Minimum Nilai yang harus dicapai
-                                                            untuk lulus</span>
                                                     </div>
                                                 </div>
 
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-light"
-                                                        data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                                        data-bs-dismiss="modal">{{ __('class.cancel') }}</button>
+                                                    <button type="submit" class="btn btn-primary">{{ __('class.save') }}</button>
                                                 </div>
                                             </form>
                                         </div>

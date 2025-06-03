@@ -115,17 +115,16 @@
                 </div>
                 <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
                     <li class="nav-item mt-2">
-                        <a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="#">Diskusi Kelas</a>
+                        <a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="#">{{ __('class.class_discussion') }}</a>
                     </li>
                     <li class="nav-item mt-2">
                         <a class="nav-link text-active-primary ms-0 me-10 py-5"
-                            href="{{ route('mahasiswa.kelas.materiDiskusiPribadi', [$kode_kelas, $materi_id]) }}">Diskusi
-                            Pribadi + AI</a>
+                            href="{{ route('mahasiswa.kelas.materiDiskusiPribadi', [$kode_kelas, $materi_id]) }}">{{ __('class.private_discussion_ai') }}</a>
                     </li>
                     <li class="nav-item mt-2">
                         <a class="nav-link text-active-primary ms-0 me-10 py-5"
                             href="{{ route('mahasiswa.kelas.historyUjian', [$kode_kelas, $materi_id]) }}">
-                            History Ujian
+                            {{ __('class.exam_history') }}
                         </a>
                     </li>
                 </ul>
@@ -140,7 +139,7 @@
 
                             <div class="card-title">
                                 <div class="me-5">
-                                    Diskusi Kelas
+                                    {{ __('class.class_discussion') }}
                                 </div>
                                 <div class="symbol-group symbol-hover">
                                     @foreach ($list_mahasiswa->take(5) as $mhs)
@@ -215,7 +214,7 @@
                                             <div class="d-flex align-items-center mb-2">
                                                 <div class="me-3">
                                                     <span class="text-muted fs-7 mb-1">
-                                                        Belum ada diskusi
+                                                        {{ __('class.no_discussion') }}
                                                     </span>
                                                 </div>
                                             </div>

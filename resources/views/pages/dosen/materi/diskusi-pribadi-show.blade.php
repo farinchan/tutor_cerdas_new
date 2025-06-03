@@ -44,7 +44,7 @@
                                 Mahasiswa
                             </div>
                         </div>
-                        
+
                     </div>
                     <div class="card-body pt-5" id="kt_chat_contacts_body">
                         <div class="scroll-y me-n5 pe-5 h-200px h-lg-auto" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_header, #kt_app_header, #kt_toolbar, #kt_app_toolbar, #kt_footer, #kt_app_footer, #kt_chat_contacts_header" data-kt-scroll-wrappers="#kt_content, #kt_app_content, #kt_chat_contacts_body" data-kt-scroll-offset="5px">
@@ -69,13 +69,13 @@
                 </div>
             </div>
             <div class="flex-lg-row-fluid ms-lg-7 ms-xl-10">
-                
+
                 <div class="card" id="kt_chat_messenger">
                     <div class="card-header" id="kt_chat_messenger_header">
 
                         <div class="card-title">
                             <div class="me-5">
-                                Diskusi Pribadi
+                                {{ __('class.private_discussion') }}
                             </div>
                         </div>
                     </div>

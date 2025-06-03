@@ -1,7 +1,7 @@
 <div class="card pt-4 mb-6 mb-xl-9">
     <div class="card-header border-0">
         <div class="card-title">
-            <h2>Permintaan Bergabung</h2>
+            <h2>{{ __('class.request_to_join') }}</h2>
         </div>
     </div>
     <div class="card-body py-4">
@@ -15,7 +15,7 @@
                                 data-kt-check-target="#kt_table_users .form-check-input" value="1" />
                         </div>
                     </th>
-                    <th class="min-w-125px">Mahasiswa</th>
+                    <th class="min-w-125px">Student</th>
                     <th class="min-w-125px">status</th>
                     <th class="text-end min-w-100px">Actions</th>
                 </tr>
@@ -145,7 +145,7 @@
                     <span class="path2"></span>
                 </i>
                 <input type="text" data-kt-user-table-filter="search"
-                    class="form-control form-control-solid w-250px ps-13" placeholder="Cari Mahasiswa" />
+                    class="form-control form-control-solid w-250px ps-13" placeholder="{{ __('class.student_search') }}" />
             </div>
         </div>
         <div class="card-toolbar">
@@ -176,8 +176,8 @@
                                 data-kt-check-target="#kt_table_users .form-check-input" value="1" />
                         </div>
                     </th>
-                    <th class="min-w-125px">Mahasiswa</th>
-                    <th class="min-w-125px">Waktu Bergabung</th>
+                    <th class="min-w-125px">Student</th>
+                    <th class="min-w-125px">Joined At</th>
                     <th class="text-end min-w-100px">Actions</th>
                 </tr>
             </thead>

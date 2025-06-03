@@ -40,19 +40,19 @@
         <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
             <li class="nav-item mt-2">
                 <a class="nav-link text-active-primary ms-0 me-10 py-5 @if (request()->routeIs('dosen.kelas.materi.show')) active @endif"
-                    href="{{ route('dosen.kelas.materi.show', [$kode_kelas, $materi_id]) }}">Diskusi Materi</a>
+                    href="{{ route('dosen.kelas.materi.show', [$kode_kelas, $materi_id]) }}">{{ __('class.class_discussion') }}</a>
             </li>
             <li class="nav-item mt-2">
                 <a class="nav-link text-active-primary ms-0 me-10 py-5 @if (request()->routeIs('dosen.kelas.materi.diskusiPribadi')) active @endif"
-                    href="{{ route('dosen.kelas.materi.diskusiPribadi', [$kode_kelas, $materi_id]) }}">Diskusi Pribadi </a>
+                    href="{{ route('dosen.kelas.materi.diskusiPribadi', [$kode_kelas, $materi_id]) }}">{{ __('class.private_discussion') }} </a>
             </li>
             <li class="nav-item mt-2">
                 <a class="nav-link text-active-primary ms-0 me-10 py-5 @if (request()->routeIs('dosen.kelas.materi.ujianSoal')) active @endif"
-                    href="{{ route('dosen.kelas.materi.ujianSoal', [$kode_kelas, $materi_id]) }}">Soal Ujian</a>
+                    href="{{ route('dosen.kelas.materi.ujianSoal', [$kode_kelas, $materi_id]) }}">{{ __('class.exam_question') }}</a>
             </li>
             <li class="nav-item mt-2">
                 <a class="nav-link text-active-primary ms-0 me-10 py-5 @if (request()->routeIs('dosen.kelas.materi.ujianNilai')) active @endif"
-                    href="{{ route("dosen.kelas.materi.ujianNilai", [$kode_kelas, $materi_id]) }}">Nilai Ujian</a>
+                    href="{{ route("dosen.kelas.materi.ujianNilai", [$kode_kelas, $materi_id]) }}">{{ __('class.exam_score') }}</a>
             </li>
         </ul>
     </div>

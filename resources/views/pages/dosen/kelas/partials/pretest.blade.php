@@ -156,10 +156,9 @@
         <div class="card-px text-center pt-15 pb-15">
             <h2 class="fs-2x fw-bold mb-0">Pre-Test</h2>
             <p class="text-gray-500 fs-4 fw-semibold py-7">
-                Anda belum menambahkan Pre-Test pada kelas ini <br>
-                Silahkan tambahkan Pre-Test terlebih dahulu
+                {!! __('class.pretest_notfound') !!}
             </p>
-            <a href="#" class="btn btn-primary er fs-6 px-8 py-4" data-bs-toggle="modal" data-bs-target="#pretest_create">Buat Pretest</a>
+            <a href="#" class="btn btn-primary er fs-6 px-8 py-4" data-bs-toggle="modal" data-bs-target="#pretest_create">{{ __('class.create_pretest') }}</a>
         </div>
         <div class="text-center pb-15 px-5">
             <img src="{{asset("assets/media/illustrations/sketchy-1/17.png")}}" alt="" class="mw-100 h-200px h-sm-325px">
@@ -170,7 +169,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Buat Pre-Test</h3>
+                <h3 class="modal-title">{{ __('class.create_pretest') }}</h3>
 
                 <!--begin::Close-->
                 <div class="btn btn-icon btn-sm btn-active-light-primary ms-2"
@@ -188,24 +187,23 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="nama_kelas"
-                            class="form-label required">Deskripsi</label>
+                            class="form-label required">{{ __('class.description') }}</label>
                         <textarea class="form-control form-control-solid" id="description" name="description" placeholder="Deskripsi Ujian"
                             required></textarea>
                     </div>
                     <div class="mb-3">
-                        <label for="nama_kelas" class="form-label required">Durasi
-                            Ujian</label>
+                        <label for="nama_kelas" class="form-label required">{{ __('class.duration') }}</label>
                         <input type="number" class="form-control form-control-solid"
                             id="duration" name="duration" placeholder="Durasi Ujian"
                             required />
-                        <span class="form-text text-muted">Durasi Ujian dalam menit</span>
+                        <span class="form-text text-muted">{{ __('class.duration_placeholder') }}</span>
                     </div>
                 </div>
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light"
-                        data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                        data-bs-dismiss="modal">{{ __('class.cancel') }}</button>
+                    <button type="submit" class="btn btn-primary">{{ __('class.save') }}</button>
                 </div>
             </form>
         </div>

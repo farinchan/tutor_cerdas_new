@@ -83,7 +83,7 @@
 
                             <div class="card-title">
                                 <div class="me-5">
-                                    Diskusi Pribadi
+                                    {{ __('class.private_discussion') }}
                                 </div>
                             </div>
                         </div>
@@ -183,9 +183,9 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="card-px text-center pt-15 pb-15">
-                                <h2 class="fs-2x fw-bold mb-0">Diskusi Pribadi Mahasiswa</h2>
+                                <h2 class="fs-2x fw-bold mb-0">{{ __('class.private_discussion_student') }}</h2>
                                 <p class="text-gray-500 fs-4 fw-semibold py-7">
-                                    Pilih mahasiswa untuk memulai diskusi pribadi dengan mahasiswa <br>
+                                    {{ __('class.private_discussion_student_placeholder') }} <br>
                                 </p>
                             </div>
                             <div class="text-center pb-15 px-5">

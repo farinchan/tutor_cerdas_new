@@ -67,7 +67,7 @@
                                         <div class="m-0">
                                             <span
                                                 class="text-gray-700 fw-bolder d-block fs-2qx lh-1 ls-n1 mb-1">{{ $kelas->materi->count() }}</span>
-                                            <span class="text-gray-500 fw-semibold fs-6">Materi</span>
+                                            <span class="text-gray-500 fw-semibold fs-6">{{ __('class.material') }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -87,7 +87,7 @@
                                         <div class="m-0">
                                             <span
                                                 class="text-gray-700 fw-bolder d-block fs-2qx lh-1 ls-n1 mb-1">{{ $kelas->mahasiswa->where("status", "aktif")->count() }}</span>
-                                            <span class="text-gray-500 fw-semibold fs-6">Mahasiswa</span>
+                                            <span class="text-gray-500 fw-semibold fs-6">{{ __('class.student') }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -98,7 +98,7 @@
                 <div class="card mb-5 mb-xl-8">
                     <div class="card-header border-0">
                         <div class="card-title">
-                            <h3 class="fw-bold m-0">Kode Kelas</h3>
+                            <h3 class="fw-bold m-0">{{ __('class.class_code') }}</h3>
                         </div>
                     </div>
                     <div class="card-body pt-2">
@@ -117,11 +117,11 @@
                 <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-semibold mb-8">
                     <li class="nav-item">
                         <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab"
-                            href="#kt_user_view_materi">Materi</a>
+                            href="#kt_user_view_materi">{{ __('class.subject_matter') }}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab"
-                            href="#kt_user_view_mahasiswa">Mahasiswa
+                            href="#kt_user_view_mahasiswa">{{ __('class.student') }}
                             @if ($mahasiswa_nonaktif_count > 0)
                                 <strong>( {{ $mahasiswa_nonaktif_count }} )</strong>
                             @endif
@@ -133,11 +133,11 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab"
-                            href="#kt_user_view_penilaian">Penilaian</a>
+                            href="#kt_user_view_penilaian">{{ __('class.assessment') }}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab"
-                            href="#kt_user_view_pengaturan">Pengaturan</a>
+                            href="#kt_user_view_pengaturan">{{ __('class.settings') }}</a>
                     </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">

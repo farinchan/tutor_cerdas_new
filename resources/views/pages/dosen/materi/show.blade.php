@@ -51,7 +51,7 @@
 
                             <div class="card-title">
                                 <div class="me-5">
-                                    Diskusi Kelas
+                                    {{ __('class.class_discussion') }}
                                 </div>
                                 <div class="symbol-group symbol-hover">
                                     @foreach ($list_mahasiswa->take(5) as $mhs)

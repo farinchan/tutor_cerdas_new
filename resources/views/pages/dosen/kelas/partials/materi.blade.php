@@ -2,17 +2,17 @@
     <div class="card-header mt-6">
         <div class="card-title flex-column">
             <h2 class="mb-1">
-                Materi Pembelajaran
+                {{ __('class.subject_matter') }}
             </h2>
             <div class="fs-6 fw-semibold text-muted">
-                Total Materi: {{ $kelas->materi->count() }}
+                {{ __('class.total_material') }}: {{ $kelas->materi->count() }}
             </div>
         </div>
         <div class="card-toolbar">
             <a href="{{ route('dosen.materi.create', $kelas->kode_kelas) }}"
                 class="btn btn-light-primary btn-sm">
                 <i class="ki-duotone ki-plus fs-3"></i>
-                Tambah Materi
+                {{ __('class.add_material') }}
             </a>
         </div>
     </div>
@@ -44,7 +44,7 @@
                     <div class="separator separator-dashed my-7"></div>
                     <div class="text-end">
                         <a href="{{ route("dosen.kelas.materi.show", [$kelas->kode_kelas, $materi->id]) }}"
-                         class="btn btn-sm btn-light btn-active-light-primary">Lihat</a>
+                         class="btn btn-sm btn-light btn-active-light-primary">{{ __('class.view') }}</a>
                     </div>
                 </div>
             </div>

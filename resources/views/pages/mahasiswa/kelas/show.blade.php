@@ -83,7 +83,7 @@
                 <div class="card mb-5 mb-xl-8">
                     <div class="card-header border-0">
                         <div class="card-title">
-                            <h3 class="fw-bold m-0">Kode Kelas</h3>
+                            <h3 class="fw-bold m-0">{{ __('class.class_code') }}</h3>
                         </div>
                     </div>
                     <div class="card-body pt-2">
@@ -92,7 +92,7 @@
                                 value="{{ $kelas->kode_kelas }}" readonly />
 
                             <button class="btn btn-light-primary" data-clipboard-target="#kt_clipboard_1">
-                                Salin
+                                 {{ __('class.copy') }}
                             </button>
                         </div>
                     </div>
@@ -102,16 +102,16 @@
                 <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-semibold mb-8">
                     <li class="nav-item">
                         <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab"
-                            href="#kt_user_view_materi">Materi</a>
+                            href="#kt_user_view_materi">{{ __('class.subject_matter') }}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab"
-                            href="#kt_user_view_mahasiswa">Anggota Kelas
+                            href="#kt_user_view_mahasiswa">{{ __('class.class_members') }}
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab"
-                            href="#kt_user_view_penilaian">Nilai Saya</a>
+                            href="#kt_user_view_penilaian">{{ __('class.my_assessment') }}</a>
                     </li>
 
                 </ul>
@@ -121,10 +121,10 @@
                             <div class="card-header mt-6">
                                 <div class="card-title flex-column">
                                     <h2 class="mb-1">
-                                        Materi Pembelajaran
+                                        {{ __('class.subject_matter') }}
                                     </h2>
                                     <div class="fs-6 fw-semibold text-muted">
-                                        Total Materi: {{ $materi_list->count() }}
+                                        {{ __('class.total_material') }}: {{ $materi_list->count() }}
                                     </div>
                                 </div>
                             </div>
@@ -158,7 +158,7 @@
                                                         {{ $materi->deskripsi }}
                                                     </div>
                                                     <small class="mt-2">
-                                                        <span class="text-muted fs-6">Tanggal Publish:</span>
+                                                        {{-- <span class="text-muted fs-6">Tanggal Publish:</span> --}}
                                                         <span
                                                             class="text-primary fs-6 fw-bold">{{ $materi->created_at->diffForHumans() }}</span>
                                                     </small>
@@ -168,8 +168,9 @@
                                                 <div class="separator separator-dashed my-7"></div>
                                                 <div class="text-end">
                                                     <a href="{{ route('mahasiswa.kelas.materi', [$kelas->kode_kelas, $materi->id]) }}"
-                                                        class="btn btn-sm btn-light btn-active-light-primary">Pelajari
-                                                        Sekarang</a>
+                                                        class="btn btn-sm btn-light btn-active-light-primary">
+                                                         {{ __('class.learn_now') }}
+                                                    </a>
                                                 </div>
                                             @endif
                                         </div>
@@ -189,7 +190,7 @@
                                         </i>
                                         <input type="text" data-kt-user-table-filter="search"
                                             class="form-control form-control-solid w-250px ps-13"
-                                            placeholder="Cari Mahasiswa" />
+                                            placeholder="{{ __('class.student_search') }}" />
                                     </div>
                                 </div>
                                 <div class="card-toolbar">
@@ -217,8 +218,8 @@
                                                         value="1" />
                                                 </div>
                                             </th>
-                                            <th class="min-w-125px">Mahasiswa</th>
-                                            <th class="min-w-125px">Waktu Bergabung</th>
+                                            <th class="min-w-125px">Student</th>
+                                            <th class="min-w-125px">Joined At</th>
 
                                         </tr>
                                     </thead>
@@ -297,7 +298,7 @@
                         <div class="card pt-4 mb-6 mb-xl-9">
                             <div class="card-header border-0">
                                 <div class="card-title">
-                                    <h2>Nilai Saya</h2>
+                                    <h2>{{ __('class.my_assessment') }}</h2>
                                 </div>
                             </div>
                             <div class="card-body pt-0 pb-5">

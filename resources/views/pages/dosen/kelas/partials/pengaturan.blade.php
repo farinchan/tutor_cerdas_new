@@ -1,7 +1,7 @@
 <div class="card pt-4 mb-6 mb-xl-9">
     <div class="card-header border-0">
         <div class="card-title">
-            <h2>Pengaturan Kelas</h2>
+            <h2>{{ __('class.settings') }}</h2>
         </div>
     </div>
     <div class="card-body pt-0 pb-5">
@@ -58,8 +58,8 @@
             </div>
 
             <div class="modal-footer">
-                <button type="reset" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary">Update</button>
+                <button type="reset" class="btn btn-light" data-bs-dismiss="modal">{{ __('class.cancel') }}</button>
+                <button type="submit" class="btn btn-primary">{{ __('class.update') }}</button>
             </div>
         </form>
     </div>

@@ -48,14 +48,14 @@
                 <div class="flex-lg-row-fluid ">
                     <div class="card ">
                         <div class="card-header card-header-stretch">
-                            <h3 class="card-title">Nilai Ujian Materi</h3>
+                            <h3 class="card-title">{{ __('class.exam_score') }}</h3>
                             <div class="card-toolbar">
                                 <ul class="nav nav-tabs nav-line-tabs nav-stretch fs-6 border-0">
                                     <li class="nav-item">
-                                        <a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_pane_7">Mahasiswa</a>
+                                        <a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_pane_7">{{ __('class.student') }}</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_8">Umum</a>
+                                        <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_8">{{ __('class.general') }}</a>
                                     </li>
                                 </ul>
                             </div>
@@ -94,8 +94,8 @@
                                                     <table class="table table-bordered">
                                                         <thead>
                                                             <tr class="fw-bold fs-6 text-gray-800">
-                                                                <th>Tanggal</th>
-                                                                <th>Nilai</th>
+                                                                <th>{{ __('class.date_time') }}</th>
+                                                                <th>{{ __('class.score') }}</th>
                                                                 <th>Status</th>
                                                             </tr>
                                                         </thead>

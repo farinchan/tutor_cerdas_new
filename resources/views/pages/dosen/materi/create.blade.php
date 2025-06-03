@@ -67,7 +67,7 @@
                                         <div class="m-0">
                                             <span
                                                 class="text-gray-700 fw-bolder d-block fs-2qx lh-1 ls-n1 mb-1">{{ $kelas->materi->count() }}</span>
-                                            <span class="text-gray-500 fw-semibold fs-6">Materi</span>
+                                            <span class="text-gray-500 fw-semibold fs-6">{{ __('class.material') }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -87,7 +87,7 @@
                                         <div class="m-0">
                                             <span
                                                 class="text-gray-700 fw-bolder d-block fs-2qx lh-1 ls-n1 mb-1">{{ $kelas->mahasiswa->count() }}</span>
-                                            <span class="text-gray-500 fw-semibold fs-6">Mahasiswa</span>
+                                            <span class="text-gray-500 fw-semibold fs-6">{{ __('class.student') }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -106,38 +106,38 @@
                         </div>
                     </div>
                     <div class="card-body pt-0">
-                        <select class="form-select mb-2" data-control="select2" data-hide-search="true" name="status" required>
+                        <select class="form-select mb-2" data-control="select2" data-hide-search="true" name="status"
+                            required>
                             <option value="published" selected="selected">Published</option>
                             <option value="draft">Draft</option>
                         </select>
                         <div class="text-muted fs-7">
-                            set status dari materi yang akan dibuat.
+                            {{ __('class.status_placeholder') }}
                         </div>
-                        
+
                     </div>
-                </div> 	
+                </div>
 
             </div>
             <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
                 <div class="card card-flush py-4">
                     <div class="card-header">
                         <div class="card-title">
-                            <h2>Informasi Materi</h2>
+                            <h2>{{ __('class.material_information') }}</h2>
                         </div>
                     </div>
                     <input type="hidden" name="kode_kelas" value="{{ $kode_kelas }}">
                     <div class="card-body pt-0">
                         <div class="mb-10 fv-row">
-                            <label class="required form-label">Judul</label>
+                            <label class="required form-label">{{ __('class.title') }}</label>
                             <input type="text" name="judul" class="form-control mb-2" placeholder="Judul Materi"
                                 value="{{ old('judul') }}" required />
                         </div>
                         <div>
-                            <label class="required form-label">Deskripsi</label>
+                            <label class="required form-label">{{ __('class.description') }}</label>
                             <textarea name="deskripsi" class="form-control mb-2" placeholder="Deskripsi Materi" required rows="5">{{ old('deskripsi') }}</textarea>
                             <div class="text-muted fs-7">
-                                Deskripsi materi digunakan untuk memberikan informasi singkat tentang materi yang akan
-                                dibuat.
+                                {{ __('class.description_placeholder') }}
                             </div>
                         </div>
                     </div>
@@ -145,34 +145,33 @@
                 <div class="card card-flush py-4">
                     <div class="card-header">
                         <div class="card-title">
-                            <h2>Materi</h2>
+                            <h2> {{ __('class.material') }}</h2>
                         </div>
                     </div>
                     <div class="card-body pt-0">
 
                         <div class="mb-10">
-                            <label class="form-label">Isi Materi</label>
+                            <label class="form-label"> {{ __('class.content_of_material') }}</label>
                             <div id="quill_isi_materi" class="min-h-400px mb-2">
                                 {!! old('isi_materi') !!}
                             </div>
                             <input type="hidden" name="isi_materi" id="isi_materi">
                             <div class="text-muted fs-7">
-                                Isi materi digunakan untuk memberikan informasi lengkap tentang materi yang akan dibuat.
-                            </div>
+                                {{ __('class.content_of_material_placeholder') }}
+                             </div>
                         </div>
                         <div class="mb-10">
-                            <label class="form-label">Materi File</label>
+                            <label class="form-label">{{ __('class.material_file') }}</label>
                             <div class="fv-row">
                                 <div class="dropzone" id="materi_file">
                                     <div class="dz-message needsclick">
                                         <i class="ki-duotone ki-file-up fs-3x text-primary"><span
                                                 class="path1"></span><span class="path2"></span></i>
                                         <div class="ms-4">
-                                            <h3 class="fs-5 fw-bold text-gray-900 mb-1">Drop file disini atau klik untuk
-                                                upload</h3>
-                                            <span class="fs-7 fw-semibold text-gray-500">Upload hingga 10 file |
+                                            <h3 class="fs-5 fw-bold text-gray-900 mb-1">{{ __('class.material_file_placeholder1') }}</h3>
+                                            <span class="fs-7 fw-semibold text-gray-500">{{ __('class.material_file_placeholder2') }} |
                                                 <span class="text-danger">
-                                                    Harus menyertakan minimal 1 file berformat PDF
+                                                    {{ __('class.material_file_placeholder3') }}
 
                                                 </span>
                                             </span>
@@ -185,9 +184,9 @@
                 </div>
                 <div class="d-flex justify-content-end">
                     <a href="apps/ecommerce/catalog/products.html" id="kt_ecommerce_add_product_cancel"
-                        class="btn btn-light me-5">Cancel</a>
+                        class="btn btn-light me-5">{{ __('class.cancel') }}</a>
                     <button type="submit" id="submit" class="btn btn-primary">
-                        <span class="indicator-label">Simpan Perubahan</span>
+                        <span class="indicator-label">{{ __('class.save') }}</span>
                     </button>
                 </div>
             </div>
