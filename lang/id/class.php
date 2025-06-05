@@ -18,7 +18,7 @@ return [
     'student' => 'Mahasiswa',
     'general' => 'Umum',
 
-    'subject_matter' => 'Materi Pelajaran',
+    'subject_matter' => 'Materi Kuliah',
     'total_material' => 'Total Materi',
     'class_members' => 'Anggota kelas',
     'my_assessment' => 'Penilaiian Saya',
