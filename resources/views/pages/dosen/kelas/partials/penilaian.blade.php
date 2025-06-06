@@ -117,7 +117,7 @@
                                                         <input type="text" class="form-control " placeholder="Nama"
                                                             value="{{ $nilai_mahasiswa->name }}" readonly />
                                                     </div>
-                                                    <div class="mb-8">
+                                                    {{-- <div class="mb-8">
                                                         <label class="form-label fw-bold">Tugas:</label>
                                                         <input type="number" class="form-control " placeholder="Tugas"
                                                             name="nilai_tugas"
@@ -128,7 +128,7 @@
                                                         <input type="number" class="form-control " placeholder="Quiz"
                                                             name="nilai_quiz"
                                                             value="{{ $nilai_mahasiswa->nilai_quiz }}" />
-                                                    </div>
+                                                    </div> --}}
                                                     <div class="mb-8">
                                                         <label class="form-label fw-bold">UTS:</label>
                                                         <input type="number" class="form-control " placeholder="UTS"
