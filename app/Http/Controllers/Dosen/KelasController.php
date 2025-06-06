@@ -7,6 +7,7 @@ use App\Models\Kelas;
 use App\Models\KelasMahasiswa;
 use App\Models\Mahasiswa;
 use App\Models\Matakuliah;
+use App\Models\Materi;
 use App\Models\MateriFile;
 use App\Models\Nilai;
 use App\Models\Pretest;
@@ -76,6 +77,12 @@ class KelasController extends Controller
     {
         $kelas = Kelas::where('kode_kelas', $kode_kelas)->with(['matakuliah', 'dosen', 'materi'])->first();
         $general_users = User::role('umum')->get()->pluck('id');
+        // $student_users = User::role('mahasiswa')->get()->pluck('id');
+        // $nilai = Materi::where('kode_kelas', $kode_kelas)->with(['exam', 'exam.examSessions' => function ($query) use ($student_users) {
+        //     $query->whereIn('user_id', $student_users)
+        //     //   ->selectRaw('user_id, MAX(score) as max_score')
+        //       ->groupBy('user_id');
+        // }])->get();
         $data = [
             'title' => "Kelas " . $kelas->nama_kelas,
             'menu' => 'kelas',
@@ -88,7 +95,7 @@ class KelasController extends Controller
                 ->leftJoin('nilai', 'mahasiswa.nim', 'nilai.nim')
                 ->where('kelas_mahasiswa.kode_kelas', $kode_kelas)
                 ->orderBy('mahasiswa.nim')
-                ->get(['mahasiswa.nim', 'users.name', 'nilai.nilai_pretest', 'nilai.nilai_tugas', 'nilai.nilai_quiz', 'nilai.nilai_uts', 'nilai.nilai_uas', 'nilai.nilai_akhir']),
+                ->get(['users.id', 'mahasiswa.nim', 'users.name', 'nilai.nilai_pretest', 'nilai.nilai_tugas', 'nilai.nilai_quiz', 'nilai.nilai_uts', 'nilai.nilai_uas', 'nilai.nilai_akhir']),
             'exam' => $kelas->pretest,
             'list_exam_question' => $kelas?->pretest?->id ? PretestQuestion::where('pretest_id', $kelas?->pretest?->id)->get() : [],
             'list_matakuliah' => Matakuliah::all(),
@@ -97,7 +104,7 @@ class KelasController extends Controller
             })->whereIn('user_id', $general_users)->get(),
 
         ];
-        // return response()->json($data);
+        // return response()->json($nilai);
         return view('pages.dosen.kelas.show', $data);
     }
 

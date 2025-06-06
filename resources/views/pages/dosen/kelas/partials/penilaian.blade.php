@@ -1,3 +1,8 @@
+@php
+    $materi = \App\Models\Materi::where('kode_kelas', $kelas->kode_kelas)->pluck('id')->toArray();
+
+@endphp
+
 <div class="card mb-3">
     <div class="card-header card-header-stretch">
         <h3 class="card-title">{{ __('class.assessment') }}</h3>
@@ -28,15 +33,23 @@
                     <table class="table align-middle table-row-dashed gy-5" id="kt_table_users_login_session">
                         <thead class="border-bottom border-gray-200 fs-7 fw-bold">
                             <tr class="text-start text-muted text-uppercase gs-0">
-                                <th class="min-w-100px">NIM</th>
-                                <th>Nama</th>
-                                <th class="text-center">Pretest</th>
-                                <th class="text-center">Tugas</th>
-                                <th class="text-center">Quiz</th>
-                                <th class="text-center">UTS</th>
-                                <th class="text-center">UAS</th>
-                                <th class="text-end">Actions</th>
+                                <th class="min-w-100px" rowspan="2">NIM</th>
+                                <th class="min-w-100px" rowspan="2">Nama</th>
+                                <th class="text-center" rowspan="2">Pretest</th>
+                                <th class="text-center" rowspan="2">UTS</th>
+                                <th class="text-center" rowspan="2">UAS</th>
+                                @if(count($materi) > 0)
+                                    <th class="text-center" colspan="{{ count($materi) }}">Materi</th>
+                                @endif
+                                <th class="text-end" rowspan="2">Actions</th>
                             </tr>
+                            @if(count($materi) > 0)
+                            <tr class="text-start text-muted text-uppercase gs-0">
+                                @for($i = 1; $i <= count($materi); $i++)
+                                    <th class="text-center">{{ $i }}</th>
+                                @endfor
+                            </tr>
+                            @endif
                         </thead>
                         <tbody class="fs-6 fw-semibold text-gray-600">
                             {{-- @dd($list_nilai_mahasiswa) --}}
@@ -45,11 +58,24 @@
                                     <td>{{ $nilai_mahasiswa->nim }}</td>
                                     <td>{{ $nilai_mahasiswa->name }}</td>
                                     <td class="text-center">{{ $nilai_mahasiswa->nilai_pretest ?? '-' }}
-                                    <td class="text-center">{{ $nilai_mahasiswa->nilai_tugas ?? '-' }}
-                                    </td>
-                                    <td class="text-center">{{ $nilai_mahasiswa->nilai_quiz ?? '-' }}</td>
                                     <td class="text-center">{{ $nilai_mahasiswa->nilai_uts ?? '-' }}</td>
                                     <td class="text-center">{{ $nilai_mahasiswa->nilai_uas ?? '-' }}</td>
+                                    @foreach ($materi as $id_materi)
+                                        <td class="text-center">
+                                            @php
+                                                $nilai = \App\Models\ExamSession::whereHas('exam', function (
+                                                    $query,
+                                                ) use ($id_materi) {
+                                                    $query->where('materi_id', $id_materi);
+                                                })
+                                                    ->where('user_id', $nilai_mahasiswa->id)
+                                                    ->orderBy('score', 'desc')
+                                                    ->pluck('score')
+                                                    ->first();
+                                            @endphp
+                                            {{ $nilai ?? '-' }}
+                                        </td>
+                                    @endforeach
                                     <td class="text-end">
                                         <a href="#" class="btn btn-icon btn-light-linkedin me-2 "
                                             data-bs-toggle="modal"
@@ -159,11 +185,10 @@
                                     <td class="text-end text-bold">{{ $general_pretest->score }}</td>
 
                                 </tr>
-                                @empty
+                            @empty
                                 <tr>
                                     <td colspan="2" class="text-center">No data available</td>
                                 </tr>
-
                             @endforelse
                         </tbody>
                     </table>
