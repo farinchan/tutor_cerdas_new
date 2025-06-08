@@ -15,6 +15,7 @@ use App\Models\PretestChoice;
 use App\Models\PretestQuestion;
 use App\Models\PretestSession;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -158,7 +159,6 @@ class KelasController extends Controller
     }
 
 
-
     public function UpdateNilai(Request $request, $kode_kelas)
     {
         $validator = Validator::make($request->all(), [
@@ -191,6 +191,24 @@ class KelasController extends Controller
 
         Alert::success('Berhasil', 'Nilai berhasil diupdate');
         return redirect()->back();
+    }
+
+    public function printNilai(Request $request, $kode_kelas)
+    {
+        $kelas = Kelas::where('kode_kelas', $kode_kelas)->with(['matakuliah', 'dosen', 'materi'])->first();
+
+        $data = [
+            'kelas' => $kelas,
+            'list_nilai_mahasiswa' => Mahasiswa::leftJoin('users', 'mahasiswa.user_id', 'users.id')
+                ->leftJoin('kelas_mahasiswa', 'mahasiswa.nim', 'kelas_mahasiswa.nim')
+                ->leftJoin('nilai', 'mahasiswa.nim', 'nilai.nim')
+                ->where('kelas_mahasiswa.kode_kelas', $kode_kelas)
+                ->orderBy('mahasiswa.nim')
+                ->get(['users.id', 'mahasiswa.nim', 'users.name', 'nilai.nilai_pretest', 'nilai.nilai_tugas', 'nilai.nilai_quiz', 'nilai.nilai_uts', 'nilai.nilai_uas', 'nilai.nilai_akhir']),
+        ];
+        $pdf = Pdf::loadView('pages.dosen.kelas.nilai-pdf', $data);
+        $pdf->setPaper('A4', 'landscape');
+        return $pdf->stream('katu_ppdb.pdf');
     }
 
     public function pretestCreate(Request $request, $kode_kelas)

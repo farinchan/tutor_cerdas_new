@@ -26,11 +26,24 @@
             <div class="card-header border-0">
                 <div class="card-title">
                     <h2>{{ __('class.student_assessment') }}</h2>
+
+                </div>
+                <div class="card-toolbar">
+                    <a href="{{ route('dosen.kelas.print', $kelas->kode_kelas) }}" class="btn btn-sm btn-light-info">
+                        <i class="ki-duotone ki-printer fs-2">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                            <span class="path3"></span>
+                            <span class="path4"></span>
+                            <span class="path5"></span>
+                        </i>
+                        Cetak
+                    </a>
                 </div>
             </div>
             <div class="card-body pt-0 pb-5">
                 <div class="table-responsive">
-                    <table class="table align-middle table-row-dashed gy-5" id="kt_table_users_login_session">
+                    <table class="table table-bordered" id="kt_table_users_login_session">
                         <thead class="border-bottom border-gray-200 fs-7 fw-bold">
                             <tr class="text-start text-muted text-uppercase gs-0">
                                 <th class="min-w-100px" rowspan="2">NIM</th>
@@ -38,17 +51,17 @@
                                 <th class="text-center" rowspan="2">Pretest</th>
                                 <th class="text-center" rowspan="2">UTS</th>
                                 <th class="text-center" rowspan="2">UAS</th>
-                                @if(count($materi) > 0)
+                                @if (count($materi) > 0)
                                     <th class="text-center" colspan="{{ count($materi) }}">Materi</th>
                                 @endif
                                 <th class="text-end" rowspan="2">Actions</th>
                             </tr>
-                            @if(count($materi) > 0)
-                            <tr class="text-start text-muted text-uppercase gs-0">
-                                @for($i = 1; $i <= count($materi); $i++)
-                                    <th class="text-center">{{ $i }}</th>
-                                @endfor
-                            </tr>
+                            @if (count($materi) > 0)
+                                <tr class="text-start text-muted text-uppercase gs-0">
+                                    @for ($i = 1; $i <= count($materi); $i++)
+                                        <th class="text-center">{{ $i }}</th>
+                                    @endfor
+                                </tr>
                             @endif
                         </thead>
                         <tbody class="fs-6 fw-semibold text-gray-600">
