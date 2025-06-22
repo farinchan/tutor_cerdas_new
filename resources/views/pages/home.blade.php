@@ -30,7 +30,20 @@
                     {{ __('home.lecture_description') }}
                 </div>
             </div>
-            <div class="tns tns-default mb-10">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-4 gy-10">
+
+                @foreach ($list_dosen as $dosen)
+                    <div class="col text-center mb-9">
+                        <div class="octagon mx-auto mb-2 d-flex w-150px h-150px bgi-no-repeat bgi-size-contain bgi-position-center"
+                            style="background-image:url('{{ $dosen->getPhoto() }}')"></div>
+                        <div class="mb-0">
+                            <a href="#" class="text-gray-900 fw-bold text-hover-primary fs-3">{{ $dosen->name }}</a>
+                            <div class="text-muted fs-6 fw-semibold">NIDN. {{ $dosen?->dosen?->nidn }}</div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+            {{-- <div class="tns tns-default mb-10">
                 <div data-tns="true" data-tns-loop="true" data-tns-swipe-angle="false" data-tns-speed="2000"
                     data-tns-autoplay="true" data-tns-autoplay-timeout="18000" data-tns-controls="true" data-tns-nav="false"
                     data-tns-items="1" data-tns-center="false" data-tns-dots="false"
@@ -54,7 +67,7 @@
                 <button class="btn btn-icon btn-active-color-primary" id="kt_team_slider_next">
                     <i class="ki-outline ki-right fs-3x"></i>
                 </button>
-            </div>
+            </div> --}}
         </div>
         <div class="card bg-light mb-18">
             <div class="card-body py-15">
