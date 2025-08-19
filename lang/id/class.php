@@ -14,6 +14,10 @@ return [
     'class_major' => 'Jurusan',
     'close' => 'Tutup',
 
+    'certificate' => 'Sertifikat',
+    'get_certificate' => 'Dapatkan Sertifikat',
+    'certificate_info' => 'Kamu harus menyelesaikan seluruh kelas untuk mendapatkan sertifikat',
+
     'material' => 'Materi',
     'student' => 'Mahasiswa',
     'general' => 'Umum',

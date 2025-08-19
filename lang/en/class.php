@@ -14,6 +14,10 @@ return [
     'class_major' => 'Major',
     'close' => 'Close',
 
+    'certificate' => 'Certificate',
+    'get_certificate' => 'Get Certificate',
+    'certificate_info' => 'You must complete the entire class to receive a certificate.',
+
     'material' => 'Material',
     'student' => 'Students',
     'general' => 'General',

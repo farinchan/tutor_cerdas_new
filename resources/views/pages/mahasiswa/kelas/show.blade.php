@@ -56,7 +56,7 @@
                     <div class="card-body mt-n20 mb-10">
                         <div class="bg-gray-100 bg-opacity-70 rounded-2 px-6 py-5">
                             <div class="d-flex flex-column">
-                                <span class="text-gray-800  mb-3">{{ __('class.lecturer') }}  :</span>
+                                <span class="text-gray-800  mb-3">{{ __('class.lecturer') }} :</span>
                             </div>
                             <div class="d-flex align-items-center">
                                 <!--begin:: Avatar -->
@@ -92,11 +92,59 @@
                                 value="{{ $kelas->kode_kelas }}" readonly />
 
                             <button class="btn btn-light-primary" data-clipboard-target="#kt_clipboard_1">
-                                 {{ __('class.copy') }}
+                                {{ __('class.copy') }}
                             </button>
                         </div>
                     </div>
                 </div>
+                @if ($belum_lulus)
+                    <div class="card mb-5 mb-xl-8">
+                        <div class="card-header border-0">
+                            <div class="card-title">
+                                <h3 class="fw-bold m-0">{{ __('class.certificate') }}</h3>
+                                <span class="ms-1" data-bs-toggle="tooltip" data-bs-placement="right"
+                                    title="{{ __('class.certificate_info') }}">
+                                    <i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-body pt-2">
+
+                            <button class="btn btn-light-danger w-100" disabled>
+                                <i class="ki-duotone ki-document fs-1">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
+                                {{ __('class.get_certificate') }}
+                            </button>
+
+
+                        </div>
+                    </div>
+                @else
+                    <div class="card mb-5 mb-xl-8">
+                        <div class="card-header border-0">
+                            <div class="card-title">
+                                <h3 class="fw-bold m-0">{{ __('class.certificate') }}</h3>
+
+                            </div>
+                        </div>
+                        <div class="card-body pt-2">
+
+                            <a href="{{ route('mahasiswa.kelas.certificate', $kelas->kode_kelas) }}" class="btn btn-light-primary w-75">
+                                <i class="ki-duotone ki-document fs-1">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
+                                {{ __('class.get_certificate') }}
+                            </a>
+                            <a href="#" target="_blank" class="btn btn-light-info w-20 " data-bs-toggle="tooltip" data-bs-placement="right" title="Share to LinkedIn">
+                                <i class="bi bi-linkedin fs-2"></i>
+                            </a>
+
+                        </div>
+                    </div>
+                @endif
             </div>
             <div class="flex-lg-row-fluid ms-lg-15">
                 <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-semibold mb-8">
@@ -136,8 +184,7 @@
 
                                                 <div class="mx-3">
                                                     @if ($materi->is_locked)
-                                                        <span
-                                                            class="fs-4 fw-bold text-gray-800">
+                                                        <span class="fs-4 fw-bold text-gray-800">
                                                             {{ $materi->judul }}
                                                             <span class="badge badge-light-danger">
                                                                 <i class="ki-duotone ki-lock-3 text-danger">
@@ -148,11 +195,10 @@
                                                                 {{ __('class.locked') }}
                                                             </span>
                                                         </span>
-                                                        @else
+                                                    @else
                                                         <a href="{{ route('mahasiswa.kelas.materi', [$kelas->kode_kelas, $materi->id]) }}"
                                                             class="fs-4 fw-bold text-hover-primary text-gray-800">
                                                             {{ $materi->judul }}</a>
-
                                                     @endif
                                                     <div class="fs-6 fw-semibold text-gray-500">
                                                         {{ $materi->deskripsi }}
@@ -169,7 +215,7 @@
                                                 <div class="text-end">
                                                     <a href="{{ route('mahasiswa.kelas.materi', [$kelas->kode_kelas, $materi->id]) }}"
                                                         class="btn btn-sm btn-light btn-active-light-primary">
-                                                         {{ __('class.learn_now') }}
+                                                        {{ __('class.learn_now') }}
                                                     </a>
                                                 </div>
                                             @endif

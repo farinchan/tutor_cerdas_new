@@ -43,6 +43,8 @@ Route::post('forgot-password', [AuthController::class, 'forgotPasswordProcess'])
 Route::get('reset-password/{token}', [AuthController::class, 'resetPassword'])->name('reset.password');
 Route::post('reset-password/{token}', [AuthController::class, 'resetPasswordProcess'])->name('reset.password.process');
 
+Route::get('/certificate/{id}', [MahasiswaKelasController::class, 'certificate'])->name('certificate');
+
 Route::prefix('dosen')->middleware(['auth', 'role:dosen'])->name('dosen.')->group(function () {
 
     Route::prefix('kelas')->name('kelas.')->group(function () {
@@ -115,6 +117,8 @@ Route::prefix('mahasiswa')->middleware(['auth', 'role:mahasiswa'])->name('mahasi
         Route::get('/{kode_kelas}/materi/{id}', [MahasiswaMateriController::class, 'materi'])->name('materi');
         Route::get('/{kode_kelas}/materi/{id}/diskusi-pribadi', [MahasiswaMateriController::class, 'materiDiskusiPribadi'])->name('materiDiskusiPribadi');
         Route::get('/{kode_kelas}/materi/{id}/history-ujian', [MahasiswaMateriController::class, 'historyUjian'])->name('historyUjian');
+
+        Route::get('/{kode_kelas}/certificate', [MahasiswaKelasController::class, 'certificate'])->name('certificate');
 
         Route::get('/{kode_kelas}/materi/{id}/exam', [MahasiswaExamController::class, 'exam'])->name('exam');
         Route::get('/materi/exam-soal', [MahasiswaExamController::class, 'examSoal'])->name('examSoal');

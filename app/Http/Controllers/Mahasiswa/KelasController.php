@@ -3,14 +3,18 @@
 namespace App\Http\Controllers\Mahasiswa;
 
 use App\Http\Controllers\Controller;
+use App\Models\Certificate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Kelas;
 use App\Models\KelasMahasiswa;
 use App\Models\Mahasiswa;
 use App\Models\Materi;
+use App\Models\SettingWebsite;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Str;
 use RealRashid\SweetAlert\Facades\Alert;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class KelasController extends Controller
 {
@@ -66,45 +70,46 @@ class KelasController extends Controller
             return redirect()->back();
         }
 
-         Alert::error('Error', 'Terjadi kesalahan');
-            return redirect()->back();
-
+        Alert::error('Error', 'Terjadi kesalahan');
+        return redirect()->back();
     }
 
     public function show($kode_kelas)
     {
         $kelas = Kelas::where('kode_kelas', $kode_kelas)->with(['matakuliah', 'dosen'])->first();
+        $materi_list = Materi::where('kode_kelas', $kode_kelas)->with([
+            'exam.examSessions' => function ($query) {
+                $query->where('user_id', Auth::id());
+            },
+        ])->get()
+            ->map(function ($materi, $index) use ($kode_kelas) {
+                // Cek apakah ada ujian terkait dengan materi ini
+                $materi->is_locked = false; // Default terbuka
+
+                if ($index > 0) {
+                    $materi_sebelumnya = Materi::where('kode_kelas', $kode_kelas)
+                        ->with(['exam.examSessions' => function ($query) {
+                            $query->where('user_id', Auth::id());
+                        }])
+                        ->orderBy('id', 'asc')
+                        ->get()[$index - 1];
+
+                    $examSession = $materi_sebelumnya->exam?->examSessions?->contains('status', 'lulus') ?? false;
+
+                    if (!$examSession) {
+                        $materi->is_locked = true; // Kunci materi jika ujian sebelumnya belum lulus
+                    }
+                }
+
+                return $materi;
+            });
         $data = [
             'title' => 'Detail Kelas',
             'menu' => 'kelas',
             'sub_menu' => 'kelas',
             'kelas' => $kelas,
-            'materi_list' => Materi::where('kode_kelas', $kode_kelas)->with([
-                'exam.examSessions' => function ($query) {
-                    $query->where('user_id', Auth::id());
-                },
-            ])->get()
-                ->map(function ($materi, $index) use ($kode_kelas) {
-                    // Cek apakah ada ujian terkait dengan materi ini
-                    $materi->is_locked = false; // Default terbuka
-
-                    if ($index > 0) {
-                        $materi_sebelumnya = Materi::where('kode_kelas', $kode_kelas)
-                            ->with(['exam.examSessions' => function ($query) {
-                                $query->where('user_id', Auth::id());
-                            }])
-                            ->orderBy('id', 'asc')
-                            ->get()[$index - 1];
-
-                        $examSession = $materi_sebelumnya->exam?->examSessions?->contains('status', 'lulus') ?? false;
-
-                        if (!$examSession) {
-                            $materi->is_locked = true; // Kunci materi jika ujian sebelumnya belum lulus
-                        }
-                    }
-
-                    return $materi;
-                }),
+            'materi_list' => $materi_list,
+            'belum_lulus' => $materi_list->where('is_locked', true)->count(),
             'list_mahasiswa' => KelasMahasiswa::where('kode_kelas', $kode_kelas)->with('mahasiswa')->where('status', 'aktif')->get(),
             'nilai_saya' => Mahasiswa::leftJoin('users', 'mahasiswa.user_id', 'users.id')
                 ->leftJoin('kelas_mahasiswa', 'mahasiswa.nim', 'kelas_mahasiswa.nim')
@@ -116,5 +121,85 @@ class KelasController extends Controller
         ];
         // return response()->json($data);
         return view('pages.mahasiswa.kelas.show', $data);
+    }
+
+    public function Certificate($kode_kelas)
+    {
+        $kelas = Kelas::where('kode_kelas', $kode_kelas)->with(['matakuliah', 'dosen'])->first();
+        if (!$kelas) {
+            Alert::error('Error', 'Kelas tidak ditemukan');
+            return redirect()->back();
+        }
+
+        $materi_list = Materi::where('kode_kelas', $kode_kelas)->with([
+            'exam.examSessions' => function ($query) {
+                $query->where('user_id', Auth::id());
+            },
+        ])->get()
+            ->map(function ($materi, $index) use ($kode_kelas) {
+                // Cek apakah ada ujian terkait dengan materi ini
+                $materi->is_locked = false; // Default terbuka
+
+                if ($index > 0) {
+                    $materi_sebelumnya = Materi::where('kode_kelas', $kode_kelas)
+                        ->with(['exam.examSessions' => function ($query) {
+                            $query->where('user_id', Auth::id());
+                        }])
+                        ->orderBy('id', 'asc')
+                        ->get()[$index - 1];
+
+                    $examSession = $materi_sebelumnya->exam?->examSessions?->contains('status', 'lulus') ?? false;
+
+                    if (!$examSession) {
+                        $materi->is_locked = true; // Kunci materi jika ujian sebelumnya belum lulus
+                    }
+                }
+
+                return $materi;
+            });
+
+            // return response()->json($materi_list);
+
+        if ($materi_list->where('is_locked', true)->count() > 0) {
+            Alert::error('Error', 'Anda belum menyelesaikan semua materi');
+            return redirect()->back();
+        }
+
+        // Cek apakah sertifikat sudah ada, jika belum maka buat
+        $certificate = Certificate::where('user_id', Auth::id())->where('kode_kelas', $kode_kelas)->first();
+        if (!$certificate) {
+            $certificate = Certificate::create([
+                'user_id' => Auth::id(),
+                'kode_kelas' => $kode_kelas,
+            ]);
+        }
+        $setting = SettingWebsite::first();
+
+        $qrUrl = route('certificate', $certificate->id);
+        $qrBinary = QrCode::format('png')
+            ->size(1550)
+            ->margin(1)
+            ->errorCorrection('H')
+            ->generate($qrUrl);
+
+        $qrCodeSrc = 'data:image/png;base64,' . base64_encode($qrBinary);
+
+        $data = [
+            'logo' => 'data:image/png;base64,' . base64_encode(file_get_contents(storage_path('app/public/' . $setting->logo))),
+            'certificate_no' => $certificate->id,
+            'title' => 'Sertifikat Kelas',
+            'kelas' => $kelas,
+            'materi_list' => $materi_list,
+            'user' => Auth::user(),
+            'certificate' => $certificate,
+            'date' => now()->format('l, d F Y'),
+            'qr_code' => $qrCodeSrc,
+        ];
+
+        $pdf = Pdf::loadView('pages.mahasiswa.kelas.certificate-pdf', $data);
+        $pdf->setPaper('A4', 'landscape');
+        return $pdf->stream('sertifikat_kelas.pdf');
+
+        // return view('pages.mahasiswa.kelas.certificate-pdf', $data);
     }
 }
