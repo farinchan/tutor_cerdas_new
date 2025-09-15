@@ -128,6 +128,7 @@ Route::prefix('mahasiswa')->middleware(['auth', 'role:mahasiswa'])->name('mahasi
         Route::get('/{kode_kelas}/materi/{id}/history-ujian', [MahasiswaMateriController::class, 'historyUjian'])->name('historyUjian');
 
         Route::get('/{kode_kelas}/certificate', [MahasiswaKelasController::class, 'certificate'])->name('certificate');
+        Route::get('/{kode_kelas}/linkedin-share', [MahasiswaKelasController::class, 'getLinkedInShareUrl'])->name('linkedin-share');
 
         Route::get('/{kode_kelas}/materi/{id}/exam', [MahasiswaExamController::class, 'exam'])->name('exam');
         Route::get('/materi/exam-soal', [MahasiswaExamController::class, 'examSoal'])->name('examSoal');

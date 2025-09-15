@@ -131,16 +131,19 @@
                         </div>
                         <div class="card-body pt-2">
 
-                            <a href="{{ route('mahasiswa.kelas.certificate', $kelas->kode_kelas) }}" class="btn btn-light-primary w-75">
+                            <a href="{{ route('mahasiswa.kelas.certificate', $kelas->kode_kelas) }}"
+                                class="btn btn-light-primary w-75">
                                 <i class="ki-duotone ki-document fs-1">
                                     <span class="path1"></span>
                                     <span class="path2"></span>
                                 </i>
                                 {{ __('class.get_certificate') }}
                             </a>
-                            <a href="#" target="_blank" class="btn btn-light-info w-20 " data-bs-toggle="tooltip" data-bs-placement="right" title="Share to LinkedIn">
+                            <button id="shareToLinkedIn" class="btn btn-light-info w-20"
+                                data-kode-kelas="{{ $kelas->kode_kelas }}" data-bs-toggle="tooltip"
+                                data-bs-placement="right" title="Share to LinkedIn">
                                 <i class="bi bi-linkedin fs-2"></i>
-                            </a>
+                            </button>
 
                         </div>
                     </div>
@@ -403,6 +406,13 @@
         const target = document.getElementById('kt_clipboard_1');
         const button = target.nextElementSibling;
 
+        var clipboard = new ClipboardJS(button, {
+            target: target,
+            text: function() {
+                return target.value;
+            }
+        });
+
         // Success action handler
         clipboard.on('success', function(e) {
             const currentLabel = button.innerHTML;
@@ -419,6 +429,82 @@
             setTimeout(function() {
                 button.innerHTML = currentLabel;
             }, 3000)
+        });
+
+        // LinkedIn Share functionality
+        document.getElementById('shareToLinkedIn')?.addEventListener('click', function() {
+            const kodeKelas = this.getAttribute('data-kode-kelas');
+            const button = this;
+            const originalHtml = button.innerHTML;
+
+            // Show loading state
+            button.innerHTML = '<i class="spinner-border spinner-border-sm" role="status"></i>';
+            button.disabled = true;
+
+            // Get LinkedIn share URL from server
+            fetch(`/mahasiswa/kelas/${kodeKelas}/linkedin-share`, {
+                    method: 'GET',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => Promise.reject(err));
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.linkedin_url) {
+                        // Open LinkedIn share dialog in popup window
+                        const popupWidth = 600;
+                        const popupHeight = 600;
+                        const left = (window.innerWidth - popupWidth) / 2;
+                        const top = (window.innerHeight - popupHeight) / 2;
+
+                        const popup = window.open(
+                            data.linkedin_url,
+                            'linkedin-share',
+                            `width=${popupWidth},height=${popupHeight},left=${left},top=${top},resizable=yes,scrollbars=yes`
+                        );
+
+                        // Show success message
+                        if (popup) {
+                            // Optional: Show a success toast or notification
+                            console.log('LinkedIn share dialog opened successfully');
+
+                            // You can add a toast notification here if you have a toast library
+                            // For example: toastr.success('LinkedIn share dialog opened');
+                        }
+                    } else {
+                        throw new Error(data.error || 'Terjadi kesalahan');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+
+                    // Show appropriate error message
+                    let errorMessage = 'Terjadi kesalahan saat membagikan ke LinkedIn';
+
+                    if (error.message) {
+                        errorMessage = error.message;
+                    } else if (error.error) {
+                        errorMessage = error.error;
+                    }
+
+                    // Show error alert
+                    alert(errorMessage);
+
+                    // You can replace this with a better toast notification if available
+                    // For example: toastr.error(errorMessage);
+                })
+                .finally(() => {
+                    // Restore button state
+                    button.innerHTML = originalHtml;
+                    button.disabled = false;
+                });
         });
     </script>
 @endsection

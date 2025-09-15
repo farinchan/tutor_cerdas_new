@@ -202,4 +202,82 @@ class KelasController extends Controller
 
         // return view('pages.mahasiswa.kelas.certificate-pdf', $data);
     }
+
+    public function getLinkedInShareUrl($kode_kelas)
+    {
+        $kelas = Kelas::where('kode_kelas', $kode_kelas)->with(['matakuliah', 'dosen'])->first();
+        if (!$kelas) {
+            return response()->json(['error' => 'Kelas tidak ditemukan'], 404);
+        }
+
+        // Cek apakah mahasiswa sudah lulus semua materi
+        $materi_list = Materi::where('kode_kelas', $kode_kelas)->with([
+            'exam.examSessions' => function ($query) {
+                $query->where('user_id', Auth::id());
+            },
+        ])->get()
+            ->map(function ($materi, $index) use ($kode_kelas) {
+                $materi->is_locked = false;
+
+                if ($index > 0) {
+                    $materi_sebelumnya = Materi::where('kode_kelas', $kode_kelas)
+                        ->with(['exam.examSessions' => function ($query) {
+                            $query->where('user_id', Auth::id());
+                        }])
+                        ->orderBy('id', 'asc')
+                        ->get()[$index - 1];
+
+                    $examSession = $materi_sebelumnya->exam?->examSessions?->contains('status', 'lulus') ?? false;
+
+                    if (!$examSession) {
+                        $materi->is_locked = true;
+                    }
+                }
+
+                return $materi;
+            });
+
+        if ($materi_list->where('is_locked', true)->count() > 0) {
+            return response()->json(['error' => 'Anda belum menyelesaikan semua materi'], 400);
+        }
+
+        // Cek atau buat sertifikat
+        $certificate = Certificate::where('user_id', Auth::id())->where('kode_kelas', $kode_kelas)->first();
+        if (!$certificate) {
+            $certificate = Certificate::create([
+                'user_id' => Auth::id(),
+                'kode_kelas' => $kode_kelas,
+            ]);
+        }
+
+        // URL untuk verifikasi sertifikat
+        $certificateUrl = route('certificate.show', $certificate->id);
+
+        // Data untuk LinkedIn Share
+        $courseName = $kelas->nama_kelas . ' - ' . $kelas->matakuliah->nama_mk;
+        $issuerName = config('app.name', 'Tutor Cerdas');
+        $userName = Auth::user()->name;
+
+        // LinkedIn Share URL parameters
+        $linkedInParams = [
+            'summary' => "🎓 Saya bangga mengumumkan bahwa saya telah berhasil menyelesaikan kursus '$courseName' di $issuerName!\n\n" .
+                        "📚 Kursus ini telah memberikan saya pemahaman mendalam tentang materi yang diajarkan dan meningkatkan kemampuan saya dalam bidang ini.\n\n" .
+                        "✅ Verifikasi sertifikat: $certificateUrl\n\n" .
+                        "#education #learning #certificate #achievement #onlinelearning #" . str_replace(' ', '', strtolower($kelas->matakuliah->nama_mk)),
+            'title' => "Certificate of Completion: $courseName",
+            'url' => $certificateUrl,
+            'source' => $issuerName
+        ];
+
+        $linkedInUrl = 'https://www.linkedin.com/sharing/share-offsite/?' . http_build_query($linkedInParams);
+
+        return response()->json([
+            'linkedin_url' => $linkedInUrl,
+            'certificate_url' => $certificateUrl,
+            'course_name' => $courseName,
+            'issuer_name' => $issuerName,
+            'user_name' => $userName,
+            'certificate_id' => $certificate->id
+        ]);
+    }
 }
