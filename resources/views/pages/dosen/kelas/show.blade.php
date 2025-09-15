@@ -183,6 +183,13 @@
         const target = document.getElementById('kt_clipboard_1');
         const button = target.nextElementSibling;
 
+        var clipboard = new ClipboardJS(button, {
+            target: target,
+            text: function() {
+                return target.value;
+            }
+        });
+
         // Success action handler
         clipboard.on('success', function(e) {
             const currentLabel = button.innerHTML;
