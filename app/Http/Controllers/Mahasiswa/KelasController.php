@@ -175,7 +175,7 @@ class KelasController extends Controller
         }
         $setting = SettingWebsite::first();
 
-        $qrUrl = route('certificate', $certificate->id);
+        $qrUrl = route('certificate.show', $certificate->id);
         $qrBinary = QrCode::format('png')
             ->size(1550)
             ->margin(1)
