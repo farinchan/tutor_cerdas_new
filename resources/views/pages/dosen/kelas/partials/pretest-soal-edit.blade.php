@@ -120,7 +120,7 @@
                                 <div class="mb">
                                     <label for="name" class=" form-label required"> Bobot</label>
                                     <input type="number" class="form-control" id="question_score" name="question_score"
-                                        value="{{ $question->score }}" required>
+                                        value="{{ $question->score }}" step="0.01" min="0" required>
                                 </div>
                                 <div class="separator my-10"></div>
 

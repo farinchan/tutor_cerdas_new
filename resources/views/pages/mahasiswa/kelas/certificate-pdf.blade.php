@@ -289,8 +289,7 @@
             @endif
             <div class="verify-title">Verifikasi Sertifikat</div>
             <div class="verify-url">
-                {{ str_replace(['http://', 'https://'], '', url('/certificate')) ?? '-' }}
-                {{ ' ' . ($certificate->id ?? '') }}
+                {{ str_replace(['http://', 'https://'], '', url('/certificate')) ?? '-' }}/{{  $certificate->id ?? ''}}
             </div>
         </div>
     </div>

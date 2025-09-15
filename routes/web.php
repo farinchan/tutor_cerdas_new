@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\Dosen\KelasController as DosenKelasController;
 use App\Http\Controllers\Dosen\MahasiswaController as DosenMahasiswaController;
 use App\Http\Controllers\Dosen\MateriController as DosenMateriController;
@@ -43,7 +44,15 @@ Route::post('forgot-password', [AuthController::class, 'forgotPasswordProcess'])
 Route::get('reset-password/{token}', [AuthController::class, 'resetPassword'])->name('reset.password');
 Route::post('reset-password/{token}', [AuthController::class, 'resetPasswordProcess'])->name('reset.password.process');
 
-Route::get('/certificate/{id}', [MahasiswaKelasController::class, 'certificate'])->name('certificate');
+Route::get('/certificate', [CertificateController::class, 'index'])->name('certificate.index');
+Route::get('/certificate/{id}', [CertificateController::class, 'show'])->name('certificate.show');
+
+// Certificate Verification Routes
+Route::prefix('certificate')->name('certificate.')->group(function () {
+    Route::get('/', [CertificateController::class, 'index'])->name('index');
+    Route::get('/verify/{id}', [CertificateController::class, 'show'])->name('show');
+    Route::get('/generate-pdf/{id}', [CertificateController::class, 'generatePdf'])->name('generate-pdf');
+});
 
 Route::prefix('dosen')->middleware(['auth', 'role:dosen'])->name('dosen.')->group(function () {
 
