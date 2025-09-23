@@ -53,10 +53,10 @@ class AuthController extends Controller
         if ($request->role == 'mahasiswa') {
 
             $validator_mhs = Validator::make($request->all(), [
-                'email' => 'required|email',
+                'email' => 'required|email|unique:users,email',
                 'password' => 'required',
                 'role' => 'required|in:mahasiswa,dosen',
-                'nim' => 'required|numeric',
+                'nim' => 'required|numeric|unique:mahasiswa,nim',
                 'nama' => 'required|string',
                 'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                 'alamat' => 'required|string',
@@ -71,7 +71,8 @@ class AuthController extends Controller
                 'mimes' => ':attribute harus berupa gambar dengan format jpeg, png, jpg, gif, svg',
                 'max' => ':attribute tidak boleh lebih dari 2MB',
                 'in' => ':attribute harus salah satu dari :values',
-                'email' => ':attribute harus berupa email'
+                'email' => ':attribute harus berupa email',
+                'unique' => ':attribute sudah terdaftar',
             ]);
 
 
@@ -109,10 +110,10 @@ class AuthController extends Controller
 
 
             $validator_dosen = Validator::make($request->all(), [
-                'email' => 'required|email',
+                'email' => 'required|email|unique:users,email',
                 'password' => 'required',
                 'role' => 'required|in:mahasiswa,dosen',
-                'nidn' => 'required|numeric',
+                'nidn' => 'required|numeric|unique:dosen,nidn',
                 'nama' => 'required|string',
                 'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                 'alamat' => 'required|string',
@@ -129,7 +130,8 @@ class AuthController extends Controller
                 'mimes' => ':attribute harus berupa gambar dengan format jpeg, png, jpg, gif, svg',
                 'max' => ':attribute tidak boleh lebih dari 2MB',
                 'in' => ':attribute harus salah satu dari :values',
-                'email' => ':attribute harus berupa email'
+                'email' => ':attribute harus berupa email',
+                'unique' => ':attribute sudah terdaftar',
             ]);
 
             if ($validator_dosen->fails()) {
@@ -165,7 +167,7 @@ class AuthController extends Controller
             return redirect()->route('login');
         } else if ($request->role == 'umum') {
             $validator_umum = Validator::make($request->all(), [
-                'email' => 'required|email',
+                'email' => 'required|email|unique:users,email',
                 'password' => 'required',
                 'role' => 'required|in:umum',
                 'nama' => 'required|string',
@@ -181,7 +183,8 @@ class AuthController extends Controller
                 'mimes' => ':attribute harus berupa gambar dengan format jpeg, png, jpg, gif, svg',
                 'max' => ':attribute tidak boleh lebih dari 2MB',
                 'in' => ':attribute harus salah satu dari :values',
-                'email' => ':attribute harus berupa email'
+                'email' => ':attribute harus berupa email',
+                'unique' => ':attribute sudah terdaftar',
             ]);
 
             if ($validator_umum->fails()) {
