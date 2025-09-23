@@ -37,7 +37,7 @@ class ProfileController extends Controller
         ];
 
         if ($user->hasRole('mahasiswa')) {
-            $validation_rules['nim'] = 'required|unique:mahasiswa,nim,' . $user->mahasiswa->nim. ',nim';
+            $validation_rules['nim'] = 'required|unique:mahasiswa,nim,' . ($user->mahasiswa->nim ?? '') . ',nim';
             $validation_rules['alamat_mahasiswa'] = 'required';
             $validation_rules['jenis_kelamin_mahasiswa'] = 'required';
             $validation_rules['agama_mahasiswa'] = 'required';
@@ -45,7 +45,7 @@ class ProfileController extends Controller
         }
 
         if ($user->hasRole('dosen')) {
-            $validation_rules['nidn'] = 'required|unique:dosen,nidn,' . $user->dosen->nidn . ',nidn';
+            $validation_rules['nidn'] = 'required|unique:dosen,nidn,' . ($user->dosen->nidn ?? '') . ',nidn';
             $validation_rules['jabatan'] = 'required';
             $validation_rules['pangkat'] = 'required';
             $validation_rules['alamat_dosen'] = 'required';
@@ -82,6 +82,16 @@ class ProfileController extends Controller
         $user->save();
 
         if ($user->hasRole('mahasiswa')) {
+            if (!$user->mahasiswa) {
+                Mahasiswa::create([
+                    'user_id' => $user->id,
+                    'nim' => $request->nim,
+                    'alamat' => $request->alamat_mahasiswa,
+                    'jenis_kelamin' => $request->jenis_kelamin_mahasiswa,
+                    'agama' => $request->agama_mahasiswa,
+                    'jurusan' => $request->jurusan,
+                ]);
+            }
             Mahasiswa::where('user_id', $user->id)->update([
                 'nim' => $request->nim,
                 'alamat' => $request->alamat_mahasiswa,
@@ -92,6 +102,18 @@ class ProfileController extends Controller
         }
 
         if ($user->hasRole('dosen')) {
+            if (!$user->dosen) {
+                Dosen::create([
+                    'user_id' => $user->id,
+                    'nidn' => $request->nidn,
+                    'jabatan' => $request->jabatan,
+                    'pangkat' => $request->pangkat,
+                    'alamat' => $request->alamat_dosen,
+                    'jenis_kelamin' => $request->jenis_kelamin_dosen,
+                    'agama' => $request->agama_dosen,
+                    'pendidikan_terakhir' => $request->pendidikan_terakhir,
+                ]);
+            }
             Dosen::where('user_id', $user->id)->update([
                 'nidn' => $request->nidn,
                 'jabatan' => $request->jabatan,
