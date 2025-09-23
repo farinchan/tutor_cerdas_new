@@ -94,15 +94,23 @@ class AuthController extends Controller
             }
             $user->save();
 
-            $user->assignRole('mahasiswa');
 
-            $user->mahasiswa()->create([
-                'nim' => $request->nim,
-                'alamat' => $request->alamat,
-                'jenis_kelamin' => $request->jenis_kelamin,
-                'agama' => $request->agama,
-                'jurusan' => $request->jurusan
-            ]);
+            try {
+                $user->assignRole('mahasiswa');
+                $user->mahasiswa()->create([
+                    'nim' => $request->nim,
+                    'alamat' => $request->alamat,
+                    'jenis_kelamin' => $request->jenis_kelamin,
+                    'agama' => $request->agama,
+                    'jurusan' => $request->jurusan
+                ]);
+            } catch (\Exception $e) {
+                // Jika terjadi error, hapus user yang sudah dibuat
+                $user->delete();
+                Alert::error('Error', 'Terjadi kesalahan saat menyimpan data mahasiswa. Silahkan coba lagi.');
+                return redirect()->back()->withInput();
+            }
+
 
             Alert::success('Success', 'Registrasi berhasil silahkan login untuk melanjutkan');
             return redirect()->route('login');
@@ -150,18 +158,25 @@ class AuthController extends Controller
             }
             $user->save();
 
-            $user->assignRole('dosen');
+            try {
+                $user->assignRole('dosen');
+                $user->dosen()->create([
+                    'nidn' => $request->nidn,
+                    'alamat' => $request->alamat,
+                    'jenis_kelamin' => $request->jenis_kelamin,
+                    'agama' => $request->agama,
+                    'jabatan' => $request->jabatan,
+                    'pangkat' => $request->pangkat,
+                    'pendidikan_terakhir' => $request->pendidikan_terakhir
+                ]);
+            } catch (\Exception $e) {
+                // Jika terjadi error, hapus user yang sudah dibuat
+                $user->delete();
+                Alert::error('Error', 'Terjadi kesalahan saat menyimpan data dosen. Silahkan coba lagi.');
+                return redirect()->back()->withInput();
+            }
 
 
-            $user->dosen()->create([
-                'nidn' => $request->nidn,
-                'alamat' => $request->alamat,
-                'jenis_kelamin' => $request->jenis_kelamin,
-                'agama' => $request->agama,
-                'jabatan' => $request->jabatan,
-                'pangkat' => $request->pangkat,
-                'pendidikan_terakhir' => $request->pendidikan_terakhir
-            ]);
 
             Alert::success('Success', 'Registrasi berhasil, silahkan login untuk melanjutkan');
             return redirect()->route('login');
@@ -203,13 +218,19 @@ class AuthController extends Controller
             }
             $user->save();
 
-            $user->assignRole('umum');
-
-            $user->umum()->create([
-                'alamat' => $request->alamat,
-                'jenis_kelamin' => $request->jenis_kelamin,
-                'agama' => $request->agama,
-            ]);
+            try {
+                $user->assignRole('umum');
+                $user->umum()->create([
+                    'alamat' => $request->alamat,
+                    'jenis_kelamin' => $request->jenis_kelamin,
+                    'agama' => $request->agama,
+                ]);
+            } catch (\Exception $e) {
+                // Jika terjadi error, hapus user yang sudah dibuat
+                $user->delete();
+                Alert::error('Error', 'Terjadi kesalahan saat menyimpan data umum. Silahkan coba lagi.');
+                return redirect()->back()->withInput();
+            }
 
             Alert::success('Success', 'Registrasi berhasil, silahkan login untuk melanjutkan');
             return redirect()->route('login');
