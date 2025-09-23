@@ -59,12 +59,17 @@ class KelasController extends Controller
                 return redirect()->back();
             }
         } else {
-
-            KelasMahasiswa::create([
+            try {
+                KelasMahasiswa::create([
                 'nim' => Auth::user()->mahasiswa->nim,
                 'kode_kelas' => $kelas->kode_kelas,
                 'status' => 'nonaktif'
             ]);
+            } catch (\Throwable $th) {
+                Alert::error('Error', 'Terjadi kesalahan : ' . $th->getMessage());
+                return redirect()->back();
+            }
+
 
             Alert::success('Berhasil', 'Permintaan bergabung berhasil dikirim, silahkan tunggu konfirmasi dari dosen, cek email secara berkala');
             return redirect()->back();
