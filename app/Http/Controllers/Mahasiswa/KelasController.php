@@ -20,6 +20,10 @@ class KelasController extends Controller
 {
     public function index()
     {
+        if (!Auth::user()->mahasiswa) {
+            Alert::warning('Terjadi Kesalahan', 'Sepertinya ada kesalahan pada data anda, sialahkan perbaiki profile anda atau hubungi admin');
+            return redirect()->route('profile');
+        }
         $kelas = KelasMahasiswa::where('nim', Auth::user()->mahasiswa->nim)->where('status', 'aktif')->with('kelas')->get();
         $data = [
             'title' => 'Kelas',
