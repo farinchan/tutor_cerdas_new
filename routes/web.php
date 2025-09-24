@@ -104,6 +104,9 @@ Route::prefix('dosen')->middleware(['auth', 'role:dosen'])->name('dosen.')->grou
         Route::get('/create/{kode_kelas}', [DosenMateriController::class, 'create'])->name('create');
         Route::post('/uploadFile', [DosenMateriController::class, 'uploadFile'])->name('uploadFile');
         Route::post('/store', [DosenMateriController::class, 'store'])->name('store');
+        Route::get('/{kode_kelas}/{id}/edit', [DosenMateriController::class, 'edit'])->name('edit');
+        Route::post('/{kode_kelas}/{id}/update', [DosenMateriController::class, 'update'])->name('update');
+        Route::delete('/file/{fileId}', [DosenMateriController::class, 'deleteFile'])->name('deleteFile');
 
         Route::get('/{id}', [DosenMateriController::class, 'show'])->name('show');
     });

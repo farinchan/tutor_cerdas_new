@@ -1,32 +1,51 @@
 <div class="card mb-5 mb-xxl-8">
     <div class="card-body pt-9 pb-0">
         <div class="p-5">
-            <div class="d-flex flex-wrap flex-sm-nowrap align-items-center mb-4">
-                <div class="d-flex flex-column flex-grow-1">
-                    <div class="d-flex flex-wrap me-2">
-                        <a href="#" class="text-gray-800 text-hover-primary fs-2 fw-bolder me-1">
+            <div class="d-flex justify-content-between align-items-start mb-4">
+                <div class="d-flex flex-column flex-grow-1 me-4">
+                    <div class="d-flex align-items-center mb-2">
+                        <h2 class="text-gray-800 fs-2 fw-bolder mb-0 me-3">
                             {{ $materi->judul }}
-                        </a>
+                        </h2>
                     </div>
-                    <div class="d-flex flex-wrap fw-semibold fs-6 mb-4 pe-2">
-                        <a href="#" class="d-flex align-items-center text-gray-500 text-hover-primary me-5 mb-2">
+                    <div class="d-flex flex-wrap fw-semibold fs-6 mb-3">
+                        <div class="d-flex align-items-center text-gray-500 me-5 mb-2">
                             <i class="ki-duotone ki-bank fs-4 me-1">
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
                             {{ $materi->kelas?->nama_kelas }}
-                        </a>
-                        <a href="#" class="d-flex align-items-center text-gray-500 text-hover-primary me-5 mb-2">
+                        </div>
+                        <div class="d-flex align-items-center text-gray-500 me-5 mb-2">
                             <i class="ki-duotone ki-user fs-4 me-1">
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
                             {{ $materi->dosen?->user?->name }}
-                        </a>
+                        </div>
+                        <div class="d-flex align-items-center text-gray-500 mb-2">
+                            <i class="ki-duotone ki-calendar fs-4 me-1">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                                <span class="path3"></span>
+                                <span class="path4"></span>
+                            </i>
+                            {{ $materi->created_at->format('d M Y') }}
+                        </div>
                     </div>
-                    <span class="text-muted fs-6">
+                    <p class="text-muted fs-6 mb-0">
                         {{ $materi->deskripsi }}
-                    </span>
+                    </p>
+                </div>
+                <div class="d-flex flex-column align-items-end">
+                    <a href="{{ route('dosen.materi.edit', [$kode_kelas, $materi->id]) }}"
+                       class="btn btn-light-primary btn-sm d-flex align-items-center">
+                        <i class="ki-duotone ki-pencil fs-5 me-2">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
+                        Edit
+                    </a>
                 </div>
             </div>
             <hr class=" mb-5">

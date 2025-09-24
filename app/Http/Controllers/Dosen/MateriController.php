@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dosen;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Models\Kelas;
 use App\Models\Materi;
@@ -108,6 +109,114 @@ class MateriController extends Controller
             'redirect' => route('dosen.kelas.show', $request->kode_kelas)
         ]);
     }
+
+    public function edit($kode_kelas, $id)
+    {
+        $materi = Materi::where('id', $id)->where('kode_kelas', $kode_kelas)->first();
+        if (!$materi) {
+            return abort(404);
+        }
+
+        $data = [
+            'title' => 'Edit Materi',
+            'menu' => 'materi',
+            'sub_menu' => 'edit',
+            'kode_kelas' => $kode_kelas,
+            'kelas' => Kelas::where('kode_kelas', $kode_kelas)->first(),
+            'materi' => $materi,
+            'list_file' => MateriFile::where('materi_id', $id)->get()
+        ];
+        return view('pages.dosen.materi.edit', $data);
+    }
+
+    public function update(Request $request, $kode_kelas, $id)
+    {
+        $materi = Materi::where('id', $id)->where('kode_kelas', $kode_kelas)->first();
+        if (!$materi) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Materi tidak ditemukan'
+            ], 404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'foto' => 'nullable',
+            'judul' => 'required',
+            'deskripsi' => 'required',
+            'isi_materi' => 'required',
+            'file' => 'nullable',
+            'status' => 'required'
+        ], [
+            'required' => ':attribute tidak boleh kosong',
+            'image' => ':attribute harus berupa gambar',
+            'mimes' => ':attribute harus berupa gambar dengan format jpeg, png, jpg, gif, svg',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $validator->errors()->all()
+            ], 400);
+        }
+
+        $fotoPath = $materi->gambar; // Keep existing image
+        if ($request->hasFile('foto')) {
+            $foto = $request->file('foto');
+            $fotoNewName = Str::random(10) . "_" . $foto->getClientOriginalName();
+            $fotoPath = $foto->storeAs('public/materi/foto', $fotoNewName);
+        }
+
+        $materi->update([
+            'gambar' => $fotoPath,
+            'judul' => $request->judul,
+            'deskripsi' => $request->deskripsi,
+            'isi_materi' => $request->isi_materi,
+            'status' => $request->status
+        ]);
+
+        if ($request->hasFile('file')) {
+            foreach ($request->file('file') as $file) {
+                $fileNewName = Str::random(10) . "_" . $file->getClientOriginalName();
+                $filePath = $file->storeAs('materi', $fileNewName, 'public');
+                MateriFile::create([
+                    'materi_id' => $materi->id,
+                    'file' => str_replace('public/', '', $filePath)
+                ]);
+            }
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Materi berhasil diupdate',
+            'redirect' => route('dosen.kelas.show', $kode_kelas)
+        ]);
+    }
+
+    public function deleteFile($fileId)
+    {
+        $file = MateriFile::find($fileId);
+        if (!$file) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'File tidak ditemukan'
+            ], 404);
+        }
+
+        // Delete physical file
+        if (Storage::disk('public')->exists($file->file)) {
+            Storage::disk('public')->delete($file->file);
+        }
+
+        // Delete database record
+        $file->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'File berhasil dihapus'
+        ]);
+    }
+
+
 
     public function uploadFile(Request $request)
     {
