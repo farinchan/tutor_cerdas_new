@@ -64,6 +64,7 @@ Route::prefix('dosen')->middleware(['auth', 'role:dosen'])->name('dosen.')->grou
 
         Route::get('/{kode_kelas}', [DosenKelasController::class, 'show'])->name('show');
         Route::get('/{kode_kelas}/cetak-nilai', [DosenKelasController::class, 'printNilai'])->name('print');
+        Route::get('/{kode_kelas}/export-nilai', [DosenKelasController::class, 'exportNilai'])->name('exportNilai');
 
         Route::put('/nilai/{nim}', [DosenKelasController::class, 'updateNilai'])->name('updateNilai');
 

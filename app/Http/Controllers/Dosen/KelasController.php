@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dosen;
 
+use App\Exports\NilaiExport;
 use App\Http\Controllers\Controller;
 use App\Models\Kelas;
 use App\Models\KelasMahasiswa;
@@ -22,6 +23,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 
 class KelasController extends Controller
 {
@@ -208,7 +210,15 @@ class KelasController extends Controller
         ];
         $pdf = Pdf::loadView('pages.dosen.kelas.nilai-pdf', $data);
         $pdf->setPaper('A4', 'landscape');
-        return $pdf->stream('katu_ppdb.pdf');
+        return $pdf->stream('nilai.pdf');
+    }
+
+    public function exportNilai(Request $request, $kode_kelas)
+    {
+        $kelas = Kelas::where('kode_kelas', $kode_kelas)->with(['matakuliah', 'dosen', 'materi'])->first();
+
+        return Excel::download(new NilaiExport($kode_kelas), 'nilai_kelas_' . $kelas->nama_kelas . '.xlsx');
+
     }
 
     public function pretestCreate(Request $request, $kode_kelas)

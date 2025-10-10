@@ -29,7 +29,7 @@
 
                 </div>
                 <div class="card-toolbar">
-                    <a href="{{ route('dosen.kelas.print', $kelas->kode_kelas) }}" class="btn btn-sm btn-light-info">
+                    <a href="{{ route('dosen.kelas.print', $kelas->kode_kelas) }}" class="btn btn-sm btn-light-info me-2" target="_blank">
                         <i class="ki-duotone ki-printer fs-2">
                             <span class="path1"></span>
                             <span class="path2"></span>
@@ -39,6 +39,14 @@
                         </i>
                         Cetak
                     </a>
+                    <a href="{{ route('dosen.kelas.exportNilai', $kelas->kode_kelas) }}" class="btn btn-sm btn-light-success">
+                        <i class="ki-duotone ki-document fs-2">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
+                        Export
+                    </a>
+
                 </div>
             </div>
             <div class="card-body pt-0 pb-5">
