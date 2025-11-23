@@ -217,7 +217,7 @@ class KelasController extends Controller
     {
         $kelas = Kelas::where('kode_kelas', $kode_kelas)->with(['matakuliah', 'dosen', 'materi'])->first();
 
-        return Excel::download(new NilaiExport($kode_kelas), 'nilai_kelas_' . $kelas->nama_kelas . '.xlsx');
+        return Excel::download(new NilaiExport($kode_kelas), 'nilai_kelas_' . Str::slug($kelas->nama_kelas)  . '.xlsx');
 
     }
 
