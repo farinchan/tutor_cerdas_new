@@ -223,7 +223,7 @@
                                             </div>
                                             <h3 class="mb-3">{{ __('guide.pdf_lecturer_title') }}</h3>
                                             <p class="text-gray-600 mb-7 fs-6">{{ __('guide.pdf_lecturer_desc') }}</p>
-                                            <a href="{{ asset('storage/guides/panduan-dosen-admin.pdf') }}" class="btn btn-info btn-lg" target="_blank" download>
+                                            <a href="{{ asset('/file/BUKU PANDUAN PENGGUNAAN DOSEN DAN ADMINok.pdf') }}" class="btn btn-info btn-lg" target="_blank" download>
                                                 <i class="ki-duotone ki-file-down fs-2 me-2">
                                                     <span class="path1"></span>
                                                     <span class="path2"></span>
@@ -251,7 +251,7 @@
                                             </div>
                                             <h3 class="mb-3">{{ __('guide.pdf_student_title') }}</h3>
                                             <p class="text-gray-600 mb-7 fs-6">{{ __('guide.pdf_student_desc') }}</p>
-                                            <a href="{{ asset('storage/guides/panduan-mahasiswa-umum.pdf') }}" class="btn btn-success btn-lg" target="_blank" download>
+                                            <a href="{{ asset('/file/BUKU PANDUAN PENGGUNAAN MAHASISWA DAN UMUMok.pdf') }}" class="btn btn-success btn-lg" target="_blank" download>
                                                 <i class="ki-duotone ki-file-down fs-2 me-2">
                                                     <span class="path1"></span>
                                                     <span class="path2"></span>
