@@ -30,6 +30,7 @@ use App\Http\Controllers\LanguageController;
 Route::get('/language/{locale}', [LanguageController::class, 'switchLanguage'])->name('language.switch');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/faq', [HomeController::class, 'faq'])->name('faq');
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 Route::put('/profile', [ProfileController::class, 'profileUpdate'])->name('profile.update');
 

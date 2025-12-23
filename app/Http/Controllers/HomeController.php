@@ -18,4 +18,11 @@ class HomeController extends Controller
         ];
         return view('pages.home', $data);
     }
+
+    public function faq(){
+        $data = [
+            'title' => 'FAQ & Panduan',
+        ];
+        return view('pages.faq', $data);
+    }
 }

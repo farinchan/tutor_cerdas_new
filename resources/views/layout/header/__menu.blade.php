@@ -66,6 +66,16 @@
             </div>
         @endrole
 
+         <div
+            class="menu-item menu-here-bg menu-lg-down-accordion me-0 me-lg-2 @if (request()->routeIs('faq')) here @endif">
+            <a class="menu-link py-3" href="{{ route('faq') }}">
+                <span class="menu-title">
+                {{ __('header.faq_guide') }}
+                </span>
+                <span class="menu-arrow d-lg-none"></span>
+            </a>
+        </div>
+
         @auth
             <div class="menu-item menu-here-bg menu-lg-down-accordion me-0 me-lg-2">
                 <a href="{{ route("profile") }}" class="menu-link py-3">

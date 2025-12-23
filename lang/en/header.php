@@ -25,4 +25,6 @@ return [
     'logout' => 'Logout',
     'language' => 'Language',
 
+    'faq_guide'=> 'FAQ & Guide'
+
 ];

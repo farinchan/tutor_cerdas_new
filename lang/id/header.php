@@ -26,4 +26,6 @@ return [
 
     'language' => 'Bahasa',
 
+    'faq_guide' =>  'FAQ & Panduan'
+
 ];
